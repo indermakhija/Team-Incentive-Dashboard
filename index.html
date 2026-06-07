@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0085)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SalesIncentive_Dashboard%20(2).html -->
+<!-- saved from url=(0085)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SalesIncentive_Dashboard%20(3).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -250,7 +250,7 @@ tbody td{padding:10px 14px;white-space:nowrap}
 <body>
 
 <!-- LOGIN -->
-<div id="login-overlay" style="display: flex;">
+<div id="login-overlay" style="display: none;">
   <div class="login-card">
     <div class="login-logo">UNDERLINEN</div>
     <div class="login-sub">SALES INCENTIVE INTELLIGENCE · FY 2026-27</div>
@@ -264,7 +264,7 @@ tbody td{padding:10px 14px;white-space:nowrap}
         <option value="mis">MIS Admin</option>
       </select>
       <label>YOUR NAME</label>
-      <select id="user-select"><option value="">— Select User —</option><option value="S01">Amit Sharma</option><option value="S02">Deepak Nair</option><option value="S03">Sunita Rao</option><option value="S04">Ravi Kumar</option><option value="S05">Meena Iyer</option><option value="S06">Ganesh Rao</option><option value="S07">Rajesh Gupta</option></select>
+      <select id="user-select"><option value="">— Select User —</option><option value="E01">Rahul Verma</option><option value="E02">Sneha Gupta</option><option value="E03">Karan Singh</option><option value="E04">Pooja Mehta</option><option value="E05">Arjun Das</option><option value="E06">Divya Pillai</option><option value="E07">Nikhil Reddy</option><option value="E08">Preethi Nair</option><option value="E09">Suresh Babu</option><option value="E10">Manish Tiwari</option></select>
       <label>PASSWORD (demo: 1234)</label>
       <input type="password" id="pwd-input" placeholder="Enter password">
     </div>
@@ -274,19 +274,19 @@ tbody td{padding:10px 14px;white-space:nowrap}
 </div>
 
 <!-- MAIN APP -->
-<div class="app" id="app">
+<div class="app visible" id="app">
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-name">UNDERLINEN</div>
       <div class="brand-sub">INCENTIVE INTELLIGENCE</div>
-      <div class="role-badge" id="role-badge">SUPERVISOR VIEW</div>
+      <div class="role-badge" id="role-badge">ESM VIEW</div>
     </div>
     <div class="nav-section">DASHBOARDS</div>
     <div class="nav-item active" onclick="showSection(&#39;dashboard&#39;,this)" data-for="all" style="display: flex;">
       <span class="nav-icon">⚡</span>My Dashboard
     </div>
-    <div class="nav-item" onclick="showSection(&#39;team&#39;,this)" data-for="supervisor,manager,mis" style="display: flex;">
+    <div class="nav-item" onclick="showSection(&#39;team&#39;,this)" data-for="supervisor,manager,mis" style="display: none;">
       <span class="nav-icon">👥</span>Team Performance
     </div>
     <div class="nav-item" onclick="showSection(&#39;incentives&#39;,this)" data-for="all" style="display: flex;">
@@ -307,10 +307,10 @@ tbody td{padding:10px 14px;white-space:nowrap}
     </div>
     <div class="sidebar-footer">
       <div class="sidebar-user">
-        <div class="avatar" id="sb-avatar">D</div>
+        <div class="avatar" id="sb-avatar">N</div>
         <div class="user-info">
-          <div class="user-name" id="sb-name">Deepak Nair</div>
-          <div class="user-role" id="sb-role">SUPERVISOR</div>
+          <div class="user-name" id="sb-name">Nikhil Reddy</div>
+          <div class="user-role" id="sb-role">ESM</div>
         </div>
         <button class="logout-btn" onclick="doLogout()">Out</button>
       </div>
@@ -326,7 +326,7 @@ tbody td{padding:10px 14px;white-space:nowrap}
         <div class="page-title" id="page-title">My Dashboard</div>
       </div>
       <div class="topbar-right">
-        <span class="last-updated" id="last-updated">Last updated: 07 Jun 2026 03:17 pm</span>
+        <span class="last-updated" id="last-updated">Last updated: 07 Jun 2026 03:55 pm</span>
         <button class="refresh-btn" onclick="refreshDashboard()">↻ Refresh</button>
         <button class="upload-btn" id="upload-trigger-btn" onclick="openUploadModal()" style="display: none;">⬆ Upload Data</button>
       </div>
@@ -335,29 +335,29 @@ tbody td{padding:10px 14px;white-space:nowrap}
     <div class="content">
 
       <!-- ── ALERTS ───────────────────────────── -->
-      <div class="alerts-wrap" id="alerts-wrap"><div class="alert-pill warn"><span>⚡</span>In slab! 90–99% — ₹3/unit on total volume. 190 units to reach 100%.</div><div class="alert-pill info"><span>₹</span>Incentive Earned MTD: ₹35K</div><div class="alert-pill info"><span>🏪</span>8 specific outlets enrolled — Bonus: ₹4K</div><div class="alert-pill info"><span>📋</span>Your incentive = 2× average of your team's ESM earnings</div></div>
+      <div class="alerts-wrap" id="alerts-wrap"><div class="alert-pill warn"><span>⚡</span>In slab! 90–99% — ₹3/unit on total volume. 106 units to reach 100%.</div><div class="alert-pill info"><span>₹</span>Incentive Earned MTD: ₹16K</div><div class="alert-pill info"><span>🏪</span>8 specific outlets enrolled — Bonus: ₹4K</div></div>
 
       <!-- ══ DASHBOARD VIEW ════════════════════════════════════ -->
       <div class="view-section active" id="sec-dashboard">
         <div class="kpi-grid" id="kpi-grid">
     <div class="kpi-card  fade-up">
       <div class="kpi-label">MTD NSV</div>
-      <div class="kpi-value">₹58.4L</div>
-      <div class="kpi-sub">Total Net Sales Value <span class="kpi-badge warn">96.9% units</span></div>
+      <div class="kpi-value">₹58.8L</div>
+      <div class="kpi-sub">Total Net Sales Value <span class="kpi-badge warn">98.1% units</span></div>
     </div>
     <div class="kpi-card purple fade-up">
       <div class="kpi-label">TARGET NSV</div>
-      <div class="kpi-value">₹59.6L</div>
+      <div class="kpi-value">₹60.6L</div>
       <div class="kpi-sub">Cumulative target <span class="kpi-badge ">MTD</span></div>
     </div>
     <div class="kpi-card green fade-up">
       <div class="kpi-label">INCENTIVE EARNED</div>
-      <div class="kpi-value">₹18K</div>
+      <div class="kpi-value">₹16K</div>
       <div class="kpi-sub">Based on active schemes <span class="kpi-badge up">+Est.</span></div>
     </div>
     <div class="kpi-card amber fade-up">
       <div class="kpi-label">UNITS SOLD</div>
-      <div class="kpi-value">5,901</div>
+      <div class="kpi-value">5,495</div>
       <div class="kpi-sub">MTD across all brands </div>
     </div>
     <div class="kpi-card green fade-up">
@@ -379,13 +379,13 @@ tbody td{padding:10px 14px;white-space:nowrap}
                 <span class="chip" onclick="switchBarView(&#39;region&#39;,this)">Region</span>
               </div>
             </div>
-            <canvas id="barChart" style="box-sizing: border-box; display: block; height: 240px; width: 536px;" width="805" height="360"></canvas>
+            <canvas id="barChart" width="805" height="360" style="display: block; box-sizing: border-box; height: 240px; width: 536px;"></canvas>
           </div>
           <div class="panel">
             <div class="panel-header">
               <div class="panel-title">Incentive Mix</div>
             </div>
-            <canvas id="pieChart" style="box-sizing: border-box; display: block; height: 240px; width: 371px;" width="557" height="360"></canvas>
+            <canvas id="pieChart" width="557" height="360" style="display: block; box-sizing: border-box; height: 240px; width: 371px;"></canvas>
           </div>
         </div>
         <div class="panel-row col-2">
@@ -397,7 +397,7 @@ tbody td{padding:10px 14px;white-space:nowrap}
                 <span class="chip" onclick="switchTrend(&#39;weekly&#39;,this)">Weekly</span>
               </div>
             </div>
-            <canvas id="lineChart" style="box-sizing: border-box; display: block; height: 227px; width: 454px;" width="681" height="340"></canvas>
+            <canvas id="lineChart" width="681" height="340" style="display: block; box-sizing: border-box; height: 227px; width: 454px;"></canvas>
           </div>
           <div class="panel">
             <div class="panel-header">
@@ -407,10 +407,10 @@ tbody td{padding:10px 14px;white-space:nowrap}
     <div style="color:var(--muted);font-size:11px;margin-bottom:10px">Based on current daily run rate (7 days elapsed)</div>
     <div class="proj-row">
       <div class="proj-box"><div class="p-val">₹2.5Cr</div><div class="p-lbl">Projected NSV</div></div>
-      <div class="proj-box"><div class="p-val" style="color:var(--green)">₹76K</div><div class="p-lbl">Projected Incentive</div></div>
-      <div class="proj-box"><div class="p-val" style="color:var(--green)">419.7%</div><div class="p-lbl">Projected Ach%</div></div>
+      <div class="proj-box"><div class="p-val" style="color:var(--green)">₹71K</div><div class="p-lbl">Projected Incentive</div></div>
+      <div class="proj-box"><div class="p-val" style="color:var(--green)">416.0%</div><div class="p-lbl">Projected Ach%</div></div>
     </div>
-    <div style="margin-top:14px;font-size:11px;color:var(--muted)">Gap to next slab: <strong style="color:var(--amber)">₹7.2L</strong></div></div>
+    <div style="margin-top:14px;font-size:11px;color:var(--muted)">Gap to next slab: <strong style="color:var(--amber)">₹7.8L</strong></div></div>
           </div>
         </div>
       </div>
