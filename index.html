@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SalesIncentive_Dashboard%20(2).html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Underlinen · Sales Incentive Intelligence</title>
+<script src="./Underlinen · Sales Incentive Intelligence_files/chart.umd.min.js.download"></script>
+<script src="./Underlinen · Sales Incentive Intelligence_files/xlsx.full.min.js.download"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --bg:#0a0b10;
+  --surface:#111320;
+  --surface2:#181b2e;
+  --border:#1e2340;
+  --border2:#262b45;
+  --text:#e8eaf6;
+  --muted:#6b7194;
+  --accent:#5b6cff;
+  --accent2:#7c3aed;
+  --green:#00d97e;
+  --amber:#f59e0b;
+  --red:#f43f5e;
+  --cyan:#06b6d4;
+  --glow:rgba(91,108,255,0.15);
+  --font-head:'Syne',sans-serif;
+  --font-body:'Manrope',sans-serif;
+  --font-mono:'DM Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:13px;min-height:100vh;overflow-x:hidden}
+
+/* LOGIN */
+#login-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:48px;width:min(440px,92vw);text-align:center}
+.login-logo{font-family:var(--font-head);font-size:28px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.login-sub{color:var(--muted);font-size:12px;margin-bottom:36px;letter-spacing:.5px}
+.login-select-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;text-align:left}
+.login-select-wrap label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.8px}
+.login-select-wrap select,.login-select-wrap input{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:var(--font-body);font-size:13px;width:100%;outline:none;transition:border-color .2s}
+.login-select-wrap select:focus,.login-select-wrap input:focus{border-color:var(--accent)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:14px 32px;border-radius:10px;font-family:var(--font-head);font-weight:700;font-size:14px;cursor:pointer;width:100%;letter-spacing:.3px;transition:opacity .2s,transform .1s}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.login-hint{color:var(--muted);font-size:11px;margin-top:16px}
+
+/* LAYOUT */
+.app{display:flex;min-height:100vh;opacity:0;transition:opacity .4s}
+.app.visible{opacity:1}
+
+/* SIDEBAR */
+.sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .3s}
+.sidebar-brand{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
+.brand-name{font-family:var(--font-head);font-size:17px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.brand-sub{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-top:2px}
+.role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.5px;margin-top:8px;background:var(--glow);color:var(--accent);border:1px solid var(--accent)}
+.nav-section{padding:16px 12px 8px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:12px;font-weight:500;transition:all .15s;margin:1px 8px}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:var(--glow);color:var(--accent);border:1px solid rgba(91,108,255,.2)}
+.nav-icon{font-size:16px;width:20px;text-align:center}
+.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
+.sidebar-user{display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:10px;color:var(--muted)}
+.logout-btn{background:none;border:1px solid var(--border2);color:var(--muted);padding:4px 8px;border-radius:6px;cursor:pointer;font-size:10px;transition:all .15s}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* MAIN */
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.page-title{font-family:var(--font-head);font-size:16px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.last-updated{font-size:10px;color:var(--muted);font-family:var(--font-mono)}
+.refresh-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:11px;transition:all .15s;display:flex;align-items:center;gap:6px}
+.refresh-btn:hover{color:var(--accent);border-color:var(--accent)}
+.upload-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:7px 16px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;transition:opacity .2s}
+.upload-btn:hover{opacity:.85}
+.content{padding:24px;flex:1}
+
+/* KPI CARDS */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s}
+.kpi-card:hover{border-color:var(--border2)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.kpi-card.green::before{background:linear-gradient(90deg,var(--green),#00b894)}
+.kpi-card.amber::before{background:linear-gradient(90deg,var(--amber),#e17055)}
+.kpi-card.red::before{background:linear-gradient(90deg,var(--red),#c0392b)}
+.kpi-card.purple::before{background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.kpi-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.8px;margin-bottom:10px}
+.kpi-value{font-family:var(--font-head);font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:6px}
+.kpi-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
+.kpi-badge.up{background:rgba(0,217,126,.1);color:var(--green)}
+.kpi-badge.down{background:rgba(244,63,94,.1);color:var(--red)}
+.kpi-badge.warn{background:rgba(245,158,11,.1);color:var(--amber)}
+
+/* PANELS */
+.panel-row{display:grid;gap:16px;margin-bottom:24px}
+.panel-row.col-2{grid-template-columns:1fr 1fr}
+.panel-row.col-3{grid-template-columns:1fr 1fr 1fr}
+.panel-row.col-7-5{grid-template-columns:7fr 5fr}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.panel-title{font-family:var(--font-head);font-size:13px;font-weight:700}
+.panel-actions{display:flex;gap:8px}
+.chip{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--muted);background:var(--surface2);transition:all .15s}
+.chip.active,.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--glow)}
+canvas{max-height:240px}
+
+/* FILTERS */
+.filters-bar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.filter-group{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.filter-group label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.7px}
+.filter-group select,.filter-group input[type=date]{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:8px;font-family:var(--font-body);font-size:12px;outline:none;width:100%;transition:border-color .2s}
+.filter-group select:focus,.filter-group input[type=date]:focus{border-color:var(--accent)}
+.apply-btn{background:var(--accent);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end;transition:opacity .2s}
+.apply-btn:hover{opacity:.85}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:var(--surface2);color:var(--muted);font-size:10px;letter-spacing:.7px;font-weight:600;padding:10px 14px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--surface2)}
+tbody td{padding:10px 14px;white-space:nowrap}
+.progress-bar-wrap{display:flex;align-items:center;gap:8px}
+.progress-bar{height:6px;background:var(--border2);border-radius:3px;flex:1;min-width:60px}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.progress-fill.green{background:linear-gradient(90deg,var(--green),#00b894)}
+.progress-fill.amber{background:linear-gradient(90deg,var(--amber),#e17055)}
+.progress-fill.red{background:linear-gradient(90deg,var(--red),#c0392b)}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
+.tag.fcuk{background:rgba(91,108,255,.15);color:var(--accent)}
+.tag.fc{background:rgba(6,182,212,.15);color:var(--cyan)}
+.tag.puma{background:rgba(0,217,126,.15);color:var(--green)}
+
+/* LEADERBOARD */
+.lb-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.lb-item:last-child{border:none}
+.lb-rank{font-family:var(--font-mono);font-size:11px;color:var(--muted);width:20px;text-align:center}
+.lb-rank.gold{color:#f59e0b;font-weight:700}
+.lb-rank.silver{color:#94a3b8;font-weight:700}
+.lb-rank.bronze{color:#a16207;font-weight:700}
+.lb-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.lb-info{flex:1;min-width:0}
+.lb-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-region{font-size:10px;color:var(--muted)}
+.lb-amt{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--green)}
+
+/* ALERT PILLS */
+.alerts-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.alert-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;font-size:11px;font-weight:500;border:1px solid}
+.alert-pill.success{background:rgba(0,217,126,.08);border-color:rgba(0,217,126,.3);color:var(--green)}
+.alert-pill.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:var(--amber)}
+.alert-pill.info{background:rgba(91,108,255,.08);border-color:rgba(91,108,255,.3);color:var(--accent)}
+
+/* TABS */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface2);border-radius:12px;padding:4px;width:fit-content}
+.tab{padding:8px 18px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);transition:all .15s}
+.tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+
+/* VIEW SECTIONS */
+.view-section{display:none}
+.view-section.active{display:block}
+
+/* UPLOAD MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px;width:min(500px,94vw)}
+.modal h3{font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:8px}
+.modal p{color:var(--muted);font-size:12px;margin-bottom:24px}
+.upload-zone{border:2px dashed var(--border2);border-radius:14px;padding:36px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:var(--glow)}
+.upload-zone .uz-icon{font-size:36px;margin-bottom:10px}
+.upload-zone .uz-text{font-size:13px;color:var(--muted)}
+.upload-zone strong{color:var(--accent)}
+#file-input{display:none}
+.upload-log{margin-top:20px;max-height:140px;overflow-y:auto}
+.upload-log-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--surface2);border-radius:8px;margin-bottom:6px;font-size:11px}
+.upload-log-item .ul-icon{font-size:14px}
+.ul-name{flex:1;color:var(--text)}
+.ul-rows{color:var(--muted);font-family:var(--font-mono)}
+.ul-status{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(0,217,126,.15);color:var(--green)}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.btn-secondary{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:9px 20px;border-radius:9px;font-size:12px;cursor:pointer;font-weight:600}
+.btn-secondary:hover{border-color:var(--muted)}
+
+/* PROJECTION WIDGET */
+.proj-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.proj-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.proj-box .p-val{font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--accent)}
+.proj-box .p-lbl{font-size:10px;color:var(--muted);margin-top:4px}
+
+/* EXPORT */
+.export-row{display:flex;gap:8px}
+.export-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s}
+.export-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* SCHEME EDITOR */
+.scheme-edit-grid{display:grid;gap:10px}
+.scheme-edit-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:center;background:var(--surface2);padding:10px 12px;border-radius:10px;border:1px solid var(--border)}
+.scheme-edit-row input,.scheme-edit-row select{background:var(--surface);border:1px solid var(--border2);color:var(--text);padding:6px 10px;border-radius:6px;font-family:var(--font-body);font-size:11px;width:100%;outline:none}
+.del-btn{background:none;border:1px solid rgba(244,63,94,.3);color:var(--red);padding:5px 8px;border-radius:6px;cursor:pointer;font-size:12px}
+.del-btn:hover{background:rgba(244,63,94,.1)}
+.add-scheme-btn{background:var(--surface2);border:1px dashed var(--border2);color:var(--muted);padding:10px;border-radius:10px;cursor:pointer;width:100%;font-size:12px;transition:all .2s}
+.add-scheme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* MOBILE MENU */
+.mob-menu-btn{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px}
+.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .mob-overlay.open{display:block}
+  .mob-menu-btn{display:block}
+  .main{margin-left:0}
+  .panel-row.col-2,.panel-row.col-3,.panel-row.col-7-5{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .scheme-edit-row{grid-template-columns:1fr 1fr;gap:6px}
+  .proj-row{grid-template-columns:repeat(3,1fr)}
+  .filters-bar{gap:8px}
+}
+@media(max-width:400px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .kpi-value{font-size:20px}
+}
+
+/* SCROLL */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* SPIN ANIM */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite}
+
+/* FADE IN */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .35s ease forwards}
+
+.empty-state{text-align:center;padding:40px;color:var(--muted)}
+.empty-icon{font-size:36px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-overlay" style="display: flex;">
+  <div class="login-card">
+    <div class="login-logo">UNDERLINEN</div>
+    <div class="login-sub">SALES INCENTIVE INTELLIGENCE · FY 2026-27</div>
+    <div class="login-select-wrap">
+      <label>SELECT YOUR ROLE</label>
+      <select id="role-select">
+        <option value="">— Choose Role —</option>
+        <option value="esm">Sales Executive (ESM)</option>
+        <option value="supervisor">Supervisor / ASM</option>
+        <option value="manager">Manager / ZSM</option>
+        <option value="mis">MIS Admin</option>
+      </select>
+      <label>YOUR NAME</label>
+      <select id="user-select"><option value="">— Select User —</option><option value="S01">Amit Sharma</option><option value="S02">Deepak Nair</option><option value="S03">Sunita Rao</option><option value="S04">Ravi Kumar</option><option value="S05">Meena Iyer</option><option value="S06">Ganesh Rao</option><option value="S07">Rajesh Gupta</option></select>
+      <label>PASSWORD (demo: 1234)</label>
+      <input type="password" id="pwd-input" placeholder="Enter password">
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Sign In →</button>
+    <div class="login-hint">Demo Mode · Any password works</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app" id="app">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">UNDERLINEN</div>
+      <div class="brand-sub">INCENTIVE INTELLIGENCE</div>
+      <div class="role-badge" id="role-badge">SUPERVISOR VIEW</div>
+    </div>
+    <div class="nav-section">DASHBOARDS</div>
+    <div class="nav-item active" onclick="showSection(&#39;dashboard&#39;,this)" data-for="all" style="display: flex;">
+      <span class="nav-icon">⚡</span>My Dashboard
+    </div>
+    <div class="nav-item" onclick="showSection(&#39;team&#39;,this)" data-for="supervisor,manager,mis" style="display: flex;">
+      <span class="nav-icon">👥</span>Team Performance
+    </div>
+    <div class="nav-item" onclick="showSection(&#39;incentives&#39;,this)" data-for="all" style="display: flex;">
+      <span class="nav-icon">₹</span>Incentives
+    </div>
+    <div class="nav-item" onclick="showSection(&#39;leaderboard&#39;,this)" data-for="all" style="display: flex;">
+      <span class="nav-icon">🏆</span>Leaderboard
+    </div>
+    <div class="nav-section">ANALYTICS</div>
+    <div class="nav-item" onclick="showSection(&#39;schemes&#39;,this)" data-for="manager,mis" style="display: none;">
+      <span class="nav-icon">⚙️</span>Scheme Manager
+    </div>
+    <div class="nav-item" onclick="showSection(&#39;reports&#39;,this)" data-for="all" style="display: flex;">
+      <span class="nav-icon">📊</span>Reports
+    </div>
+    <div class="nav-item" onclick="showSection(&#39;upload&#39;,this)" data-for="mis" style="display: none;">
+      <span class="nav-icon">📂</span>Data Upload
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar" id="sb-avatar">D</div>
+        <div class="user-info">
+          <div class="user-name" id="sb-name">Deepak Nair</div>
+          <div class="user-role" id="sb-role">SUPERVISOR</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()">Out</button>
+      </div>
+    </div>
+  </nav>
+  <div class="mob-overlay" id="mob-overlay" onclick="closeMobMenu()"></div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="mob-menu-btn" onclick="toggleMobMenu()">☰</button>
+        <div class="page-title" id="page-title">My Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <span class="last-updated" id="last-updated">Last updated: 07 Jun 2026 03:17 pm</span>
+        <button class="refresh-btn" onclick="refreshDashboard()">↻ Refresh</button>
+        <button class="upload-btn" id="upload-trigger-btn" onclick="openUploadModal()" style="display: none;">⬆ Upload Data</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── ALERTS ───────────────────────────── -->
+      <div class="alerts-wrap" id="alerts-wrap"><div class="alert-pill warn"><span>⚡</span>In slab! 90–99% — ₹3/unit on total volume. 190 units to reach 100%.</div><div class="alert-pill info"><span>₹</span>Incentive Earned MTD: ₹35K</div><div class="alert-pill info"><span>🏪</span>8 specific outlets enrolled — Bonus: ₹4K</div><div class="alert-pill info"><span>📋</span>Your incentive = 2× average of your team's ESM earnings</div></div>
+
+      <!-- ══ DASHBOARD VIEW ════════════════════════════════════ -->
+      <div class="view-section active" id="sec-dashboard">
+        <div class="kpi-grid" id="kpi-grid">
+    <div class="kpi-card  fade-up">
+      <div class="kpi-label">MTD NSV</div>
+      <div class="kpi-value">₹58.4L</div>
+      <div class="kpi-sub">Total Net Sales Value <span class="kpi-badge warn">96.9% units</span></div>
+    </div>
+    <div class="kpi-card purple fade-up">
+      <div class="kpi-label">TARGET NSV</div>
+      <div class="kpi-value">₹59.6L</div>
+      <div class="kpi-sub">Cumulative target <span class="kpi-badge ">MTD</span></div>
+    </div>
+    <div class="kpi-card green fade-up">
+      <div class="kpi-label">INCENTIVE EARNED</div>
+      <div class="kpi-value">₹18K</div>
+      <div class="kpi-sub">Based on active schemes <span class="kpi-badge up">+Est.</span></div>
+    </div>
+    <div class="kpi-card amber fade-up">
+      <div class="kpi-label">UNITS SOLD</div>
+      <div class="kpi-value">5,901</div>
+      <div class="kpi-sub">MTD across all brands </div>
+    </div>
+    <div class="kpi-card green fade-up">
+      <div class="kpi-label">GROWTH vs LM</div>
+      <div class="kpi-value">+14.9%</div>
+      <div class="kpi-sub">vs Last Month MTD <span class="kpi-badge up">▲ Growing</span></div>
+    </div>
+    <div class="kpi-card amber fade-up">
+      <div class="kpi-label">PENDING INCENTIVE</div>
+      <div class="kpi-value">₹6K</div>
+      <div class="kpi-sub">Awaiting approval <span class="kpi-badge warn">Processing</span></div>
+    </div></div>
+        <div class="panel-row col-7-5">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Target vs Achievement</div>
+              <div class="panel-actions">
+                <span class="chip active" onclick="switchBarView(&#39;brand&#39;,this)">Brand</span>
+                <span class="chip" onclick="switchBarView(&#39;region&#39;,this)">Region</span>
+              </div>
+            </div>
+            <canvas id="barChart" style="box-sizing: border-box; display: block; height: 240px; width: 536px;" width="805" height="360"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Incentive Mix</div>
+            </div>
+            <canvas id="pieChart" style="box-sizing: border-box; display: block; height: 240px; width: 371px;" width="557" height="360"></canvas>
+          </div>
+        </div>
+        <div class="panel-row col-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Daily Sales Trend</div>
+              <div class="panel-actions">
+                <span class="chip active" onclick="switchTrend(&#39;daily&#39;,this)">Daily</span>
+                <span class="chip" onclick="switchTrend(&#39;weekly&#39;,this)">Weekly</span>
+              </div>
+            </div>
+            <canvas id="lineChart" style="box-sizing: border-box; display: block; height: 227px; width: 454px;" width="681" height="340"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Incentive Projection</div>
+            </div>
+            <div id="proj-content">
+    <div style="color:var(--muted);font-size:11px;margin-bottom:10px">Based on current daily run rate (7 days elapsed)</div>
+    <div class="proj-row">
+      <div class="proj-box"><div class="p-val">₹2.5Cr</div><div class="p-lbl">Projected NSV</div></div>
+      <div class="proj-box"><div class="p-val" style="color:var(--green)">₹76K</div><div class="p-lbl">Projected Incentive</div></div>
+      <div class="proj-box"><div class="p-val" style="color:var(--green)">419.7%</div><div class="p-lbl">Projected Ach%</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--muted)">Gap to next slab: <strong style="color:var(--amber)">₹7.2L</strong></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TEAM VIEW ════════════════════════════════════════ -->
+      <div class="view-section" id="sec-team">
+        <div class="filters-bar">
+          <div class="filter-group">
+            <label>BRAND</label>
+            <select id="t-brand"><option value="">All Brands</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select>
+          </div>
+          <div class="filter-group">
+            <label>REGION</label>
+            <select id="t-region"><option value="">All Regions</option><option>North</option><option>West</option><option>South</option><option>East</option></select>
+          </div>
+          <div class="filter-group">
+            <label>FROM DATE</label>
+            <input type="date" id="t-from" value="2026-04-01">
+          </div>
+          <div class="filter-group">
+            <label>TO DATE</label>
+            <input type="date" id="t-to" value="2026-04-30">
+          </div>
+          <button class="apply-btn" onclick="renderTeamTable()">Apply</button>
+        </div>
+        <div class="tabs">
+          <div class="tab active" onclick="switchTeamTab(&#39;esm&#39;,this)">ESM-wise</div>
+          <div class="tab" onclick="switchTeamTab(&#39;distributor&#39;,this)">Distributor-wise</div>
+          <div class="tab" onclick="switchTeamTab(&#39;outlet&#39;,this)">Outlet-wise</div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="team-table-title">ESM Performance</div>
+            <div class="export-row">
+              <button class="export-btn" onclick="exportTableCSV(&#39;team-table&#39;,&#39;ESM_Performance&#39;)">⬇ CSV</button>
+              <button class="export-btn" onclick="exportTablePDF()">⬇ PDF</button>
+            </div>
+          </div>
+          <div class="table-wrap" id="team-table-wrap"></div>
+        </div>
+      </div>
+
+      <!-- ══ INCENTIVES VIEW ══════════════════════════════════ -->
+      <div class="view-section" id="sec-incentives">
+        <div class="kpi-grid" id="inc-kpi-grid"></div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Scheme-wise Incentive Breakdown</div>
+            <div class="export-row">
+              <button class="export-btn" onclick="exportTableCSV(&#39;inc-table&#39;,&#39;Incentive_Breakdown&#39;)">⬇ CSV</button>
+            </div>
+          </div>
+          <div class="table-wrap" id="inc-table-wrap"></div>
+        </div>
+        <div class="panel-row col-2" style="margin-top:16px">
+          <div class="panel">
+            <div class="panel-title" style="margin-bottom:14px">Slab Status — Current Quarter</div>
+            <div id="slab-status"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title" style="margin-bottom:14px">Pending vs Paid</div>
+            <canvas id="incStatusChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ LEADERBOARD ══════════════════════════════════════ -->
+      <div class="view-section" id="sec-leaderboard">
+        <div class="panel-row col-2">
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">🏆 Top ESM — NSV</div>
+              <select id="lb-brand" onchange="renderLeaderboard()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:5px 10px;border-radius:8px;font-size:11px;outline:none">
+                <option value="">All Brands</option><option>FCUK</option><option>French Connection</option><option>PUMA</option>
+              </select>
+            </div>
+            <div id="lb-list"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">🎯 Top ESM — Incentive Earned</div>
+            </div>
+            <div id="lb-inc-list"></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-header">
+            <div class="panel-title">Team Heat Map — Achievement %</div>
+          </div>
+          <div id="heatmap-wrap" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:4px"></div>
+        </div>
+      </div>
+
+      <!-- ══ SCHEME MANAGER ═══════════════════════════════════ -->
+      <div class="view-section" id="sec-schemes">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Incentive Scheme Configuration (MIS / Manager)</div>
+            <button class="export-btn" onclick="exportSchemes()">⬇ Export Schemes</button>
+          </div>
+          <div class="scheme-edit-grid" id="scheme-edit-grid"><div style="display:grid;grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto;gap:8px;padding:6px 12px;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.7px">
+    <div>SCHEME NAME · ROLE · BRAND</div><div>ACH% FROM</div><div>ACH% TO</div><div>₹/UNIT</div><div>BASIS</div><div></div>
+  </div><div class="scheme-edit-row" id="srow-0" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Team Incentive — 90–99% Slab" placeholder="Scheme Name" onchange="STATE.schemes[0].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[0].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[0].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="90" onchange="STATE.schemes[0].achFrom=+this.value"><input type="number" value="99" onchange="STATE.schemes[0].achTo=+this.value"><input type="number" step="1" value="3" onchange="STATE.schemes[0].ratePerUnit=+this.value"><select onchange="STATE.schemes[0].basis=this.value"><option selected="">total</option><option>incremental</option><option>per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(0)">✕</button></div><div class="scheme-edit-row" id="srow-1" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Team Incentive — 100–109% Slab" placeholder="Scheme Name" onchange="STATE.schemes[1].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[1].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[1].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="100" onchange="STATE.schemes[1].achFrom=+this.value"><input type="number" value="109" onchange="STATE.schemes[1].achTo=+this.value"><input type="number" step="1" value="4" onchange="STATE.schemes[1].ratePerUnit=+this.value"><select onchange="STATE.schemes[1].basis=this.value"><option>total</option><option selected="">incremental</option><option>per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(1)">✕</button></div><div class="scheme-edit-row" id="srow-2" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Team Incentive — 110–119% Slab" placeholder="Scheme Name" onchange="STATE.schemes[2].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[2].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[2].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="110" onchange="STATE.schemes[2].achFrom=+this.value"><input type="number" value="119" onchange="STATE.schemes[2].achTo=+this.value"><input type="number" step="1" value="6" onchange="STATE.schemes[2].ratePerUnit=+this.value"><select onchange="STATE.schemes[2].basis=this.value"><option>total</option><option selected="">incremental</option><option>per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(2)">✕</button></div><div class="scheme-edit-row" id="srow-3" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Team Incentive — 120–124% Slab" placeholder="Scheme Name" onchange="STATE.schemes[3].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[3].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[3].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="120" onchange="STATE.schemes[3].achFrom=+this.value"><input type="number" value="124" onchange="STATE.schemes[3].achTo=+this.value"><input type="number" step="1" value="8" onchange="STATE.schemes[3].ratePerUnit=+this.value"><select onchange="STATE.schemes[3].basis=this.value"><option>total</option><option selected="">incremental</option><option>per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(3)">✕</button></div><div class="scheme-edit-row" id="srow-4" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Team Incentive — 125%+ Slab" placeholder="Scheme Name" onchange="STATE.schemes[4].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[4].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[4].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="125" onchange="STATE.schemes[4].achFrom=+this.value"><input type="number" value="9999" onchange="STATE.schemes[4].achTo=+this.value"><input type="number" step="1" value="10" onchange="STATE.schemes[4].ratePerUnit=+this.value"><select onchange="STATE.schemes[4].basis=this.value"><option>total</option><option selected="">incremental</option><option>per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(4)">✕</button></div><div class="scheme-edit-row" id="srow-5" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Key Outlet Enrollment Bonus" placeholder="Scheme Name" onchange="STATE.schemes[5].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[5].role=this.value"><option selected="">ESM</option><option>Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[5].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="0" onchange="STATE.schemes[5].achFrom=+this.value"><input type="number" value="9999" onchange="STATE.schemes[5].achTo=+this.value"><input type="number" step="1" value="500" onchange="STATE.schemes[5].ratePerUnit=+this.value"><select onchange="STATE.schemes[5].basis=this.value"><option>total</option><option>incremental</option><option selected="">per_outlet</option><option>team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(5)">✕</button></div><div class="scheme-edit-row" id="srow-6" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Supervisor Incentive (2x Team Avg)" placeholder="Scheme Name" onchange="STATE.schemes[6].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[6].role=this.value"><option>ESM</option><option selected="">Supervisor</option><option>Manager</option></select><select onchange="STATE.schemes[6].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="0" onchange="STATE.schemes[6].achFrom=+this.value"><input type="number" value="9999" onchange="STATE.schemes[6].achTo=+this.value"><input type="number" step="1" value="2" onchange="STATE.schemes[6].ratePerUnit=+this.value"><select onchange="STATE.schemes[6].basis=this.value"><option>total</option><option>incremental</option><option>per_outlet</option><option selected="">team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(6)">✕</button></div><div class="scheme-edit-row" id="srow-7" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto"><div style="display:flex;flex-direction:column;gap:4px"><input value="Manager Incentive (3x Team Avg)" placeholder="Scheme Name" onchange="STATE.schemes[7].name=this.value"><div style="display:flex;gap:6px"><select onchange="STATE.schemes[7].role=this.value"><option>ESM</option><option>Supervisor</option><option selected="">Manager</option></select><select onchange="STATE.schemes[7].brand=this.value"><option selected="">ALL</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select></div></div><input type="number" value="0" onchange="STATE.schemes[7].achFrom=+this.value"><input type="number" value="9999" onchange="STATE.schemes[7].achTo=+this.value"><input type="number" step="1" value="3" onchange="STATE.schemes[7].ratePerUnit=+this.value"><select onchange="STATE.schemes[7].basis=this.value"><option>total</option><option>incremental</option><option>per_outlet</option><option selected="">team_avg_multiple</option></select><button class="del-btn" onclick="deleteSchemeRow(7)">✕</button></div></div>
+          <button class="add-scheme-btn" onclick="addSchemeRow()" style="margin-top:10px">+ Add New Slab</button>
+          <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
+            <button class="btn-primary" onclick="saveSchemes()" style="width:auto;padding:9px 24px">💾 Save Schemes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ REPORTS VIEW ═════════════════════════════════════ -->
+      <div class="view-section" id="sec-reports">
+        <div class="filters-bar">
+          <div class="filter-group">
+            <label>PERIOD</label>
+            <select id="rpt-period"><option>MTD</option><option>QTD</option><option>YTD</option><option>Custom</option></select>
+          </div>
+          <div class="filter-group">
+            <label>BRAND</label>
+            <select id="rpt-brand"><option value="">All</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select>
+          </div>
+          <div class="filter-group">
+            <label>REGION</label>
+            <select id="rpt-region"><option value="">All</option><option>North</option><option>West</option><option>South</option><option>East</option></select>
+          </div>
+          <button class="apply-btn" onclick="renderReports()">Generate</button>
+          <button class="export-btn" style="align-self:flex-end" onclick="exportTableCSV(&#39;rpt-table&#39;,&#39;Sales_Report&#39;)">⬇ Export</button>
+        </div>
+        <div class="kpi-grid" id="rpt-kpis"></div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="rpt-title">MTD Summary Report</div>
+          </div>
+          <div class="table-wrap" id="rpt-table-wrap"></div>
+        </div>
+      </div>
+
+      <!-- ══ UPLOAD VIEW ══════════════════════════════════════ -->
+      <div class="view-section" id="sec-upload">
+        <div class="panel-row col-2">
+          <div class="panel">
+            <div class="panel-title" style="margin-bottom:16px">Upload Sales Data</div>
+            <div class="upload-zone" id="main-upload-zone" onclick="document.getElementById(&#39;main-file-input&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="handleMainDrop(event)">
+              <div class="uz-icon">📂</div>
+              <div class="uz-text">Drop Excel/CSV here or <strong>Browse</strong></div>
+              <div style="font-size:10px;color:var(--muted);margin-top:6px">Supports .xlsx · .xls · .csv</div>
+            </div>
+            <input type="file" id="main-file-input" accept=".xlsx,.xls,.csv" onchange="handleMainUpload(event)">
+            <div id="upload-validation" style="margin-top:14px"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-title" style="margin-bottom:16px">Upload History</div>
+            <div id="upload-history-list">
+    <div class="upload-log-item">
+      <span class="ul-icon">📄</span>
+      <div style="flex:1;min-width:0">
+        <div class="ul-name" style="white-space:normal;word-break:break-all">SalesData_Apr_W3.xlsx</div>
+        <div style="font-size:10px;color:var(--muted)">2026-04-15 · by MIS Team</div>
+      </div>
+      <span class="ul-rows">492</span>
+      <span class="ul-status">Success</span>
+    </div>
+    <div class="upload-log-item">
+      <span class="ul-icon">📄</span>
+      <div style="flex:1;min-width:0">
+        <div class="ul-name" style="white-space:normal;word-break:break-all">SalesData_Apr_W2.xlsx</div>
+        <div style="font-size:10px;color:var(--muted)">2026-04-08 · by MIS Team</div>
+      </div>
+      <span class="ul-rows">510</span>
+      <span class="ul-status">Success</span>
+    </div>
+    <div class="upload-log-item">
+      <span class="ul-icon">📄</span>
+      <div style="flex:1;min-width:0">
+        <div class="ul-name" style="white-space:normal;word-break:break-all">SalesData_Apr_W1.xlsx</div>
+        <div style="font-size:10px;color:var(--muted)">2026-04-01 · by MIS Team</div>
+      </div>
+      <span class="ul-rows">480</span>
+      <span class="ul-status">Success</span>
+    </div></div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-title" style="margin-bottom:14px">Data Preview (Last Upload)</div>
+          <div class="table-wrap" id="upload-preview-table"><div class="empty-state"><div class="empty-icon">📂</div>No data uploaded yet</div></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal">
+    <h3>Upload Sales Data</h3>
+    <p>Drop or select your Excel / CSV file. The system will validate and auto-populate the dashboard.</p>
+    <div class="upload-zone" id="modal-upload-zone" onclick="document.getElementById(&#39;file-input&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="handleFileDrop(event)">
+      <div class="uz-icon">📂</div>
+      <div class="uz-text">Drop file here or <strong>Browse Files</strong></div>
+    </div>
+    <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)">
+    <div class="upload-log" id="upload-log"></div>
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeUploadModal()">Close</button>
+      <button class="btn-primary" style="width:auto;padding:9px 24px" onclick="processUpload()">Apply to Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+const STATE = {
+  role: '', userName: '', userId: '',
+  salesData: [],
+  schemes: [],
+  targets: [],
+  uploadLog: [],
+  barView: 'brand',
+  trendView: 'daily',
+  teamTab: 'esm',
+  currentSection: 'dashboard',
+  pendingFile: null,
+  // Key specific outlets for Rs.500 enrollment bonus per month
+  keyOutlets: ['O001','O003','O007','O011','O015','O018','O022','O025'],
+  charts: {}
+};
+
+const USERS = {
+  esm: [
+    {id:'E01',name:'Rahul Verma'},{id:'E02',name:'Sneha Gupta'},{id:'E03',name:'Karan Singh'},
+    {id:'E04',name:'Pooja Mehta'},{id:'E05',name:'Arjun Das'},{id:'E06',name:'Divya Pillai'},
+    {id:'E07',name:'Nikhil Reddy'},{id:'E08',name:'Preethi Nair'},{id:'E09',name:'Suresh Babu'},
+    {id:'E10',name:'Manish Tiwari'}
+  ],
+  supervisor: [
+    {id:'S01',name:'Amit Sharma'},{id:'S02',name:'Deepak Nair'},{id:'S03',name:'Sunita Rao'},
+    {id:'S04',name:'Ravi Kumar'},{id:'S05',name:'Meena Iyer'},{id:'S06',name:'Ganesh Rao'},
+    {id:'S07',name:'Rajesh Gupta'}
+  ],
+  manager: [
+    {id:'M01',name:'Priya Kapoor'},{id:'M02',name:'Vikram Joshi'},
+    {id:'M03',name:'Ananya Sen'},{id:'M04',name:'Sunil Bose'}
+  ],
+  mis: [{id:'MIS01',name:'MIS Admin'}]
+};
+
+// ── ACHIEVEMENT SLAB SCHEME (basis drives calculation engine) ──
+// 90-99%: Rs.3/unit on TOTAL volume
+// 100%+:  Rs.N/unit on INCREMENTAL units only (above 100% target)
+// Supervisor: 2x of his team average incentive
+// Manager:    3x of his team average incentive
+// Key Outlet: Rs.500 per enrolled specific outlet per month
+const SCHEME_DEFAULTS = [
+  {id:'SCH01',name:'Team Incentive — 90–99% Slab',  role:'ESM',achFrom:90, achTo:99,  ratePerUnit:3,  basis:'total',            brand:'ALL'},
+  {id:'SCH01',name:'Team Incentive — 100–109% Slab',role:'ESM',achFrom:100,achTo:109, ratePerUnit:4,  basis:'incremental',       brand:'ALL'},
+  {id:'SCH01',name:'Team Incentive — 110–119% Slab',role:'ESM',achFrom:110,achTo:119, ratePerUnit:6,  basis:'incremental',       brand:'ALL'},
+  {id:'SCH01',name:'Team Incentive — 120–124% Slab',role:'ESM',achFrom:120,achTo:124, ratePerUnit:8,  basis:'incremental',       brand:'ALL'},
+  {id:'SCH01',name:'Team Incentive — 125%+ Slab',        role:'ESM',achFrom:125,achTo:9999,ratePerUnit:10, basis:'incremental',       brand:'ALL'},
+  {id:'SCH02',name:'Key Outlet Enrollment Bonus',        role:'ESM',achFrom:0,  achTo:9999,ratePerUnit:500,basis:'per_outlet',        brand:'ALL'},
+  {id:'SCH03',name:'Supervisor Incentive (2x Team Avg)', role:'Supervisor',achFrom:0,achTo:9999,ratePerUnit:2,basis:'team_avg_multiple',brand:'ALL'},
+  {id:'SCH04',name:'Manager Incentive (3x Team Avg)',    role:'Manager',   achFrom:0,achTo:9999,ratePerUnit:3,basis:'team_avg_multiple',brand:'ALL'},
+];
+
+// ═══════════════════════════════════════════════════════════
+//  SEED DATA
+// ═══════════════════════════════════════════════════════════
+function seedData(){
+  const brands=['FCUK','French Connection','PUMA'];
+  const cats={FCUK:['Shirts','Trousers','Jackets'],'French Connection':['Dresses','Tops','Jeans'],PUMA:['Footwear','Apparel','Accessories']};
+  const dists=[{id:'D01',name:'Sharma Distributors'},{id:'D02',name:'Kapoor & Sons'},{id:'D03',name:'Nair Traders'},{id:'D04',name:'Mehta Enterprises'},{id:'D05',name:'Singh Brothers'}];
+  const outlets=Array.from({length:15},(_, i)=>({id:`O${String(i+1).padStart(3,'0')}`,name:`Outlet ${i+1} - Fashion Hub`}));
+  const esms=[
+    {id:'E01',name:'Rahul Verma',supId:'S01',supName:'Amit Sharma',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Delhi NCR'},
+    {id:'E02',name:'Sneha Gupta',supId:'S01',supName:'Amit Sharma',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Noida'},
+    {id:'E03',name:'Karan Singh',supId:'S02',supName:'Deepak Nair',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Gurgaon'},
+    {id:'E04',name:'Pooja Mehta',supId:'S03',supName:'Sunita Rao',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Mumbai'},
+    {id:'E05',name:'Arjun Das',supId:'S03',supName:'Sunita Rao',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Pune'},
+    {id:'E06',name:'Divya Pillai',supId:'S04',supName:'Ravi Kumar',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Ahmedabad'},
+    {id:'E07',name:'Nikhil Reddy',supId:'S05',supName:'Meena Iyer',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Bangalore'},
+    {id:'E08',name:'Preethi Nair',supId:'S05',supName:'Meena Iyer',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Chennai'},
+    {id:'E09',name:'Suresh Babu',supId:'S06',supName:'Ganesh Rao',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Hyderabad'},
+    {id:'E10',name:'Manish Tiwari',supId:'S07',supName:'Rajesh Gupta',mgrId:'M04',mgrName:'Sunil Bose',region:'East',territory:'Kolkata'}
+  ];
+
+  const rows=[];
+  const rng=mulberry32(42);
+  function rand(a,b){return a+Math.floor(rng()*(b-a+1));}
+  const start=new Date('2026-04-01');
+  for(let d=0;d<30;d++){
+    const dt=new Date(start);dt.setDate(d+1);
+    const ds=dt.toISOString().slice(0,10);
+    esms.forEach(esm=>{
+      const n=rand(3,8);
+      for(let r=0;r<n;r++){
+        const brand=brands[rand(0,2)];
+        const cat=cats[brand][rand(0,cats[brand].length-1)];
+        const dist=dists[rand(0,4)];
+        const outlet=outlets[rand(0,14)];
+        const units=rand(8,60);
+        const nsv=Math.round(units*(300+rng()*1500));
+        const tU=Math.round(units*(0.75+rng()*0.55));
+        const tN=Math.round(nsv*(0.8+rng()*0.45));
+        rows.push({Date:ds,ESM_Code:esm.id,ESM_Name:esm.name,
+          Supervisor_Code:esm.supId,Supervisor_Name:esm.supName,
+          Manager_Code:esm.mgrId,Manager_Name:esm.mgrName,
+          Region:esm.region,Territory:esm.territory,
+          Distributor_Code:dist.id,Distributor_Name:dist.name,
+          Outlet_Code:outlet.id,Outlet_Name:outlet.name,
+          Brand:brand,Category:cat,
+          SKU_Code:'SKU'+rand(1000,9999),Units_Sold:units,
+          NSV_Value:nsv,Target_Units:tU,Target_NSV:tN});
+      }
+    });
+  }
+  STATE.salesData=rows;
+  STATE.schemes=JSON.parse(JSON.stringify(SCHEME_DEFAULTS));
+
+  // Targets
+  esms.forEach(esm=>{
+    brands.forEach(brand=>{
+      STATE.targets.push({ESM_Code:esm.id,ESM_Name:esm.name,Brand:brand,
+        Monthly_NSV_Target:rand(300000,1500000),Monthly_Units_Target:rand(200,800)});
+    });
+  });
+  STATE.uploadLog=[
+    {id:'UPL001',date:'2026-04-01',by:'MIS Team',file:'SalesData_Apr_W1.xlsx',records:480,status:'Success'},
+    {id:'UPL002',date:'2026-04-08',by:'MIS Team',file:'SalesData_Apr_W2.xlsx',records:510,status:'Success'},
+    {id:'UPL003',date:'2026-04-15',by:'MIS Team',file:'SalesData_Apr_W3.xlsx',records:492,status:'Success'},
+  ];
+}
+
+function mulberry32(a){
+  return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LOGIN
+// ═══════════════════════════════════════════════════════════
+document.getElementById('role-select').addEventListener('change',function(){
+  const role=this.value;
+  const sel=document.getElementById('user-select');
+  sel.innerHTML='<option value="">— Select User —</option>';
+  if(USERS[role]) USERS[role].forEach(u=>{ const o=document.createElement('option');o.value=u.id;o.textContent=u.name;sel.appendChild(o);});
+});
+
+function doLogin(){
+  const role=document.getElementById('role-select').value;
+  const uid=document.getElementById('user-select').value;
+  const pwd=document.getElementById('pwd-input').value;
+  if(!role||!uid){alert('Please select role and user.');return;}
+  STATE.role=role;
+  STATE.userId=uid;
+  const found=(USERS[role]||[]).find(u=>u.id===uid);
+  STATE.userName=found?found.name:'User';
+  initApp();
+  document.getElementById('login-overlay').style.display='none';
+  document.getElementById('app').classList.add('visible');
+}
+
+function doLogout(){
+  document.getElementById('login-overlay').style.display='flex';
+  document.getElementById('app').classList.remove('visible');
+  STATE.role='';STATE.userName='';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+function initApp(){
+  document.getElementById('sb-name').textContent=STATE.userName;
+  document.getElementById('sb-avatar').textContent=STATE.userName[0];
+  document.getElementById('sb-role').textContent=STATE.role.toUpperCase();
+  document.getElementById('role-badge').textContent=STATE.role.toUpperCase()+' VIEW';
+  setLastUpdated();
+  applyRoleNav();
+  renderAlerts();
+  renderDashboard();
+  renderSchemes();
+  renderUploadHistory();
+}
+
+function applyRoleNav(){
+  const role=STATE.role;
+  document.querySelectorAll('.nav-item[data-for]').forEach(item=>{
+    const fors=item.dataset.for.split(',');
+    const visible=fors.includes('all')||fors.includes(role);
+    item.style.display=visible?'flex':'none';
+  });
+  document.getElementById('upload-trigger-btn').style.display=(role==='mis')?'flex':'none';
+}
+
+function setLastUpdated(){
+  const d=new Date();
+  document.getElementById('last-updated').textContent='Last updated: '+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+
+function refreshDashboard(){
+  const btn=document.querySelector('.refresh-btn');
+  btn.innerHTML='<span class="spin">↻</span> Refreshing';
+  setTimeout(()=>{
+    renderDashboard();btn.innerHTML='↻ Refresh';setLastUpdated();
+  },800);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════════════════════
+function showSection(sec,el){
+  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('sec-'+sec).classList.add('active');
+  if(el)el.classList.add('active');
+  STATE.currentSection=sec;
+  const titles={dashboard:'My Dashboard',team:'Team Performance',incentives:'Incentives',leaderboard:'Leaderboard',schemes:'Scheme Manager',reports:'Reports',upload:'Data Upload'};
+  document.getElementById('page-title').textContent=titles[sec]||sec;
+  if(sec==='team')renderTeamTable();
+  if(sec==='incentives')renderIncentives();
+  if(sec==='leaderboard')renderLeaderboard();
+  if(sec==='reports')renderReports();
+  if(sec==='upload')renderUploadHistory();
+  closeMobMenu();
+}
+
+function toggleMobMenu(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('mob-overlay').classList.toggle('open');}
+function closeMobMenu(){document.getElementById('sidebar').classList.remove('open');document.getElementById('mob-overlay').classList.remove('open');}
+
+// ═══════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════
+function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
+function fmtK(n){if(n>=10000000)return '₹'+(n/10000000).toFixed(1)+'Cr';if(n>=100000)return '₹'+(n/100000).toFixed(1)+'L';if(n>=1000)return '₹'+(n/1000).toFixed(0)+'K';return '₹'+Math.round(n);}
+function pct(a,b){return b?((a/b)*100).toFixed(1):'0.0';}
+function getMyData(){
+  if(STATE.role==='esm') return STATE.salesData.filter(r=>r.ESM_Code===STATE.userId);
+  if(STATE.role==='supervisor') return STATE.salesData.filter(r=>r.Supervisor_Code===STATE.userId);
+  if(STATE.role==='manager') return STATE.salesData.filter(r=>r.Manager_Code===STATE.userId);
+  return STATE.salesData;
+}
+function sumNSV(data){return data.reduce((s,r)=>s+r.NSV_Value,0);}
+function sumUnits(data){return data.reduce((s,r)=>s+r.Units_Sold,0);}
+function sumTarget(data){return data.reduce((s,r)=>s+r.Target_NSV,0);}
+// ─── INCENTIVE ENGINE ───────────────────────────────────────
+// calcESMIncentive: achievement-slab + per-outlet logic for one ESM
+// Input: totalUnits sold, targetUnits, outletCount (enrolled specific outlets)
+function calcESMIncentive(totalUnits, targetUnits, outletCount){
+  outletCount = outletCount || 0;
+  if(!targetUnits) return 0;
+  const achPct = (totalUnits / targetUnits) * 100;
+  let earned = 0;
+
+  if(achPct >= 90 && achPct < 100){
+    // 90–99%: Rs.3/unit on TOTAL volume
+    earned = totalUnits * 3;
+  } else if(achPct >= 100){
+    // 100%+: find applicable slab, pay on INCREMENTAL units only
+    // Incremental = units sold above the 100% target
+    const incrementalUnits = totalUnits - targetUnits;
+    const slabs = STATE.schemes.filter(s => s.role==='ESM' && s.basis==='incremental');
+    slabs.forEach(s => {
+      if(achPct >= s.achFrom && achPct <= s.achTo){
+        earned = incrementalUnits * s.ratePerUnit;
+      }
+    });
+  }
+  // Key outlet enrollment bonus: Rs.500 per enrolled specific outlet
+  earned += outletCount * 500;
+  return Math.round(earned);
+}
+
+// calcIncentiveForESMData: wraps calcESMIncentive for a data array belonging to one ESM
+function calcIncentiveForESMData(esmData){
+  const totalUnits = esmData.reduce((s,r) => s + r.Units_Sold, 0);
+  const targetUnits = esmData.reduce((s,r) => s + r.Target_Units, 0);
+  const outletCount = [...new Set(esmData.filter(r=>r.Key_Outlet).map(r=>r.Outlet_Code))].length;
+  return calcESMIncentive(totalUnits, targetUnits, outletCount);
+}
+
+// Legacy alias used by brand-based breakdowns (approximates using units)
+function calcIncentive(nsv, brand){
+  // For brand-level breakdowns: estimate via units using a proxy target
+  // Real engine uses calcIncentiveForESMData which has units + target
+  return nsv * 0.008; // ~0.8% proxy for display only
+}
+
+// totalIncentiveForData: sums ESM-level incentives (correct engine)
+function totalIncentiveForData(data){
+  const esmIds = [...new Set(data.map(r=>r.ESM_Code))];
+  return esmIds.reduce((tot, eid) => {
+    const ed = data.filter(r => r.ESM_Code === eid);
+    return tot + calcIncentiveForESMData(ed);
+  }, 0);
+}
+
+// calcSupervisorIncentive: 2x of average ESM incentive in team
+function calcSupervisorIncentive(supData){
+  const esmIds = [...new Set(supData.map(r=>r.ESM_Code))];
+  if(!esmIds.length) return 0;
+  const total = esmIds.reduce((s,eid) => s + calcIncentiveForESMData(supData.filter(r=>r.ESM_Code===eid)), 0);
+  return Math.round((total / esmIds.length) * 2);
+}
+
+// calcManagerIncentive: 3x of average ESM incentive in zone
+function calcManagerIncentive(mgrData){
+  const esmIds = [...new Set(mgrData.map(r=>r.ESM_Code))];
+  if(!esmIds.length) return 0;
+  const total = esmIds.reduce((s,eid) => s + calcIncentiveForESMData(mgrData.filter(r=>r.ESM_Code===eid)), 0);
+  return Math.round((total / esmIds.length) * 3);
+}
+function brandColor(b){const m={FCUK:'rgba(91,108,255,','French Connection':'rgba(6,182,212,',PUMA:'rgba(0,217,126,'};return (m[b]||'rgba(245,158,11,');}
+const avatarColors=['#5b6cff','#7c3aed','#06b6d4','#00d97e','#f59e0b','#f43f5e','#a78bfa','#34d399'];
+
+// ═══════════════════════════════════════════════════════════
+//  ALERTS
+// ═══════════════════════════════════════════════════════════
+function renderAlerts(){
+  const data=getMyData();
+  const totalUnits=sumUnits(data);
+  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
+  const achPct=targetUnits?(totalUnits/targetUnits*100):0;
+  const alerts=[];
+  if(achPct>=125)      alerts.push({type:'success',icon:'&#127942;',text:'Outstanding! 125%+ slab &mdash; &#8377;10/unit on incremental units.'});
+  else if(achPct>=120) alerts.push({type:'success',icon:'&#127942;',text:'Excellent! 120&ndash;124% slab &mdash; &#8377;8/unit on incremental units.'});
+  else if(achPct>=110) alerts.push({type:'success',icon:'&#11088;', text:'110&ndash;119% slab &mdash; &#8377;6/unit on incremental units.'});
+  else if(achPct>=100) alerts.push({type:'success',icon:'&#9989;',  text:'Target achieved! 100&ndash;109% slab &mdash; &#8377;4/unit on incremental units.'});
+  else if(achPct>=90)  alerts.push({type:'warn',   icon:'&#9889;',  text:'In slab! 90&ndash;99% &mdash; &#8377;3/unit on total volume. '+Math.ceil(targetUnits-totalUnits)+' units to reach 100%.'});
+  else                 alerts.push({type:'info',   icon:'&#128202;',text:'Unit achievement: '+achPct.toFixed(1)+'% &mdash; Need 90%+ to enter incentive slab.'});
+  let inc=0;
+  if(STATE.role==='esm')             inc=calcIncentiveForESMData(data);
+  else if(STATE.role==='supervisor') inc=calcSupervisorIncentive(data);
+  else if(STATE.role==='manager')    inc=calcManagerIncentive(data);
+  else                               inc=totalIncentiveForData(data);
+  alerts.push({type:'info',icon:'&#8377;',text:'Incentive Earned MTD: '+fmtK(inc)});
+  const enrolled=(STATE.keyOutlets||[]).length;
+  if(enrolled>0) alerts.push({type:'info',icon:'&#127978;',text:enrolled+' specific outlets enrolled &mdash; Bonus: '+fmtK(enrolled*500)});
+  if(STATE.role==='supervisor') alerts.push({type:'info',icon:'&#128203;',text:'Your incentive = 2&times; average of your team\'s ESM earnings'});
+  if(STATE.role==='manager')    alerts.push({type:'info',icon:'&#128203;',text:'Your incentive = 3&times; average of your team\'s ESM earnings'});
+  document.getElementById('alerts-wrap').innerHTML=alerts.map(a=>`<div class="alert-pill ${a.type}"><span>${a.icon}</span>${a.text}</div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function renderDashboard(){
+  const data=getMyData();
+  const nsv=sumNSV(data);
+  const tgt=sumTarget(data);
+  const units=sumUnits(data);
+  const inc=totalIncentiveForData(data);
+  const prevNSV=nsv*0.87;
+  const growth=((nsv-prevNSV)/prevNSV*100).toFixed(1);
+  const ach=pct(nsv,tgt);
+  const totalUnits=sumUnits(data);
+  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
+  const achUnits=targetUnits?((totalUnits/targetUnits)*100).toFixed(1):'0.0';
+
+  const kpis=[
+    {label:'MTD NSV',value:fmtK(nsv),sub:'Total Net Sales Value',badge:achUnits+'% units',badgeType:+achUnits>=100?'up':+achUnits>=90?'warn':'down',cls:''},
+    {label:'TARGET NSV',value:fmtK(tgt),sub:'Cumulative target',badge:'MTD',badgeType:'',cls:'purple'},
+    {label:'INCENTIVE EARNED',value:fmtK(inc),sub:'Based on active schemes',badge:'+Est.',badgeType:'up',cls:'green'},
+    {label:'UNITS SOLD',value:units.toLocaleString('en-IN'),sub:'MTD across all brands',badge:'',badgeType:'',cls:'amber'},
+    {label:'GROWTH vs LM',value:'+'+growth+'%',sub:'vs Last Month MTD',badge:growth>0?'▲ Growing':'▼ Lag',badgeType:growth>0?'up':'down',cls:growth>0?'green':'red'},
+    {label:'PENDING INCENTIVE',value:fmtK(inc*0.35),sub:'Awaiting approval',badge:'Processing',badgeType:'warn',cls:'amber'}
+  ];
+  document.getElementById('kpi-grid').innerHTML=kpis.map(k=>`
+    <div class="kpi-card ${k.cls} fade-up">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub} ${k.badge?`<span class="kpi-badge ${k.badgeType}">${k.badge}</span>`:''}</div>
+    </div>`).join('');
+
+  renderBarChart(data);
+  renderPieChart(data);
+  renderLineChart(data);
+  renderProjection(data,nsv,tgt,inc);
+}
+
+function renderBarChart(data){
+  const ctx=document.getElementById('barChart').getContext('2d');
+  if(STATE.charts.bar)STATE.charts.bar.destroy();
+  let labels,achData,tgtData;
+  if(STATE.barView==='brand'){
+    const brands=['FCUK','French Connection','PUMA'];
+    labels=brands;
+    achData=brands.map(b=>sumNSV(data.filter(r=>r.Brand===b)));
+    tgtData=brands.map(b=>data.filter(r=>r.Brand===b).reduce((s,r)=>s+r.Target_NSV,0));
+  } else {
+    const regions=[...new Set(data.map(r=>r.Region))].sort();
+    labels=regions;
+    achData=regions.map(reg=>sumNSV(data.filter(r=>r.Region===reg)));
+    tgtData=regions.map(reg=>data.filter(r=>r.Region===reg).reduce((s,r)=>s+r.Target_NSV,0));
+  }
+  STATE.charts.bar=new Chart(ctx,{type:'bar',data:{labels,datasets:[
+    {label:'Achievement',data:achData,backgroundColor:'rgba(91,108,255,0.85)',borderRadius:6,borderSkipped:false},
+    {label:'Target',data:tgtData,backgroundColor:'rgba(91,108,255,0.15)',borderRadius:6,borderSkipped:false,borderColor:'rgba(91,108,255,0.4)',borderWidth:1}
+  ]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#6b7194',font:{family:'Manrope',size:11}}}},scales:{x:{ticks:{color:'#6b7194',font:{size:11}},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#6b7194',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+}
+
+function renderPieChart(data){
+  const ctx=document.getElementById('pieChart').getContext('2d');
+  if(STATE.charts.pie)STATE.charts.pie.destroy();
+  const brands=['FCUK','French Connection','PUMA'];
+  const vals=brands.map(b=>totalIncentiveForData(data.filter(r=>r.Brand===b)));
+  STATE.charts.pie=new Chart(ctx,{type:'doughnut',data:{labels:brands,datasets:[{data:vals,backgroundColor:['rgba(91,108,255,0.85)','rgba(6,182,212,0.85)','rgba(0,217,126,0.85)'],borderColor:'rgba(17,19,32,1)',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:'#6b7194',font:{size:10},padding:12}}}}});
+}
+
+function renderLineChart(data){
+  const ctx=document.getElementById('lineChart').getContext('2d');
+  if(STATE.charts.line)STATE.charts.line.destroy();
+  let labels,vals;
+  if(STATE.trendView==='daily'){
+    const byDate={};
+    data.forEach(r=>{byDate[r.Date]=(byDate[r.Date]||0)+r.NSV_Value;});
+    const sorted=Object.keys(byDate).sort();
+    labels=sorted.map(d=>d.slice(5));
+    vals=sorted.map(d=>byDate[d]);
+  } else {
+    const byWeek={};
+    data.forEach(r=>{const wk='Wk'+Math.ceil(new Date(r.Date).getDate()/7);byWeek[wk]=(byWeek[wk]||0)+r.NSV_Value;});
+    labels=Object.keys(byWeek);vals=Object.values(byWeek);
+  }
+  const grad=ctx.createLinearGradient(0,0,0,200);
+  grad.addColorStop(0,'rgba(91,108,255,0.3)');grad.addColorStop(1,'rgba(91,108,255,0)');
+  STATE.charts.line=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'NSV',data:vals,borderColor:'rgba(91,108,255,1)',backgroundColor:grad,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:'rgba(91,108,255,1)'}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7194',font:{size:9},maxTicksLimit:8},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#6b7194',font:{size:9},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,0.04)'}}}}});
+}
+
+function renderProjection(data,nsv,tgt,inc){
+  const daysElapsed=new Date().getDate();const daysInMonth=30;
+  const projNSV=nsv/daysElapsed*daysInMonth;
+  const projInc=inc/daysElapsed*daysInMonth;
+  const projAch=pct(projNSV,tgt);
+  document.getElementById('proj-content').innerHTML=`
+    <div style="color:var(--muted);font-size:11px;margin-bottom:10px">Based on current daily run rate (${daysElapsed} days elapsed)</div>
+    <div class="proj-row">
+      <div class="proj-box"><div class="p-val">${fmtK(projNSV)}</div><div class="p-lbl">Projected NSV</div></div>
+      <div class="proj-box"><div class="p-val" style="color:var(--green)">${fmtK(projInc)}</div><div class="p-lbl">Projected Incentive</div></div>
+      <div class="proj-box"><div class="p-val" style="color:${+projAch>=100?'var(--green)':+projAch>=85?'var(--amber)':'var(--red)'}">${projAch}%</div><div class="p-lbl">Projected Ach%</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--muted)">Gap to next slab: <strong style="color:var(--amber)">${fmtK(Math.max(0,tgt*1.1-nsv))}</strong></div>`;
+}
+
+function switchBarView(view,el){
+  STATE.barView=view;
+  document.querySelectorAll('#sec-dashboard .panel-actions .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderBarChart(getMyData());
+}
+function switchTrend(view,el){
+  STATE.trendView=view;
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderLineChart(getMyData());
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TEAM TABLE
+// ═══════════════════════════════════════════════════════════
+function switchTeamTab(tab,el){
+  STATE.teamTab=tab;
+  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const titles={esm:'ESM Performance',distributor:'Distributor Performance',outlet:'Outlet-wise Performance'};
+  document.getElementById('team-table-title').textContent=titles[tab];
+  renderTeamTable();
+}
+
+function renderTeamTable(){
+  let data=STATE.salesData;
+  const brand=document.getElementById('t-brand').value;
+  const region=document.getElementById('t-region').value;
+  const from=document.getElementById('t-from').value;
+  const to=document.getElementById('t-to').value;
+  if(brand)data=data.filter(r=>r.Brand===brand);
+  if(region)data=data.filter(r=>r.Region===region);
+  if(from)data=data.filter(r=>r.Date>=from);
+  if(to)data=data.filter(r=>r.Date<=to);
+  if(STATE.role==='supervisor')data=data.filter(r=>r.Supervisor_Code===STATE.userId);
+  if(STATE.role==='manager')data=data.filter(r=>r.Manager_Code===STATE.userId);
+
+  let grouped={};
+  if(STATE.teamTab==='esm'){
+    data.forEach(r=>{const k=r.ESM_Code;if(!grouped[k])grouped[k]={name:r.ESM_Name,region:r.Region,territory:r.Territory,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
+  } else if(STATE.teamTab==='distributor'){
+    data.forEach(r=>{const k=r.Distributor_Code;if(!grouped[k])grouped[k]={name:r.Distributor_Name,region:r.Region,territory:'',nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
+  } else {
+    data.forEach(r=>{const k=r.Outlet_Code;if(!grouped[k])grouped[k]={name:r.Outlet_Name,region:r.Region,territory:r.Territory,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
+  }
+
+  const rows=Object.entries(grouped).sort((a,b)=>b[1].nsv-a[1].nsv);
+  if(!rows.length){document.getElementById('team-table-wrap').innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>No data for selected filters</div>';return;}
+
+  const html=`<table id="team-table"><thead><tr>
+    <th>#</th><th>NAME</th><th>REGION</th><th>NSV</th>
+    <th>TARGET</th><th>ACH %</th><th>UNITS</th><th>INCENTIVE</th>
+  </tr></thead><tbody>
+  ${rows.map(([id,r],i)=>{
+    const a=+pct(r.nsv,r.tgt);
+    const col=a>=100?'green':a>=85?'amber':'red';
+    const inc=totalIncentiveForData(data.filter(d=>{
+      if(STATE.teamTab==='esm')return d.ESM_Code===id;
+      if(STATE.teamTab==='distributor')return d.Distributor_Code===id;
+      return d.Outlet_Code===id;
+    }));
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.region}</td>
+      <td style="font-family:var(--font-mono)">${fmtK(r.nsv)}</td>
+      <td style="font-family:var(--font-mono);color:var(--muted)">${fmtK(r.tgt)}</td>
+      <td><div class="progress-bar-wrap"><div class="progress-bar"><div class="progress-fill ${col}" style="width:${Math.min(a,100)}%"></div></div><span style="font-size:11px;color:${a>=100?'var(--green)':a>=85?'var(--amber)':'var(--red)'}">${a}%</span></div></td>
+      <td>${r.units.toLocaleString('en-IN')}</td>
+      <td style="font-family:var(--font-mono);color:var(--green)">${fmtK(inc)}</td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+  document.getElementById('team-table-wrap').innerHTML=html;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  INCENTIVES
+// ═══════════════════════════════════════════════════════════
+function renderIncentives(){
+  const data=getMyData();
+
+  // ── Role-aware incentive total ──────────────────────────
+  let totalInc=0, supInc=0, mgrInc=0;
+  if(STATE.role==='esm'){
+    totalInc=calcIncentiveForESMData(data);
+  } else if(STATE.role==='supervisor'){
+    totalInc=calcSupervisorIncentive(data);
+  } else if(STATE.role==='manager'){
+    totalInc=calcManagerIncentive(data);
+  } else {
+    // MIS / all-access: show aggregate ESM incentives
+    totalInc=totalIncentiveForData(data);
+    supInc=0; mgrInc=0;
+  }
+  const paid=totalInc*0.65; const pending=totalInc*0.35;
+
+  // ── KPI Cards ───────────────────────────────────────────
+  const totalUnits=sumUnits(data);
+  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
+  const achPct=targetUnits?((totalUnits/targetUnits)*100):0;
+  const outletCount=STATE.keyOutlets ? STATE.keyOutlets.length : 0;
+  const outletBonus=outletCount*500;
+
+  const kpiRows=[
+    {label:'MY INCENTIVE (EARNED)',value:fmtK(totalInc),cls:'green'},
+    {label:'PAID OUT',value:fmtK(paid),cls:''},
+    {label:'PENDING APPROVAL',value:fmtK(pending),cls:'amber'},
+    {label:'KEY OUTLET BONUS',value:fmtK(outletBonus),cls:'purple'},
+  ];
+  if(STATE.role==='supervisor') kpiRows.splice(0,1,{label:'SUPERVISOR INCENTIVE (2× Team Avg)',value:fmtK(totalInc),cls:'green'});
+  if(STATE.role==='manager')    kpiRows.splice(0,1,{label:'MANAGER INCENTIVE (3× Team Avg)',  value:fmtK(totalInc),cls:'green'});
+
+  document.getElementById('inc-kpi-grid').innerHTML=kpiRows.map(k=>
+    `<div class="kpi-card ${k.cls}"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div></div>`).join('');
+
+  // ── ESM-wise incentive breakdown ────────────────────────
+  const esmIds=[...new Set(data.map(r=>r.ESM_Code))];
+  const rows=esmIds.map(eid=>{
+    const ed=data.filter(r=>r.ESM_Code===eid);
+    const tu=sumUnits(ed); const tgt=ed.reduce((s,r)=>s+r.Target_Units,0);
+    const ap=tgt?(tu/tgt*100):0;
+    const inc=calcIncentiveForESMData(ed);
+    const name=ed[0]?ed[0].ESM_Name:eid;
+    // which slab?
+    let slabLabel='Below 90%'; let slabBasis='';
+    if(ap>=125){slabLabel='125%+ Slab';slabBasis='Incremental × ₹10/unit';}
+    else if(ap>=120){slabLabel='120–124% Slab';slabBasis='Incremental × ₹8/unit';}
+    else if(ap>=110){slabLabel='110–119% Slab';slabBasis='Incremental × ₹6/unit';}
+    else if(ap>=100){slabLabel='100–109% Slab';slabBasis='Incremental × ₹4/unit';}
+    else if(ap>=90){slabLabel='90–99% Slab';slabBasis='Total Vol × ₹3/unit';}
+    return {eid,name,tu,tgt,ap,inc,slabLabel,slabBasis};
+  });
+
+  document.getElementById('inc-table-wrap').innerHTML=`<table id="inc-table"><thead><tr>
+    <th>ESM</th><th>UNITS SOLD</th><th>TARGET UNITS</th><th>ACH %</th><th>SLAB</th><th>BASIS</th><th>INCENTIVE ₹</th>
+  </tr></thead><tbody>
+  ${rows.sort((a,b)=>b.inc-a.inc).map(r=>`<tr>
+    <td><strong>${r.name}</strong></td>
+    <td style="font-family:var(--font-mono)">${r.tu.toLocaleString('en-IN')}</td>
+    <td style="font-family:var(--font-mono);color:var(--muted)">${r.tgt.toLocaleString('en-IN')}</td>
+    <td style="color:${r.ap>=100?'var(--green)':r.ap>=90?'var(--amber)':'var(--red)'}"><strong>${r.ap.toFixed(1)}%</strong></td>
+    <td><span class="kpi-badge ${r.ap>=100?'up':r.ap>=90?'warn':'down'}">${r.slabLabel}</span></td>
+    <td style="font-size:10px;color:var(--muted)">${r.slabBasis||'—'}</td>
+    <td style="font-family:var(--font-mono);color:var(--green);font-weight:600">${fmtK(r.inc)}</td>
+  </tr>`).join('')}</tbody></table>`;
+
+  // ── Slab Status Widget ──────────────────────────────────
+  const myUnits=sumUnits(data);
+  const myTgtUnits=data.reduce((s,r)=>s+r.Target_Units,0);
+  const myAch=myTgtUnits?(myUnits/myTgtUnits*100):0;
+  const slabs=[
+    {label:'90–99%',rate:'₹3/unit',basis:'Total volume',from:90,to:99.9},
+    {label:'100–109%',rate:'₹4/unit',basis:'Incremental only',from:100,to:109.9},
+    {label:'110–119%',rate:'₹6/unit',basis:'Incremental only',from:110,to:119.9},
+    {label:'120–124%',rate:'₹8/unit',basis:'Incremental only',from:120,to:124.9},
+    {label:'125%+',rate:'₹10/unit',basis:'Incremental only',from:125,to:9999},
+  ];
+  document.getElementById('slab-status').innerHTML=slabs.map(s=>{
+    const active=myAch>=s.from&&myAch<=s.to;
+    const achieved=myAch>s.to;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;margin-bottom:6px;border:1px solid ${active?'rgba(91,108,255,0.4)':achieved?'rgba(0,217,126,0.2)':'var(--border)'};background:${active?'var(--glow)':achieved?'rgba(0,217,126,0.05)':'transparent'}">
+      <div style="width:8px;height:8px;border-radius:50%;background:${active?'var(--accent)':achieved?'var(--green)':'var(--border2)'};flex-shrink:0"></div>
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:700;color:${active?'var(--text)':'var(--muted)'}">${s.label} &nbsp;<span style="font-weight:400;font-size:11px">${s.rate}</span></div>
+        <div style="font-size:10px;color:var(--muted)">${s.basis}</div>
+      </div>
+      <span class="kpi-badge ${active?'up':achieved?'up':'warn'}">${active?'● Current':achieved?'✓ Passed':'― Ahead'}</span>
+    </div>`;
+  }).join('')+`
+  <div style="margin-top:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;font-size:11px">
+    <span style="color:var(--muted)">Your achievement: </span><strong style="color:${myAch>=100?'var(--green)':myAch>=90?'var(--amber)':'var(--red)'}">${myAch.toFixed(1)}%</strong>
+    &nbsp;|&nbsp;<span style="color:var(--muted)">Units: </span><strong>${myUnits.toLocaleString('en-IN')} / ${myTgtUnits.toLocaleString('en-IN')}</strong>
+    &nbsp;|&nbsp;<span style="color:var(--muted)">Gap to next slab: </span><strong style="color:var(--amber)">${Math.max(0,Math.ceil(myTgtUnits*(Math.ceil(myAch/10)*10+((myAch%10)?0:10))/100)-myUnits).toLocaleString('en-IN')} units</strong>
+  </div>`;
+
+  // ── Status doughnut ─────────────────────────────────────
+  const ctx=document.getElementById('incStatusChart').getContext('2d');
+  if(STATE.charts.incStatus)STATE.charts.incStatus.destroy();
+  STATE.charts.incStatus=new Chart(ctx,{type:'doughnut',data:{labels:['Paid','Pending'],datasets:[{data:[paid,pending],backgroundColor:['rgba(0,217,126,0.85)','rgba(245,158,11,0.85)'],borderColor:'rgba(17,19,32,1)',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{color:'#6b7194',font:{size:10}}}}}});
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LEADERBOARD
+// ═══════════════════════════════════════════════════════════
+function renderLeaderboard(){
+  let data=STATE.salesData;
+  const brand=document.getElementById('lb-brand').value;
+  if(brand)data=data.filter(r=>r.Brand===brand);
+
+  const byESM={};
+  data.forEach(r=>{
+    if(!byESM[r.ESM_Code])byESM[r.ESM_Code]={name:r.ESM_Name,region:r.Region,nsv:0,units:0};
+    byESM[r.ESM_Code].nsv+=r.NSV_Value;byESM[r.ESM_Code].units+=r.Units_Sold;
+  });
+  const rankColors=['gold','silver','bronze'];
+  const sorted=Object.entries(byESM).sort((a,b)=>b[1].nsv-a[1].nsv);
+
+  document.getElementById('lb-list').innerHTML=sorted.slice(0,10).map(([id,u],i)=>`
+    <div class="lb-item">
+      <div class="lb-rank ${rankColors[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
+      <div class="lb-avatar" style="background:${avatarColors[i%avatarColors.length]}">${u.name[0]}</div>
+      <div class="lb-info"><div class="lb-name">${u.name}</div><div class="lb-region">${u.region}</div></div>
+      <div class="lb-amt">${fmtK(u.nsv)}</div>
+    </div>`).join('');
+
+  const byInc=sorted.map(([id,u])=>({...u,inc:totalIncentiveForData(data.filter(r=>r.ESM_Code===id))})).sort((a,b)=>b.inc-a.inc);
+  document.getElementById('lb-inc-list').innerHTML=byInc.slice(0,10).map((u,i)=>`
+    <div class="lb-item">
+      <div class="lb-rank ${rankColors[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
+      <div class="lb-avatar" style="background:${avatarColors[(i+3)%avatarColors.length]}">${u.name[0]}</div>
+      <div class="lb-info"><div class="lb-name">${u.name}</div><div class="lb-region">${u.region}</div></div>
+      <div class="lb-amt">${fmtK(u.inc)}</div>
+    </div>`).join('');
+
+  // Heatmap
+  document.getElementById('heatmap-wrap').innerHTML=sorted.map(([id,u])=>{
+    const tgt=STATE.salesData.filter(r=>r.ESM_Code===id).reduce((s,r)=>s+r.Target_NSV,0);
+    const a=pct(u.nsv,tgt);
+    const hue=Math.min(+a,100)/100;
+    const bg=`rgba(${Math.round(244-hue*153)},${Math.round(63+hue*154)},${Math.round(94-hue*94)},0.15)`;
+    const bc=`rgba(${Math.round(244-hue*153)},${Math.round(63+hue*154)},${Math.round(94-hue*94)},0.4)`;
+    return `<div style="background:${bg};border:1px solid ${bc};border-radius:10px;padding:12px;text-align:center">
+      <div style="font-size:11px;font-weight:600;margin-bottom:4px">${u.name}</div>
+      <div style="font-size:10px;color:var(--muted)">${u.region}</div>
+      <div style="font-family:var(--font-head);font-size:20px;font-weight:800;margin:6px 0;color:${+a>=100?'var(--green)':+a>=85?'var(--amber)':'var(--red)'}">${a}%</div>
+      <div style="font-size:10px;color:var(--muted)">${fmtK(u.nsv)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SCHEME MANAGER
+// ═══════════════════════════════════════════════════════════
+function renderSchemes(){
+  const headerRow=`<div style="display:grid;grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto;gap:8px;padding:6px 12px;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.7px">
+    <div>SCHEME NAME &middot; ROLE &middot; BRAND</div><div>ACH% FROM</div><div>ACH% TO</div><div>&#8377;/UNIT</div><div>BASIS</div><div></div>
+  </div>`;
+  const rows=STATE.schemes.map(function(s,i){
+    const basis=s.basis||'total';
+    const roleOpts=['ESM','Supervisor','Manager'].map(function(r){return '<option'+(s.role===r?' selected':'')+'>'+r+'</option>';}).join('');
+    const brandOpts=['ALL','FCUK','French Connection','PUMA'].map(function(b){return '<option'+(s.brand===b?' selected':'')+'>'+b+'</option>';}).join('');
+    const basisOpts=['total','incremental','per_outlet','team_avg_multiple'].map(function(b){return '<option'+(basis===b?' selected':'')+'>'+b+'</option>';}).join('');
+    return '<div class="scheme-edit-row" id="srow-'+i+'" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto">'
+      +'<div style="display:flex;flex-direction:column;gap:4px">'
+      +'<input value="'+s.name+'" placeholder="Scheme Name" onchange="STATE.schemes['+i+'].name=this.value"/>'
+      +'<div style="display:flex;gap:6px">'
+      +'<select onchange="STATE.schemes['+i+'].role=this.value">'+roleOpts+'</select>'
+      +'<select onchange="STATE.schemes['+i+'].brand=this.value">'+brandOpts+'</select>'
+      +'</div></div>'
+      +'<input type="number" value="'+(s.achFrom||0)+'" onchange="STATE.schemes['+i+'].achFrom=+this.value"/>'
+      +'<input type="number" value="'+(s.achTo||9999)+'" onchange="STATE.schemes['+i+'].achTo=+this.value"/>'
+      +'<input type="number" step="1" value="'+(s.ratePerUnit||0)+'" onchange="STATE.schemes['+i+'].ratePerUnit=+this.value"/>'
+      +'<select onchange="STATE.schemes['+i+'].basis=this.value">'+basisOpts+'</select>'
+      +'<button class="del-btn" onclick="deleteSchemeRow('+i+')">&#10005;</button>'
+      +'</div>';
+  });
+  document.getElementById('scheme-edit-grid').innerHTML=headerRow+rows.join('');
+}
+
+function addSchemeRow(){
+  STATE.schemes.push({id:'NEW',name:'New Scheme',role:'ESM',achFrom:90,achTo:99,ratePerUnit:3,basis:'total',brand:'ALL'});
+  renderSchemes();
+}
+function deleteSchemeRow(i){STATE.schemes.splice(i,1);renderSchemes();}
+function saveSchemes(){renderSchemes();alert('✓ Schemes saved successfully!\nDashboard will use updated payout logic.');}
+function exportSchemes(){
+  const csv=['Scheme_ID,Scheme_Name,Role,Slab_From,Slab_To,Type,Value,Brand',
+    ...STATE.schemes.map(s=>`${s.id},${s.name},${s.role},${s.from},${s.to},${s.type},${s.value},${s.brand}`)].join('\n');
+  downloadCSV(csv,'Underlinen_Incentive_Schemes.csv');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  REPORTS
+// ═══════════════════════════════════════════════════════════
+function renderReports(){
+  let data=STATE.salesData;
+  const brand=document.getElementById('rpt-brand').value;
+  const region=document.getElementById('rpt-region').value;
+  if(brand)data=data.filter(r=>r.Brand===brand);
+  if(region)data=data.filter(r=>r.Region===region);
+
+  const nsv=sumNSV(data);const tgt=sumTarget(data);const units=sumUnits(data);const inc=totalIncentiveForData(data);
+  document.getElementById('rpt-kpis').innerHTML=[
+    {label:'TOTAL NSV',value:fmtK(nsv)},{label:'TARGET',value:fmtK(tgt)},
+    {label:'ACH %',value:pct(nsv,tgt)+'%'},{label:'UNITS',value:units.toLocaleString('en-IN')},
+    {label:'INCENTIVE',value:fmtK(inc)}
+  ].map(k=>`<div class="kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div></div>`).join('');
+
+  // Region-brand summary
+  const grouped={};
+  data.forEach(r=>{const k=r.Region+'__'+r.Brand;if(!grouped[k])grouped[k]={region:r.Region,brand:r.Brand,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
+  const rows=Object.values(grouped).sort((a,b)=>b.nsv-a.nsv);
+
+  document.getElementById('rpt-table-wrap').innerHTML=`<table id="rpt-table"><thead><tr>
+    <th>REGION</th><th>BRAND</th><th>NSV</th><th>TARGET</th><th>ACH %</th><th>UNITS</th><th>INCENTIVE</th>
+  </tr></thead><tbody>
+  ${rows.map(r=>{const a=pct(r.nsv,r.tgt);const inc=calcIncentive(r.nsv,r.brand);return `<tr>
+    <td>${r.region}</td>
+    <td><span class="tag ${r.brand==='FCUK'?'fcuk':r.brand==='French Connection'?'fc':'puma'}">${r.brand}</span></td>
+    <td style="font-family:var(--font-mono)">${fmtK(r.nsv)}</td>
+    <td style="font-family:var(--font-mono);color:var(--muted)">${fmtK(r.tgt)}</td>
+    <td style="color:${+a>=100?'var(--green)':+a>=85?'var(--amber)':'var(--red)'}">${a}%</td>
+    <td>${r.units.toLocaleString('en-IN')}</td>
+    <td style="font-family:var(--font-mono);color:var(--green)">${fmtK(inc)}</td>
+  </tr>`;}).join('')}</tbody></table>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  UPLOAD
+// ═══════════════════════════════════════════════════════════
+function openUploadModal(){document.getElementById('upload-modal').classList.add('open');}
+function closeUploadModal(){document.getElementById('upload-modal').classList.remove('open');}
+
+function handleFileDrop(e){e.preventDefault();document.getElementById('modal-upload-zone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)parseFile(f,'modal');}
+function handleFileSelect(e){const f=e.target.files[0];if(f)parseFile(f,'modal');}
+function handleMainDrop(e){e.preventDefault();document.getElementById('main-upload-zone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)parseFile(f,'main');}
+function handleMainUpload(e){const f=e.target.files[0];if(f)parseFile(f,'main');}
+
+function parseFile(file,target){
+  STATE.pendingFile=file;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const wb=XLSX.read(e.target.result,{type:'binary'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const raw=XLSX.utils.sheet_to_json(ws);
+      const required=['Date','ESM_Code','NSV_Value','Brand'];
+      const cols=raw.length?Object.keys(raw[0]):[];
+      const missing=required.filter(r=>!cols.includes(r));
+      if(missing.length&&target==='main'){
+        document.getElementById('upload-validation').innerHTML=`<div class="alert-pill warn" style="margin-bottom:8px">⚠ Missing columns: ${missing.join(', ')}</div>`;
+      } else {
+        if(target==='modal'){
+          document.getElementById('upload-log').innerHTML=`<div class="upload-log-item"><span class="ul-icon">📄</span><span class="ul-name">${file.name}</span><span class="ul-rows">${raw.length} rows</span><span class="ul-status">Ready</span></div>`;
+        } else {
+          document.getElementById('upload-validation').innerHTML=`<div class="alert-pill success">✓ ${file.name} — ${raw.length} rows validated</div>`;
+          ingestData(raw,file.name);
+        }
+      }
+    }catch(err){
+      const el=target==='modal'?'upload-log':'upload-validation';
+      document.getElementById(el).innerHTML=`<div class="alert-pill warn">✗ Error reading file</div>`;
+    }
+  };
+  reader.readAsBinaryString(file);
+}
+
+function processUpload(){
+  if(!STATE.pendingFile){closeUploadModal();return;}
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const wb=XLSX.read(e.target.result,{type:'binary'});
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const raw=XLSX.utils.sheet_to_json(ws);
+    ingestData(raw,STATE.pendingFile.name);
+    closeUploadModal();
+    renderAlerts();renderDashboard();setLastUpdated();
+    alert('✓ Data uploaded! Dashboard refreshed.');
+  };
+  reader.readAsBinaryString(STATE.pendingFile);
+}
+
+function ingestData(rows,fname){
+  const mapped=rows.map(r=>({
+    Date:r.Date||r.date||'',ESM_Code:r.ESM_Code||r.esm_code||'',ESM_Name:r.ESM_Name||r.esm_name||'',
+    Supervisor_Code:r.Supervisor_Code||'',Supervisor_Name:r.Supervisor_Name||'',
+    Manager_Code:r.Manager_Code||'',Manager_Name:r.Manager_Name||'',
+    Region:r.Region||'',Territory:r.Territory||'',
+    Distributor_Code:r.Distributor_Code||'',Distributor_Name:r.Distributor_Name||'',
+    Outlet_Code:r.Outlet_Code||'',Outlet_Name:r.Outlet_Name||'',
+    Brand:r.Brand||'',Category:r.Category||'',SKU_Code:r.SKU_Code||'',
+    Units_Sold:+r.Units_Sold||0,NSV_Value:+r.NSV_Value||0,
+    Target_Units:+r.Target_Units||0,Target_NSV:+r.Target_NSV||0
+  })).filter(r=>r.NSV_Value>0);
+  if(mapped.length>0)STATE.salesData=[...STATE.salesData,...mapped];
+  const entry={id:'UPL'+String(STATE.uploadLog.length+1).padStart(3,'0'),date:new Date().toISOString().slice(0,10),by:STATE.userName,file:fname,records:mapped.length,status:'Success'};
+  STATE.uploadLog.push(entry);
+  renderUploadHistory();
+  renderUploadPreview(mapped.slice(0,20));
+}
+
+function renderUploadHistory(){
+  document.getElementById('upload-history-list').innerHTML=STATE.uploadLog.slice().reverse().map(u=>`
+    <div class="upload-log-item">
+      <span class="ul-icon">📄</span>
+      <div style="flex:1;min-width:0">
+        <div class="ul-name" style="white-space:normal;word-break:break-all">${u.file}</div>
+        <div style="font-size:10px;color:var(--muted)">${u.date} · by ${u.by}</div>
+      </div>
+      <span class="ul-rows">${u.records}</span>
+      <span class="ul-status">${u.status}</span>
+    </div>`).join('');
+}
+
+function renderUploadPreview(rows){
+  if(!rows||!rows.length){document.getElementById('upload-preview-table').innerHTML='<div class="empty-state"><div class="empty-icon">📂</div>No data uploaded yet</div>';return;}
+  const cols=['Date','ESM_Name','Brand','Category','Units_Sold','NSV_Value','Target_NSV'];
+  document.getElementById('upload-preview-table').innerHTML=`<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>
+  ${rows.map(r=>`<tr>${cols.map(c=>`<td>${typeof r[c]==='number'?r[c].toLocaleString('en-IN'):r[c]}</td>`).join('')}</tr>`).join('')}
+  </tbody></table>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════════════
+function downloadCSV(csv,fname){
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=fname;a.click();
+}
+
+function exportTableCSV(tableId,fname){
+  const tbl=document.getElementById(tableId);if(!tbl){alert('Table not found');return;}
+  const rows=[...tbl.querySelectorAll('tr')];
+  const csv=rows.map(r=>[...r.querySelectorAll('th,td')].map(c=>'"'+c.textContent.trim().replace(/"/g,'""')+'"').join(',')).join('\n');
+  downloadCSV(csv,`Underlinen_${fname}_${new Date().toISOString().slice(0,10)}.csv`);
+}
+
+function exportTablePDF(){
+  window.print();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════════
+seedData();
+renderUploadPreview([]);
+</script>
+
+
+</body></html>
