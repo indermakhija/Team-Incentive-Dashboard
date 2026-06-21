@@ -1,1435 +1,1077 @@
 <!DOCTYPE html>
-<!-- saved from url=(0085)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SalesIncentive_Dashboard%20(5).html -->
+<!-- saved from url=(0073)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SchemeIQ_Dashboard.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Underlinen · Sales Incentive Intelligence</title>
-<script src="./Underlinen · Sales Incentive Intelligence_files/chart.umd.min.js.download" crossorigin="anonymous"></script>
-<script src="./Underlinen · Sales Incentive Intelligence_files/xlsx.full.min.js.download" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SchemeIQ — Underlinen Sales Incentive Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./SchemeIQ — Underlinen Sales Incentive Command Center_files/css2" rel="stylesheet">
+<script src="./SchemeIQ — Underlinen Sales Incentive Command Center_files/chart.umd.min.js.download"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap');
-
 :root{
-  --bg:#0a0b10;
-  --surface:#111320;
-  --surface2:#181b2e;
-  --border:#1e2340;
-  --border2:#262b45;
-  --text:#e8eaf6;
-  --muted:#6b7194;
-  --accent:#5b6cff;
-  --accent2:#7c3aed;
-  --green:#00d97e;
-  --amber:#f59e0b;
-  --red:#f43f5e;
-  --cyan:#06b6d4;
-  --glow:rgba(91,108,255,0.15);
-  --font-head:'Syne',sans-serif;
-  --font-body:'Manrope',sans-serif;
-  --font-mono:'DM Mono',monospace;
+  --ink:#0E0E11; --ink-2:#15151A; --surf:#1B1B22; --surf-2:#23232C; --surf-3:#2C2C37;
+  --line:#33333F; --line-soft:#2A2A33;
+  --txt:#F4F4F6; --txt-2:#A5A5B2; --txt-3:#6E6E7C;
+  --red:#E11D2A; --red-soft:#FF4453; --red-ink:#2A1012;
+  --gold:#E5B567; --gold-soft:#F2CE8E; --gold-ink:#2A2114;
+  --green:#34D399; --green-ink:#0F2A20;
+  --blue:#5B9DF0;
+  --rad:14px; --rad-sm:10px;
+  --shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 18px 40px -24px rgba(0,0,0,.8);
+  --ff-disp:'Archivo',system-ui,sans-serif; --ff:'Inter',system-ui,sans-serif; --ff-mono:'JetBrains Mono',monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:13px;min-height:100vh;overflow-x:hidden}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--ff);background:var(--ink);color:var(--txt);-webkit-font-smoothing:antialiased;line-height:1.45;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 500px at 12% -8%, rgba(225,29,42,.10), transparent 60%),
+  radial-gradient(800px 600px at 100% 0%, rgba(229,181,103,.07), transparent 55%),
+  var(--ink);}
+::selection{background:var(--red);color:#fff}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit}
+a{color:inherit}
+.mono{font-family:var(--ff-mono);font-variant-numeric:tabular-nums}
+.disp{font-family:var(--ff-disp)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--surf-3);border-radius:20px;border:2px solid var(--ink)}
+::-webkit-scrollbar-track{background:transparent}
 
-/* LOGIN */
-#login-overlay{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
-.login-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:48px;width:min(440px,92vw);text-align:center}
-.login-logo{font-family:var(--font-head);font-size:28px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.login-sub{color:var(--muted);font-size:12px;margin-bottom:36px;letter-spacing:.5px}
-.login-select-wrap{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;text-align:left}
-.login-select-wrap label{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.8px}
-.login-select-wrap select,.login-select-wrap input{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:12px 16px;border-radius:10px;font-family:var(--font-body);font-size:13px;width:100%;outline:none;transition:border-color .2s}
-.login-select-wrap select:focus,.login-select-wrap input:focus{border-color:var(--accent)}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:14px 32px;border-radius:10px;font-family:var(--font-head);font-weight:700;font-size:14px;cursor:pointer;width:100%;letter-spacing:.3px;transition:opacity .2s,transform .1s}
-.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
-.login-hint{color:var(--muted);font-size:11px;margin-top:16px}
+/* ---------- LOGIN ---------- */
+#login{position:fixed;inset:0;z-index:100;display:grid;grid-template-columns:1.1fr .9fr;background:var(--ink)}
+#login .brandside{position:relative;overflow:hidden;padding:54px;display:flex;flex-direction:column;justify-content:space-between;
+  background:linear-gradient(155deg,#1a0a0c 0%, #110b10 55%, #0E0E11 100%);border-right:1px solid var(--line-soft)}
+#login .brandside::after{content:"";position:absolute;right:-30%;top:-20%;width:80%;height:140%;
+  background:radial-gradient(closest-side, rgba(225,29,42,.20), transparent 70%);filter:blur(10px)}
+.loginmark{display:flex;align-items:center;gap:13px;position:relative;z-index:2}
+.logo-glyph{width:46px;height:46px;border-radius:12px;background:linear-gradient(150deg,var(--red),#9c0f18);
+  display:grid;place-items:center;box-shadow:0 10px 26px -10px rgba(225,29,42,.7);position:relative}
+.logo-glyph svg{width:26px;height:26px}
+.loginmark h1{font-family:var(--ff-disp);font-weight:900;font-size:21px;letter-spacing:-.4px;line-height:1}
+.loginmark span{display:block;font-size:10.5px;letter-spacing:3px;color:var(--gold);font-weight:600;margin-top:3px}
+.login-hero{position:relative;z-index:2}
+.login-hero .eyebrow{font-size:11px;letter-spacing:3.5px;color:var(--red-soft);font-weight:700;text-transform:uppercase}
+.login-hero h2{font-family:var(--ff-disp);font-weight:800;font-size:clamp(30px,3.4vw,46px);line-height:1.02;letter-spacing:-1px;margin:16px 0 14px}
+.login-hero h2 em{font-style:normal;color:var(--gold)}
+.login-hero p{color:var(--txt-2);max-width:430px;font-size:14.5px}
+.login-foot{position:relative;z-index:2;display:flex;gap:26px;color:var(--txt-3);font-size:12px}
+.login-foot b{font-family:var(--ff-disp);color:var(--txt);font-size:19px;display:block;font-weight:800}
+#login .formside{display:flex;align-items:center;justify-content:center;padding:40px}
+.loginbox{width:100%;max-width:370px}
+.loginbox h3{font-family:var(--ff-disp);font-size:24px;font-weight:800;letter-spacing:-.4px}
+.loginbox .sub{color:var(--txt-2);font-size:13.5px;margin:6px 0 26px}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--txt-3);font-weight:600;margin-bottom:7px}
+.field input{width:100%;padding:13px 14px;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--rad-sm);color:var(--txt);font-size:14.5px;transition:.16s}
+.field input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(225,29,42,.16)}
+.remember{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt-2);margin:4px 0 20px;cursor:pointer;user-select:none}
+.remember input{accent-color:var(--red);width:15px;height:15px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:var(--rad-sm);font-weight:700;font-size:14px;transition:.15s;white-space:nowrap}
+.btn-primary{background:var(--red);color:#fff;width:100%;box-shadow:0 12px 26px -12px rgba(225,29,42,.8)}
+.btn-primary:hover{background:var(--red-soft);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.loginerr{color:var(--red-soft);font-size:12.5px;margin-top:12px;min-height:16px;font-weight:600}
+.demo-accts{margin-top:26px;border-top:1px solid var(--line-soft);padding-top:18px}
+.demo-accts .dl{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--txt-3);font-weight:600;margin-bottom:11px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 12px;background:var(--surf);border:1px solid var(--line);border-radius:30px;font-size:12px;color:var(--txt-2);font-weight:600;transition:.14s}
+.chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.chip b{color:var(--txt);font-weight:700}
 
-/* LAYOUT */
-.app{display:flex;min-height:100vh;opacity:0;transition:opacity .4s}
-.app.visible{opacity:1}
+/* ---------- APP SHELL ---------- */
+#app{display:none;min-height:100vh}
+.shell{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+.rail{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,var(--ink-2),var(--ink));border-right:1px solid var(--line-soft);padding:20px 14px;display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+.rail .mark{display:flex;align-items:center;gap:11px;padding:6px 8px 18px;border-bottom:1px solid var(--line-soft);margin-bottom:12px}
+.rail .mark .logo-glyph{width:38px;height:38px;border-radius:10px}
+.rail .mark .logo-glyph svg{width:21px;height:21px}
+.rail .mark h1{font-family:var(--ff-disp);font-weight:900;font-size:17px;letter-spacing:-.3px;line-height:1}
+.rail .mark span{font-size:9px;letter-spacing:2.6px;color:var(--gold);font-weight:600}
+.nav-label{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--txt-3);font-weight:700;padding:14px 10px 6px}
+.navitem{display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:var(--rad-sm);color:var(--txt-2);font-weight:600;font-size:13.5px;transition:.14s;position:relative;text-align:left;width:100%}
+.navitem svg{width:18px;height:18px;flex-shrink:0;opacity:.85}
+.navitem:hover{background:var(--surf);color:var(--txt)}
+.navitem.active{background:linear-gradient(100deg,rgba(225,29,42,.16),rgba(225,29,42,.04));color:#fff}
+.navitem.active::before{content:"";position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--red);border-radius:0 3px 3px 0}
+.navitem.active svg{opacity:1;color:var(--red-soft)}
+.rail-foot{margin-top:auto;border-top:1px solid var(--line-soft);padding-top:14px}
+.userchip{display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--rad-sm)}
+.avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,var(--gold),#b3853b);display:grid;place-items:center;font-family:var(--ff-disp);font-weight:800;color:#1a1206;font-size:14px;flex-shrink:0}
+.userchip .un{font-size:13px;font-weight:700;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.userchip .ur{font-size:10.5px;color:var(--txt-3);font-weight:600;letter-spacing:.3px}
+.logout{width:100%;margin-top:10px;padding:9px;border-radius:var(--rad-sm);background:var(--surf);border:1px solid var(--line);color:var(--txt-2);font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px;transition:.14s}
+.logout:hover{border-color:var(--red);color:var(--red-soft)}
 
-/* SIDEBAR */
-.sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .3s}
-.sidebar-brand{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
-.brand-name{font-family:var(--font-head);font-size:17px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.brand-sub{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-top:2px}
-.role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.5px;margin-top:8px;background:var(--glow);color:var(--accent);border:1px solid var(--accent)}
-.nav-section{padding:16px 12px 8px;font-size:10px;color:var(--muted);letter-spacing:1px;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:12px;font-weight:500;transition:all .15s;margin:1px 8px}
-.nav-item:hover{background:var(--surface2);color:var(--text)}
-.nav-item.active{background:var(--glow);color:var(--accent);border:1px solid rgba(91,108,255,.2)}
-.nav-icon{font-size:16px;width:20px;text-align:center}
-.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
-.sidebar-user{display:flex;align-items:center;gap:10px}
-.avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
-.user-info{flex:1;min-width:0}
-.user-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-role{font-size:10px;color:var(--muted)}
-.logout-btn{background:none;border:1px solid var(--border2);color:var(--muted);padding:4px 8px;border-radius:6px;cursor:pointer;font-size:10px;transition:all .15s}
-.logout-btn:hover{border-color:var(--red);color:var(--red)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(14,14,17,.78);border-bottom:1px solid var(--line-soft);padding:14px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.topbar .pgtitle h2{font-family:var(--ff-disp);font-size:20px;font-weight:800;letter-spacing:-.4px;line-height:1.1}
+.topbar .pgtitle p{font-size:12.5px;color:var(--txt-2);margin-top:2px}
+.topbar .spacer{flex:1}
+.menu-btn{display:none}
 
-/* MAIN */
-.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.page-title{font-family:var(--font-head);font-size:16px;font-weight:700}
-.topbar-right{display:flex;align-items:center;gap:12px}
-.last-updated{font-size:10px;color:var(--muted);font-family:var(--font-mono)}
-.refresh-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:11px;transition:all .15s;display:flex;align-items:center;gap:6px}
-.refresh-btn:hover{color:var(--accent);border-color:var(--accent)}
-.upload-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:7px 16px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;transition:opacity .2s}
-.upload-btn:hover{opacity:.85}
-.content{padding:24px;flex:1}
+/* SCENARIO BAR */
+.scenbar{display:flex;align-items:center;gap:14px;background:linear-gradient(100deg,var(--gold-ink),rgba(229,181,103,.04));border:1px solid rgba(229,181,103,.28);border-radius:var(--rad);padding:9px 13px}
+.scenbar .lbl{font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-weight:700;line-height:1.1}
+.scenbar .lbl small{display:block;color:var(--txt-3);letter-spacing:.5px;font-size:9px;margin-top:1px}
+.scen-inputs{display:flex;gap:8px}
+.scen-cell{text-align:center}
+.scen-cell span{display:block;font-size:9px;color:var(--txt-3);font-weight:600;margin-bottom:3px;letter-spacing:.4px}
+.scen-cell input{width:60px;padding:7px 4px;text-align:center;background:var(--ink);border:1px solid rgba(229,181,103,.4);border-radius:8px;color:var(--gold-soft);font-family:var(--ff-mono);font-weight:700;font-size:14px}
+.scen-cell input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(229,181,103,.18)}
 
-/* KPI CARDS */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
-.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s}
-.kpi-card:hover{border-color:var(--border2)}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
-.kpi-card.green::before{background:linear-gradient(90deg,var(--green),#00b894)}
-.kpi-card.amber::before{background:linear-gradient(90deg,var(--amber),#e17055)}
-.kpi-card.red::before{background:linear-gradient(90deg,var(--red),#c0392b)}
-.kpi-card.purple::before{background:linear-gradient(90deg,var(--accent2),var(--accent))}
-.kpi-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.8px;margin-bottom:10px}
-.kpi-value{font-family:var(--font-head);font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}
-.kpi-sub{font-size:11px;color:var(--muted);margin-top:6px}
-.kpi-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:600}
-.kpi-badge.up{background:rgba(0,217,126,.1);color:var(--green)}
-.kpi-badge.down{background:rgba(244,63,94,.1);color:var(--red)}
-.kpi-badge.warn{background:rgba(245,158,11,.1);color:var(--amber)}
+.content{padding:26px 28px 60px;max-width:1500px;width:100%;margin:0 auto}
+.page{display:none;animation:fade .35s ease}
+.page.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* PANELS */
-.panel-row{display:grid;gap:16px;margin-bottom:24px}
-.panel-row.col-2{grid-template-columns:1fr 1fr}
-.panel-row.col-3{grid-template-columns:1fr 1fr 1fr}
-.panel-row.col-7-5{grid-template-columns:7fr 5fr}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
-.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.panel-title{font-family:var(--font-head);font-size:13px;font-weight:700}
-.panel-actions{display:flex;gap:8px}
-.chip{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;cursor:pointer;border:1px solid var(--border2);color:var(--muted);background:var(--surface2);transition:all .15s}
-.chip.active,.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--glow)}
-canvas{max-height:240px}
+/* KPI TILES */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:linear-gradient(160deg,var(--surf),var(--ink-2));border:1px solid var(--line-soft);border-radius:var(--rad);padding:17px 18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.kpi::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:var(--accent,rgba(225,29,42,.1));filter:blur(22px);opacity:.5}
+.kpi .kl{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--txt-3);font-weight:700}
+.kpi .kl .dot{width:7px;height:7px;border-radius:50%;background:var(--accent,var(--red))}
+.kpi .kv{font-family:var(--ff-disp);font-weight:800;font-size:30px;letter-spacing:-1px;margin-top:9px;line-height:1}
+.kpi .kv .cur{font-size:17px;color:var(--txt-2);font-weight:700;margin-right:1px}
+.kpi .ks{font-size:12px;color:var(--txt-2);margin-top:7px;display:flex;align-items:center;gap:6px}
+.kpi .ks .pill{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:20px}
+.pill.up{background:var(--green-ink);color:var(--green)}
+.pill.flat{background:var(--surf-3);color:var(--txt-2)}
+.kpi.gold{--accent:rgba(229,181,103,.5)}
+.kpi.gold .kv{color:var(--gold-soft)}
+.kpi.gold .dot{background:var(--gold)}
+.kpi.green{--accent:rgba(52,211,153,.4)}
+.kpi.green .dot{background:var(--green)}
 
-/* FILTERS */
-.filters-bar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.filter-group{display:flex;flex-direction:column;gap:4px;min-width:140px}
-.filter-group label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.7px}
-.filter-group select,.filter-group input[type=date]{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:8px;font-family:var(--font-body);font-size:12px;outline:none;width:100%;transition:border-color .2s}
-.filter-group select:focus,.filter-group input[type=date]:focus{border-color:var(--accent)}
-.apply-btn{background:var(--accent);color:#fff;border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;align-self:flex-end;transition:opacity .2s}
-.apply-btn:hover{opacity:.85}
+/* CARDS / GRID */
+.grid{display:grid;gap:18px}
+.g-2{grid-template-columns:1.55fr 1fr}
+.g-2b{grid-template-columns:1fr 1fr}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.card{background:linear-gradient(165deg,var(--surf),var(--ink-2));border:1px solid var(--line-soft);border-radius:var(--rad);padding:20px;box-shadow:var(--shadow)}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.card-head h3{font-family:var(--ff-disp);font-size:16px;font-weight:800;letter-spacing:-.3px}
+.card-head .ch-sub{font-size:12px;color:var(--txt-2);margin-top:3px;max-width:60ch}
+.card-head .tag{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;color:var(--gold);background:var(--gold-ink);border:1px solid rgba(229,181,103,.3);padding:4px 9px;border-radius:20px;white-space:nowrap}
 
-/* TABLES */
-.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-thead th{background:var(--surface2);color:var(--muted);font-size:10px;letter-spacing:.7px;font-weight:600;padding:10px 14px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
-tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--surface2)}
-tbody td{padding:10px 14px;white-space:nowrap}
-.progress-bar-wrap{display:flex;align-items:center;gap:8px}
-.progress-bar{height:6px;background:var(--border2);border-radius:3px;flex:1;min-width:60px}
-.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
-.progress-fill.green{background:linear-gradient(90deg,var(--green),#00b894)}
-.progress-fill.amber{background:linear-gradient(90deg,var(--amber),#e17055)}
-.progress-fill.red{background:linear-gradient(90deg,var(--red),#c0392b)}
-.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600}
-.tag.fcuk{background:rgba(91,108,255,.15);color:var(--accent)}
-.tag.fc{background:rgba(6,182,212,.15);color:var(--cyan)}
-.tag.puma{background:rgba(0,217,126,.15);color:var(--green)}
+/* SIGNATURE: incentive curve */
+.curvewrap{position:relative}
+#curveSvg{width:100%;height:300px;display:block;overflow:visible}
+.curve-readout{display:flex;gap:22px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.cr{flex:1;min-width:120px}
+.cr .crl{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--txt-3);font-weight:700}
+.cr .crv{font-family:var(--ff-disp);font-size:24px;font-weight:800;margin-top:4px;letter-spacing:-.5px}
+.cr .crv.gold{color:var(--gold-soft)} .cr .crv.red{color:var(--red-soft)} .cr .crv.green{color:var(--green)}
+.cr .crh{font-size:11.5px;color:var(--txt-2);margin-top:3px}
+
+/* SLIDER */
+.simrow{display:flex;align-items:center;gap:14px;margin:6px 0 4px}
+.simrow .slabel{font-size:12px;color:var(--txt-2);font-weight:600;min-width:60px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:6px;background:var(--surf-3);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 0 4px rgba(229,181,103,.22),0 4px 10px rgba(0,0,0,.5);transition:.1s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border:none;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 0 4px rgba(229,181,103,.22)}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.preset{padding:6px 11px;border-radius:8px;background:var(--surf);border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--txt-2);font-family:var(--ff-mono);transition:.13s}
+.preset:hover{border-color:var(--gold);color:var(--gold)}
+.preset.on{background:var(--red);border-color:var(--red);color:#fff}
+
+/* GAUGE */
+.gaugewrap{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+.gauge{position:relative;width:200px;height:118px}
+.gauge svg{width:100%;height:100%;overflow:visible}
+.gauge .gnum{position:absolute;bottom:2px;left:0;right:0;text-align:center}
+.gauge .gnum b{font-family:var(--ff-disp);font-size:34px;font-weight:900;letter-spacing:-1px;display:block;line-height:1}
+.gauge .gnum span{font-size:11px;color:var(--txt-3);letter-spacing:1px;text-transform:uppercase;font-weight:700}
+
+/* TABLE */
+.tablewrap{overflow-x:auto;border:1px solid var(--line-soft);border-radius:var(--rad-sm)}
+table{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+thead th{background:var(--ink-2);text-align:left;padding:11px 14px;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--txt-3);font-weight:700;border-bottom:1px solid var(--line);position:sticky;top:0}
+thead th.num,tbody td.num{text-align:right;font-family:var(--ff-mono);font-variant-numeric:tabular-nums}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--line-soft);color:var(--txt)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.022)}
+tbody td.money{color:var(--gold-soft);font-weight:600}
+tbody td.muted{color:var(--txt-3)}
+.tot-row td{background:var(--ink-2);font-weight:800;border-top:2px solid var(--line);color:var(--txt)}
+.tot-row td.money{color:var(--gold-soft)}
+.slabtag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:.3px}
+.s0{background:var(--surf-3);color:var(--txt-3)} .s90{background:rgba(91,157,240,.15);color:var(--blue)}
+.s100{background:rgba(229,181,103,.15);color:var(--gold)} .s110{background:rgba(229,181,103,.22);color:var(--gold-soft)}
+.s120{background:rgba(52,211,153,.16);color:var(--green)} .s125{background:rgba(52,211,153,.26);color:var(--green)}
+.vac{color:var(--txt-3);font-style:italic}
 
 /* LEADERBOARD */
-.lb-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.lb-item:last-child{border:none}
-.lb-rank{font-family:var(--font-mono);font-size:11px;color:var(--muted);width:20px;text-align:center}
-.lb-rank.gold{color:#f59e0b;font-weight:700}
-.lb-rank.silver{color:#94a3b8;font-weight:700}
-.lb-rank.bronze{color:#a16207;font-weight:700}
-.lb-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
-.lb-info{flex:1;min-width:0}
-.lb-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lb-region{font-size:10px;color:var(--muted)}
-.lb-amt{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--green)}
+.lb-top{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.podium{background:linear-gradient(165deg,var(--surf),var(--ink-2));border:1px solid var(--line-soft);border-radius:var(--rad);padding:18px;position:relative;overflow:hidden}
+.podium .medal{font-family:var(--ff-disp);font-weight:900;font-size:13px;letter-spacing:1px;display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:30px}
+.podium.g1{border-color:rgba(229,181,103,.45)} .podium.g1 .medal{background:var(--gold-ink);color:var(--gold)}
+.podium.g2 .medal{background:var(--surf-3);color:#cdd2da} .podium.g3 .medal{background:rgba(176,108,58,.2);color:#d08a55}
+.podium .pn{font-family:var(--ff-disp);font-size:18px;font-weight:800;margin-top:13px;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.podium .pr{font-size:11.5px;color:var(--txt-2);margin-top:2px}
+.podium .pv{font-family:var(--ff-disp);font-size:26px;font-weight:900;color:var(--gold-soft);margin-top:11px;letter-spacing:-.6px}
+.podium .pa{font-size:11.5px;color:var(--txt-2);margin-top:2px}
+.podium .crown{position:absolute;right:-14px;top:-14px;font-size:74px;opacity:.07;font-family:var(--ff-disp);font-weight:900}
 
-/* ALERT PILLS */
-.alerts-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.alert-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;font-size:11px;font-weight:500;border:1px solid}
-.alert-pill.success{background:rgba(0,217,126,.08);border-color:rgba(0,217,126,.3);color:var(--green)}
-.alert-pill.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.3);color:var(--amber)}
-.alert-pill.info{background:rgba(91,108,255,.08);border-color:rgba(91,108,255,.3);color:var(--accent)}
+/* INSIGHTS */
+.insight{display:flex;gap:13px;padding:13px 15px;background:var(--ink-2);border:1px solid var(--line-soft);border-radius:var(--rad-sm);margin-bottom:10px;align-items:flex-start}
+.insight .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+.insight .ic.r{background:var(--red-ink);color:var(--red-soft)} .insight .ic.g{background:var(--gold-ink);color:var(--gold)} .insight .ic.gr{background:var(--green-ink);color:var(--green)}
+.insight .ic svg{width:17px;height:17px}
+.insight .it{font-size:13px;color:var(--txt);line-height:1.5}
+.insight .it b{color:var(--gold-soft);font-weight:700}
+.insight .it .rg{color:var(--red-soft)} .insight .it .gn{color:var(--green)}
 
-/* TABS */
-.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--surface2);border-radius:12px;padding:4px;width:fit-content}
-.tab{padding:8px 18px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);transition:all .15s}
-.tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+/* SLAB EDITOR */
+.slabtable{width:100%;border-collapse:collapse;font-size:13px}
+.slabtable td,.slabtable th{padding:10px 12px;border-bottom:1px solid var(--line-soft);text-align:left}
+.slabtable th{font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--txt-3);font-weight:700}
+.slabtable input{width:64px;padding:7px;background:var(--ink);border:1px solid var(--line);border-radius:7px;color:var(--gold-soft);font-family:var(--ff-mono);font-weight:700;text-align:center}
+.slabtable input:focus{outline:none;border-color:var(--gold)}
+.miniband{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
 
-/* VIEW SECTIONS */
-.view-section{display:none}
-.view-section.active{display:block}
+/* toolbar / filters */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.toolbar select,.toolbar input[type=text]{padding:9px 12px;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--rad-sm);color:var(--txt);font-size:13px;font-weight:500}
+.toolbar select:focus,.toolbar input:focus{outline:none;border-color:var(--gold)}
+.toolbar .seg{display:flex;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--rad-sm);overflow:hidden}
+.toolbar .seg button{padding:9px 14px;font-size:12.5px;font-weight:700;color:var(--txt-2);transition:.13s}
+.toolbar .seg button.on{background:var(--red);color:#fff}
+.btn-ghost{padding:9px 14px;background:var(--surf);border:1px solid var(--line);border-radius:var(--rad-sm);font-size:12.5px;font-weight:700;color:var(--txt-2);display:inline-flex;align-items:center;gap:7px;transition:.13s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ghost svg{width:15px;height:15px}
+.chartbox{position:relative;height:260px}
+.note{font-size:12px;color:var(--txt-3);margin-top:12px;line-height:1.5}
+.sectiontitle{font-family:var(--ff-disp);font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-3);margin:30px 0 14px;display:flex;align-items:center;gap:12px}
+.sectiontitle::after{content:"";flex:1;height:1px;background:var(--line-soft)}
 
-/* UPLOAD MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px;width:min(500px,94vw)}
-.modal h3{font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:8px}
-.modal p{color:var(--muted);font-size:12px;margin-bottom:24px}
-.upload-zone{border:2px dashed var(--border2);border-radius:14px;padding:36px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surface2)}
-.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:var(--glow)}
-.upload-zone .uz-icon{font-size:36px;margin-bottom:10px}
-.upload-zone .uz-text{font-size:13px;color:var(--muted)}
-.upload-zone strong{color:var(--accent)}
-#file-input{display:none}
-.upload-log{margin-top:20px;max-height:140px;overflow-y:auto}
-.upload-log-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--surface2);border-radius:8px;margin-bottom:6px;font-size:11px}
-.upload-log-item .ul-icon{font-size:14px}
-.ul-name{flex:1;color:var(--text)}
-.ul-rows{color:var(--muted);font-family:var(--font-mono)}
-.ul-status{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(0,217,126,.15);color:var(--green)}
-.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
-.btn-secondary{background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:9px 20px;border-radius:9px;font-size:12px;cursor:pointer;font-weight:600}
-.btn-secondary:hover{border-color:var(--muted)}
+.toast{position:fixed;bottom:24px;right:24px;z-index:90;background:var(--surf-2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:var(--rad-sm);padding:13px 16px;font-size:13px;font-weight:600;box-shadow:0 18px 40px -16px rgba(0,0,0,.8);transform:translateY(120%);transition:.3s cubic-bezier(.2,.8,.2,1);max-width:340px}
+.toast.show{transform:none}
+.toast b{color:var(--gold-soft)}
 
-/* PROJECTION WIDGET */
-.proj-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.proj-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
-.proj-box .p-val{font-family:var(--font-head);font-size:18px;font-weight:800;color:var(--accent)}
-.proj-box .p-lbl{font-size:10px;color:var(--muted);margin-top:4px}
-
-/* EXPORT */
-.export-row{display:flex;gap:8px}
-.export-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--muted);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:all .15s}
-.export-btn:hover{border-color:var(--accent);color:var(--accent)}
-
-/* SCHEME EDITOR */
-.scheme-edit-grid{display:grid;gap:10px}
-.scheme-edit-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:center;background:var(--surface2);padding:10px 12px;border-radius:10px;border:1px solid var(--border)}
-.scheme-edit-row input,.scheme-edit-row select{background:var(--surface);border:1px solid var(--border2);color:var(--text);padding:6px 10px;border-radius:6px;font-family:var(--font-body);font-size:11px;width:100%;outline:none}
-.del-btn{background:none;border:1px solid rgba(244,63,94,.3);color:var(--red);padding:5px 8px;border-radius:6px;cursor:pointer;font-size:12px}
-.del-btn:hover{background:rgba(244,63,94,.1)}
-.add-scheme-btn{background:var(--surface2);border:1px dashed var(--border2);color:var(--muted);padding:10px;border-radius:10px;cursor:pointer;width:100%;font-size:12px;transition:all .2s}
-.add-scheme-btn:hover{border-color:var(--accent);color:var(--accent)}
-
-/* MOBILE MENU */
-.mob-menu-btn{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px}
-.mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
-
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .mob-overlay.open{display:block}
-  .mob-menu-btn{display:block}
-  .main{margin-left:0}
-  .panel-row.col-2,.panel-row.col-3,.panel-row.col-7-5{grid-template-columns:1fr}
-  .kpi-grid{grid-template-columns:repeat(2,1fr)}
-  .scheme-edit-row{grid-template-columns:1fr 1fr;gap:6px}
-  .proj-row{grid-template-columns:repeat(3,1fr)}
-  .filters-bar{gap:8px}
+@media (max-width:1080px){.g-2,.g-2b,.g-3{grid-template-columns:1fr}.lb-top{grid-template-columns:1fr}}
+@media (max-width:860px){
+  #login{grid-template-columns:1fr}#login .brandside{display:none}
+  .shell{grid-template-columns:1fr}
+  .rail{position:fixed;left:0;top:0;z-index:60;width:236px;transform:translateX(-110%);transition:.25s;box-shadow:0 0 60px rgba(0,0,0,.7)}
+  .rail.open{transform:none}
+  .menu-btn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--surf);border:1px solid var(--line)}
+  .menu-btn svg{width:20px;height:20px}
+  .scenbar{flex:1 1 100%;order:5;justify-content:space-between}
+  .content{padding:20px 16px 50px}
+  .topbar{padding:12px 16px}
+  .scen-cell input{width:54px}
 }
-@media(max-width:400px){
-  .kpi-grid{grid-template-columns:1fr 1fr}
-  .kpi-value{font-size:20px}
-}
-
-/* SCROLL */
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:var(--surface)}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-
-/* SPIN ANIM */
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin{animation:spin 1s linear infinite}
-
-/* FADE IN */
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.fade-up{animation:fadeUp .35s ease forwards}
-
-.empty-state{text-align:center;padding:40px;color:var(--muted)}
-.empty-icon{font-size:36px;margin-bottom:10px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:55}
+.backdrop.show{display:block}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-overlay">
-  <div class="login-card">
-    <div class="login-logo">UNDERLINEN</div>
-    <div class="login-sub">SALES INCENTIVE INTELLIGENCE · FY 2026-27</div>
-    <div class="login-select-wrap">
-      <label>SELECT YOUR ROLE</label>
-      <select id="role-select">
-        <option value="">— Choose Role —</option>
-        <option value="esm">Sales Executive (ESM)</option>
-        <option value="supervisor">Supervisor / ASM</option>
-        <option value="manager">Manager / ZSM</option>
-        <option value="mis">MIS Admin</option>
-      </select>
-      <label>YOUR NAME</label>
-      <select id="user-select"><option value="">— Select Role First —</option></select>
-      <label>PASSWORD (demo: 1234)</label>
-      <input type="password" id="pwd-input" placeholder="Enter password">
+<!-- ===================== LOGIN ===================== -->
+<div id="login" style="display: grid;">
+  <div class="brandside">
+    <div class="loginmark">
+      <div class="logo-glyph">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17l5-6 4 3 5-8 4 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="20" cy="11" r="2" fill="#E5B567"></circle></svg>
+      </div>
+      <div><h1>SchemeIQ</h1><span>UNDERLINEN</span></div>
     </div>
-    <button class="btn-primary" onclick="doLogin()">Sign In →</button>
-    <div class="login-hint">Demo Mode · Any password works</div>
+    <div class="login-hero">
+      <div class="eyebrow">Sales Incentive Intelligence</div>
+      <h2>Every push to the next slab,<br><em>priced in real rupees.</em></h2>
+      <p>Live BASE + INCREMENTAL payout engine for the national field force. One PIN signs you in — Region, ABM or BE — and you see only your slice, recalculating the instant a scenario changes.</p>
+    </div>
+    <div class="login-foot">
+      <div><b id="lf-so">44</b>Business Execs</div>
+      <div><b id="lf-asm">21</b>ABM</div>
+      <div><b id="lf-rh">4</b>Regions</div>
+      <div><b>Q1</b>Apr · May · Jun</div>
+    </div>
+  </div>
+  <div class="formside">
+    <div class="loginbox">
+      <h3>Enter your PIN</h3>
+      <p class="sub">Region, ABM &amp; BE access — you see only what you own.</p>
+      <div class="field"><label>Access PIN</label><input id="lpin" type="text" inputmode="latin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6" placeholder="e.g. KU19 or 1100" oninput="this.value=this.value.toUpperCase()"></div>
+      <label class="remember"><input type="checkbox" id="lr"> Keep me signed in on this device</label>
+      <button class="btn btn-primary" onclick="doLogin()">Unlock dashboard</button>
+      <div class="loginerr" id="lerr">PIN not recognised. Try a sample PIN below.</div>
+      <div class="demo-accts">
+        <div class="dl">Quick access · sample PINs</div>
+        <div class="chips" id="demochips"><button class="chip" onclick="quick(&#39;9999&#39;)">MIS Admin · <b>9999</b></button><button class="chip" onclick="quick(&#39;1100&#39;)">North Region · <b>1100</b></button><button class="chip" onclick="quick(&#39;GU06&#39;)">ABM · Gulshan Kumar · <b>GU06</b></button><button class="chip" onclick="quick(&#39;MU26&#39;)">BE · Muzamil Yousuf · <b>MU26</b></button></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- MAIN APP -->
-<div class="app" id="app">
-  <!-- Sidebar -->
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-name">UNDERLINEN</div>
-      <div class="brand-sub">INCENTIVE INTELLIGENCE</div>
-      <div class="role-badge" id="role-badge">ESM VIEW</div>
-    </div>
-    <div class="nav-section">DASHBOARDS</div>
-    <div class="nav-item active" onclick="showSection(&#39;dashboard&#39;,this)" data-for="all">
-      <span class="nav-icon">⚡</span>My Dashboard
-    </div>
-    <div class="nav-item" onclick="showSection(&#39;team&#39;,this)" data-for="supervisor,manager,mis">
-      <span class="nav-icon">👥</span>Team Performance
-    </div>
-    <div class="nav-item" onclick="showSection(&#39;incentives&#39;,this)" data-for="all">
-      <span class="nav-icon">₹</span>Incentives
-    </div>
-    <div class="nav-item" onclick="showSection(&#39;leaderboard&#39;,this)" data-for="all">
-      <span class="nav-icon">🏆</span>Leaderboard
-    </div>
-    <div class="nav-section">ANALYTICS</div>
-    <div class="nav-item" onclick="showSection(&#39;schemes&#39;,this)" data-for="manager,mis">
-      <span class="nav-icon">⚙️</span>Scheme Manager
-    </div>
-    <div class="nav-item" onclick="showSection(&#39;reports&#39;,this)" data-for="all">
-      <span class="nav-icon">📊</span>Reports
-    </div>
-    <div class="nav-item" onclick="showSection(&#39;upload&#39;,this)" data-for="mis">
-      <span class="nav-icon">📂</span>Data Upload
-    </div>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="avatar" id="sb-avatar">U</div>
-        <div class="user-info">
-          <div class="user-name" id="sb-name">User</div>
-          <div class="user-role" id="sb-role">ESM</div>
-        </div>
-        <button class="logout-btn" onclick="doLogout()">Out</button>
+<!-- ===================== APP ===================== -->
+<div id="app" style="display: none;">
+  <div class="backdrop" id="backdrop" onclick="toggleRail(false)"></div>
+  <div class="shell">
+    <aside class="rail" id="rail">
+      <div class="mark">
+        <div class="logo-glyph"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l5-6 4 3 5-8 4 5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="20" cy="11" r="2" fill="#E5B567"></circle></svg></div>
+        <div><h1>SchemeIQ</h1><span>UNDERLINEN</span></div>
       </div>
-    </div>
-  </nav>
-  <div class="mob-overlay" id="mob-overlay" onclick="closeMobMenu()"></div>
-
-  <!-- Main -->
-  <div class="main">
-    <div class="topbar">
-      <div style="display:flex;align-items:center;gap:12px">
-        <button class="mob-menu-btn" onclick="toggleMobMenu()">☰</button>
-        <div class="page-title" id="page-title">My Dashboard</div>
+      <div id="navitems"><div class="nav-label">Zone</div><button class="navitem" data-pg="overview" onclick="go(&#39;overview&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>Zone Overview</button><button class="navitem active" data-pg="officers" onclick="go(&#39;officers&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M23 21v-2a4 4 0 00-3-3.87M16 3.13A4 4 0 0116 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>My Officers</button><button class="navitem" data-pg="team" onclick="go(&#39;team&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>ASM Rollup</button><button class="navitem" data-pg="leaderboard" onclick="go(&#39;leaderboard&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0zM7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Zone Leaderboard</button><button class="navitem" data-pg="simulator" onclick="go(&#39;simulator&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>Scenario Lab</button><button class="navitem" data-pg="analytics" onclick="go(&#39;analytics&#39;)"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M7 14l3-3 3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Analytics</button></div>
+      <div class="rail-foot">
+        <div class="userchip">
+          <div class="avatar" id="uAv">N</div>
+          <div style="min-width:0"><div class="un" id="uName">North Region</div><div class="ur" id="uRole">Region Head</div></div>
+        </div>
+        <button class="logout" onclick="doLogout()">
+          <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Sign out
+        </button>
       </div>
-      <div class="topbar-right">
-        <span class="last-updated" id="last-updated">Last updated: —</span>
-        <button class="refresh-btn" onclick="refreshDashboard()">↻ Refresh</button>
-        <button class="upload-btn" id="upload-trigger-btn" onclick="openUploadModal()">⬆ Upload Data</button>
-      </div>
-    </div>
+    </aside>
 
-    <div class="content">
-
-      <!-- ── ALERTS ───────────────────────────── -->
-      <div class="alerts-wrap" id="alerts-wrap"></div>
-
-      <!-- ══ DASHBOARD VIEW ════════════════════════════════════ -->
-      <div class="view-section active" id="sec-dashboard">
-        <div class="kpi-grid" id="kpi-grid"></div>
-        <div class="panel-row col-7-5">
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">Target vs Achievement</div>
-              <div class="panel-actions">
-                <span class="chip active" onclick="switchBarView(&#39;brand&#39;,this)">Brand</span>
-                <span class="chip" onclick="switchBarView(&#39;region&#39;,this)">Region</span>
-              </div>
-            </div>
-            <canvas id="barChart"></canvas>
-          </div>
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">Incentive Mix</div>
-            </div>
-            <canvas id="pieChart"></canvas>
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" onclick="toggleRail(true)"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></button>
+        <div class="pgtitle"><h2 id="pgTitle">Officers</h2><p id="pgSub">Sales Officer incentive ledger</p></div>
+        <div class="spacer"></div>
+        <div class="scenbar">
+          <div class="lbl">June Scenario<small>type any %</small></div>
+          <div class="scen-inputs">
+            <div class="scen-cell"><span>S1</span><input id="s1" type="number" step="1" value="90" onchange="onScen()" oninput="onScen()"></div>
+            <div class="scen-cell"><span>S2</span><input id="s2" type="number" step="1" value="100" onchange="onScen()" oninput="onScen()"></div>
+            <div class="scen-cell"><span>S3</span><input id="s3" type="number" step="1" value="120" onchange="onScen()" oninput="onScen()"></div>
           </div>
         </div>
-        <div class="panel-row col-2">
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">Daily Sales Trend</div>
-              <div class="panel-actions">
-                <span class="chip active" onclick="switchTrend(&#39;daily&#39;,this)">Daily</span>
-                <span class="chip" onclick="switchTrend(&#39;weekly&#39;,this)">Weekly</span>
-              </div>
-            </div>
-            <canvas id="lineChart"></canvas>
-          </div>
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">Incentive Projection</div>
-            </div>
-            <div id="proj-content"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ TEAM VIEW ════════════════════════════════════════ -->
-      <div class="view-section" id="sec-team">
-        <div class="filters-bar">
-          <div class="filter-group">
-            <label>BRAND</label>
-            <select id="t-brand"><option value="">All Brands</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select>
-          </div>
-          <div class="filter-group">
-            <label>REGION</label>
-            <select id="t-region"><option value="">All Regions</option><option>North</option><option>West</option><option>South</option><option>East</option></select>
-          </div>
-          <div class="filter-group">
-            <label>FROM DATE</label>
-            <input type="date" id="t-from" value="2026-04-01">
-          </div>
-          <div class="filter-group">
-            <label>TO DATE</label>
-            <input type="date" id="t-to" value="2026-04-30">
-          </div>
-          <button class="apply-btn" onclick="renderTeamTable()">Apply</button>
-        </div>
-        <div class="tabs">
-          <div class="tab active" onclick="switchTeamTab(&#39;esm&#39;,this)">ESM-wise</div>
-          <div class="tab" onclick="switchTeamTab(&#39;distributor&#39;,this)">Distributor-wise</div>
-          <div class="tab" onclick="switchTeamTab(&#39;outlet&#39;,this)">Outlet-wise</div>
-        </div>
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title" id="team-table-title">ESM Performance</div>
-            <div class="export-row">
-              <button class="export-btn" onclick="exportTableCSV(&#39;team-table&#39;,&#39;ESM_Performance&#39;)">⬇ CSV</button>
-              <button class="export-btn" onclick="exportTablePDF()">⬇ PDF</button>
-            </div>
-          </div>
-          <div class="table-wrap" id="team-table-wrap"></div>
-        </div>
-      </div>
-
-      <!-- ══ INCENTIVES VIEW ══════════════════════════════════ -->
-      <div class="view-section" id="sec-incentives">
-        <div class="kpi-grid" id="inc-kpi-grid"></div>
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">Scheme-wise Incentive Breakdown</div>
-            <div class="export-row">
-              <button class="export-btn" onclick="exportTableCSV(&#39;inc-table&#39;,&#39;Incentive_Breakdown&#39;)">⬇ CSV</button>
-            </div>
-          </div>
-          <div class="table-wrap" id="inc-table-wrap"></div>
-        </div>
-        <div class="panel-row col-2" style="margin-top:16px">
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom:14px">Slab Status — Current Quarter</div>
-            <div id="slab-status"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom:14px">Pending vs Paid</div>
-            <canvas id="incStatusChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ LEADERBOARD ══════════════════════════════════════ -->
-      <div class="view-section" id="sec-leaderboard">
-        <div class="panel-row col-2">
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">🏆 Top ESM — NSV</div>
-              <select id="lb-brand" onchange="renderLeaderboard()" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:5px 10px;border-radius:8px;font-size:11px;outline:none">
-                <option value="">All Brands</option><option>FCUK</option><option>French Connection</option><option>PUMA</option>
-              </select>
-            </div>
-            <div id="lb-list"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-header">
-              <div class="panel-title">🎯 Top ESM — Incentive Earned</div>
-            </div>
-            <div id="lb-inc-list"></div>
-          </div>
-        </div>
-        <div class="panel" style="margin-top:16px">
-          <div class="panel-header">
-            <div class="panel-title">Team Heat Map — Achievement %</div>
-          </div>
-          <div id="heatmap-wrap" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:4px"></div>
-        </div>
-      </div>
-
-      <!-- ══ SCHEME MANAGER ═══════════════════════════════════ -->
-      <div class="view-section" id="sec-schemes">
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title">Incentive Scheme Configuration (MIS / Manager)</div>
-            <button class="export-btn" onclick="exportSchemes()">⬇ Export Schemes</button>
-          </div>
-          <div class="scheme-edit-grid" id="scheme-edit-grid"></div>
-          <button class="add-scheme-btn" onclick="addSchemeRow()" style="margin-top:10px">+ Add New Slab</button>
-          <div style="margin-top:14px;display:flex;gap:10px;justify-content:flex-end">
-            <button class="btn-primary" onclick="saveSchemes()" style="width:auto;padding:9px 24px">💾 Save Schemes</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ══ REPORTS VIEW ═════════════════════════════════════ -->
-      <div class="view-section" id="sec-reports">
-        <div class="filters-bar">
-          <div class="filter-group">
-            <label>PERIOD</label>
-            <select id="rpt-period"><option>MTD</option><option>QTD</option><option>YTD</option><option>Custom</option></select>
-          </div>
-          <div class="filter-group">
-            <label>BRAND</label>
-            <select id="rpt-brand"><option value="">All</option><option>FCUK</option><option>French Connection</option><option>PUMA</option></select>
-          </div>
-          <div class="filter-group">
-            <label>REGION</label>
-            <select id="rpt-region"><option value="">All</option><option>North</option><option>West</option><option>South</option><option>East</option></select>
-          </div>
-          <button class="apply-btn" onclick="renderReports()">Generate</button>
-          <button class="export-btn" style="align-self:flex-end" onclick="exportTableCSV(&#39;rpt-table&#39;,&#39;Sales_Report&#39;)">⬇ Export</button>
-        </div>
-        <div class="kpi-grid" id="rpt-kpis"></div>
-        <div class="panel">
-          <div class="panel-header">
-            <div class="panel-title" id="rpt-title">MTD Summary Report</div>
-          </div>
-          <div class="table-wrap" id="rpt-table-wrap"></div>
-        </div>
-      </div>
-
-      <!-- ══ UPLOAD VIEW ══════════════════════════════════════ -->
-      <div class="view-section" id="sec-upload">
-        <div class="panel-row col-2">
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom:16px">Upload Sales Data</div>
-            <div class="upload-zone" id="main-upload-zone" onclick="document.getElementById(&#39;main-file-input&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="handleMainDrop(event)">
-              <div class="uz-icon">📂</div>
-              <div class="uz-text">Drop Excel/CSV here or <strong>Browse</strong></div>
-              <div style="font-size:10px;color:var(--muted);margin-top:6px">Supports .xlsx · .xls · .csv</div>
-            </div>
-            <input type="file" id="main-file-input" accept=".xlsx,.xls,.csv" onchange="handleMainUpload(event)">
-            <div id="upload-validation" style="margin-top:14px"></div>
-          </div>
-          <div class="panel">
-            <div class="panel-title" style="margin-bottom:16px">Upload History</div>
-            <div id="upload-history-list"></div>
-          </div>
-        </div>
-        <div class="panel" style="margin-top:16px">
-          <div class="panel-title" style="margin-bottom:14px">Data Preview (Last Upload)</div>
-          <div class="table-wrap" id="upload-preview-table"><div class="empty-state"><div class="empty-icon">📂</div>No data uploaded yet</div></div>
-        </div>
-      </div>
-
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /app -->
-
-<!-- UPLOAD MODAL -->
-<div class="modal-overlay" id="upload-modal">
-  <div class="modal">
-    <h3>Upload Sales Data</h3>
-    <p>Drop or select your Excel / CSV file. The system will validate and auto-populate the dashboard.</p>
-    <div class="upload-zone" id="modal-upload-zone" onclick="document.getElementById(&#39;file-input&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="handleFileDrop(event)">
-      <div class="uz-icon">📂</div>
-      <div class="uz-text">Drop file here or <strong>Browse Files</strong></div>
-    </div>
-    <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)">
-    <div class="upload-log" id="upload-log"></div>
-    <div class="modal-actions">
-      <button class="btn-secondary" onclick="closeUploadModal()">Close</button>
-      <button class="btn-primary" style="width:auto;padding:9px 24px" onclick="processUpload()">Apply to Dashboard</button>
+      </header>
+      <div class="content" id="content"><div class="toolbar">
+    <input type="text" id="qSO" placeholder="Search officer / ASM…" oninput="renderOfficerTable()" style="min-width:220px">
+    <select id="fRegion" onchange="renderOfficerTable()" disabled=""><option value="">All regions</option><option>Sachin Sapra</option></select>
+    <select id="fBand" onchange="renderOfficerTable()">
+      <option value="">All bands · May</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
+    </select>
+    <div class="spacer" style="flex:1"></div>
+    <button class="btn-ghost" onclick="exportCSV()"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Export CSV</button>
+  </div><div id="officerTableWrap"><div class="tablewrap"><table><thead><tr>
+    <th>Officer</th><th>ASM / BM</th><th>Region</th><th class="num">May Ach</th><th>May band</th>
+    <th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th><th class="num">Q1 S2</th>
+    </tr></thead><tbody><tr>
+      <td>Sumit Kumar</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
+      <td class="num">10.3%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹18,900</td><td class="num money">₹21,000</td><td class="num">₹32,200</td><td class="num money">₹21,000</td>
+    </tr><tr>
+      <td>Deepak Sarwara</td><td class="muted">Kapil Kakkar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">66.2%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹10,163</td><td class="num money">₹11,292</td><td class="num">₹17,314</td><td class="num money">₹11,292</td>
+    </tr><tr>
+      <td>Naresh Kumar</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">11.2%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹9,528</td><td class="num money">₹10,587</td><td class="num">₹16,233</td><td class="num money">₹10,587</td>
+    </tr><tr>
+      <td>Manshu Maggo</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">42.8%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹8,894</td><td class="num money">₹9,882</td><td class="num">₹15,152</td><td class="num money">₹9,882</td>
+    </tr><tr>
+      <td>Western Up</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
+      <td class="num">89.8%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹7,625</td><td class="num money">₹8,472</td><td class="num">₹12,990</td><td class="num money">₹8,472</td>
+    </tr><tr>
+      <td>Deepak Ghand</td><td class="muted">Deepak Dhawan</td><td class="muted">Sachin Sapra</td>
+      <td class="num">159.2%</td><td><span class="slabtag s125">125%+</span></td>
+      <td class="num money">—</td><td class="num money">₹20,999</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹28,058</td>
+    </tr><tr>
+      <td>Sunil Kumar</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
+      <td class="num">44.7%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹7,059</td>
+    </tr><tr>
+      <td>Muzamil Yousuf</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">110.6%</td><td><span class="slabtag s110">110–119%</span></td>
+      <td class="num money">₹8,673</td><td class="num money">₹8,559</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹24,291</td>
+    </tr><tr>
+      <td>Nafees Usmani</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
+      <td class="num">65.4%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹6,210</td><td class="num money">₹6,900</td><td class="num">₹10,580</td><td class="num money">₹6,900</td>
+    </tr><tr>
+      <td>Anshuman Tiwari</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">23.7%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹5,670</td><td class="num money">₹6,300</td><td class="num">₹9,660</td><td class="num money">₹6,300</td>
+    </tr><tr>
+      <td>Manoj Kumar Gupta</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
+      <td class="num">25.4%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹4,574</td><td class="num money">₹5,082</td><td class="num">₹7,792</td><td class="num money">₹5,082</td>
+    </tr><tr>
+      <td>Raveendra Singh</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
+      <td class="num">66.3%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹4,050</td><td class="num money">₹4,500</td><td class="num">₹6,900</td><td class="num money">₹4,500</td>
+    </tr><tr>
+      <td>Sanjay Singh</td><td class="muted">Kapil Kakkar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">53.1%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹3,812</td><td class="num money">₹4,236</td><td class="num">₹6,495</td><td class="num money">₹4,236</td>
+    </tr><tr>
+      <td>Chandra Mohan</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
+      <td class="num">81.1%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td><td class="num money">₹3,300</td>
+    </tr><tr>
+      <td><span class="vac">Vacant SO-5</span></td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
+      <td class="num">38.1%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td><td class="num money">₹3,300</td>
+    </tr><tr>
+      <td>Ariz Yar Khan</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
+      <td class="num">72.5%</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹2,025</td><td class="num money">₹2,250</td><td class="num">₹3,450</td><td class="num money">₹2,250</td>
+    </tr><tr>
+      <td><span class="vac">Vacant SO-4</span></td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
+      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+    </tr><tr>
+      <td><span class="vac">Vacant SO-6</span></td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
+      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+    </tr><tr>
+      <td><span class="vac">Vacant SO-7</span></td><td class="muted">Vacant ASM-3</td><td class="muted">Sachin Sapra</td>
+      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
+      <td class="num money">—</td><td class="num money">—</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+    </tr>
+    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">19 rows</td><td></td><td></td>
+      <td class="num money">₹8,673</td><td class="num money">₹29,558</td>
+      <td class="num">₹1,06,450</td><td class="num money">₹1,18,278</td><td class="num">₹1,81,360</td><td class="num money">₹1,56,509</td></tr>
+    </tbody></table></div></div></div>
     </div>
   </div>
 </div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════════
-const STATE = {
-  role: '', userName: '', userId: '',
-  salesData: [],
-  schemes: [],
-  targets: [],
-  uploadLog: [],
-  barView: 'brand',
-  trendView: 'daily',
-  teamTab: 'esm',
-  currentSection: 'dashboard',
-  pendingFile: null,
-  // Key specific outlets for Rs.500 enrollment bonus per month
-  keyOutlets: ['O001','O003','O007','O011','O015','O018','O022','O025'],
-  charts: {}
-};
+/* ============ DATA (from TEAM_Incentive_LIVE_FORMULA.xlsx) ============ */
+const RAW = [["Avinash Singh", "Balvantkumar Thakordas Rana", "Kukreja Jay Harilal", 5, 3000, 1412, 3000, 2868, 3000], ["Avinash Singh", "Balvantkumar Thakordas Rana", "Rajkot", 1, 1100, 559, 1100, 388, 1100], ["Avinash Singh", "Balvantkumar Thakordas Rana", "Shah Kevin Dinesh", 1, 1500, 209, 1500, 117, 1500], ["Avinash Singh", "Balvantkumar Thakordas Rana", "Vacant SO-1", 3, 2118, 0, 2118, 148, 2118], ["Avinash Singh", "Balvantkumar Thakordas Rana", "Vadodara", 1, 0, 0, 0, 0, 0], ["Avinash Singh", "Jitendra Chaturvedi", "Hitesh Dashrath Khandagale", 2, 3294, 2375, 3294, 1348, 3294], ["Avinash Singh", "Maharashtra", "Dipak Saraf", 1, 1647, 524, 1647, 611, 2353], ["Avinash Singh", "Maharashtra", "Lokesh Dayaram Patel", 2, 1529, 488, 1529, 572, 1647], ["Avinash Singh", "Maharashtra", "Sandip N Y", 1, 1100, 844, 1100, 1290, 1100], ["Avinash Singh", "Pradeep Parnami", "Brij Mathur", 2, 2118, 2117, 2118, 1194, 2353], ["Avinash Singh", "Pradeep Parnami", "Pankaj Charaya", 1, 1100, 1777, 1100, 1128, 1100], ["Avinash Singh", "Pradeep Parnami", "Salim Mohammad", 2, 1882, 1549, 1882, 1228, 1882], ["Avinash Singh", "Santosh Kumar Dubey", "Avinash Chavhan", 2, 2588, 0, 2588, 12, 2588], ["Rajarshri De", "Anup Kumar Das", "North East", 1, 1100, 225, 1100, 0, 1100], ["Rajarshri De", "Anup Kumar Das", "Siliguri", 1, 700, 0, 700, 0, 700], ["Rajarshri De", "Bihar", "Ankit Kumar Verma", 1, 700, 0, 700, 0, 700], ["Rajarshri De", "Bihar", "Gaya", 1, 500, 0, 500, 0, 500], ["Rajarshri De", "Bihar", "Md Salman Khurshid", 2, 1100, 184, 1100, 286, 1100], ["Rajarshri De", "Jharkhand", "Ravikanth Burman", 1, 1100, 650, 1100, 478, 1100], ["Rajarshri De", "Manoj Jena", "Bhubneshwer", 1, 1100, 924, 1100, 868, 1100], ["Rajarshri De", "Vacant ASM-1", "Vacant SO-2", 1, 2118, 0, 2118, 0, 2118], ["Rajarshri De", "Vacant ASM-2", "Vacant SO-3", 1, 500, 0, 500, 366, 500], ["Rajarshri De", "West Bengal", "Kolkata", 1, 750, 0, 750, 0, 750], ["Sachin Sapra", "Ashish Saxena", "Ariz Yar Khan", 1, 750, 0, 750, 544, 750], ["Sachin Sapra", "Ashish Saxena", "Chandra Mohan", 1, 1100, 922, 1100, 892, 1100], ["Sachin Sapra", "Ashish Saxena", "Nafees Usmani", 1, 1900, 990, 1900, 1242, 2300], ["Sachin Sapra", "Ashish Saxena", "Vacant SO-4", 1, 0, 0, 0, 0, 0], ["Sachin Sapra", "Ashish Saxena", "Western Up", 1, 2824, 466, 2824, 2537, 2824], ["Sachin Sapra", "Deepak Dhawan", "Deepak Ghand", 2, 2353, 1698, 2353, 3747, 2353], ["Sachin Sapra", "Diwakar Pandey", "Manoj Kumar Gupta", 2, 1694, 179, 1694, 430, 1694], ["Sachin Sapra", "Diwakar Pandey", "Raveendra Singh", 1, 1500, 42, 1500, 994, 1500], ["Sachin Sapra", "Diwakar Pandey", "Sumit Kumar", 3, 7000, 1811, 7000, 723, 7000], ["Sachin Sapra", "Diwakar Pandey", "Sunil Kumar", 1, 2353, 104, 2353, 1051, 2353], ["Sachin Sapra", "Diwakar Pandey", "Vacant SO-5", 1, 1100, 27, 1100, 419, 1100], ["Sachin Sapra", "Gulshan Kumar", "Anshuman Tiwari", 1, 2100, 1021, 2100, 498, 2100], ["Sachin Sapra", "Gulshan Kumar", "Manshu Maggo", 3, 3294, 1598, 3294, 1410, 3294], ["Sachin Sapra", "Gulshan Kumar", "Muzamil Yousuf", 1, 2353, 2622, 2353, 2603, 2353], ["Sachin Sapra", "Gulshan Kumar", "Naresh Kumar", 3, 3529, 820, 3529, 395, 3529], ["Sachin Sapra", "Gulshan Kumar", "Vacant SO-6", 1, 0, 0, 0, 19, 0], ["Sachin Sapra", "Kapil Kakkar", "Deepak Sarwara", 2, 3294, 987, 3294, 2179, 3764], ["Sachin Sapra", "Kapil Kakkar", "Sanjay Singh", 1, 1412, 978, 1412, 750, 1412], ["Sachin Sapra", "Vacant ASM-3", "Vacant SO-7", 1, 0, 0, 0, 0, 0], ["South", "Kerala", "Akhil Mv", 1, 1882, 0, 1882, 0, 1882], ["South", "Tamilnadu", "Akhil Mv", 1, 1100, 0, 1100, 0, 1100], ["South", "Tamilnadu", "Ramesh Babu", 1, 1529, 475, 1529, 264, 1529], ["South", "Tamilnadu", "Tamilnadu", 1, 1529, 302, 1529, 0, 1529], ["South", "Touhid Pasha M", "Hamsa V A", 1, 1100, 984, 1100, 604, 1100], ["South", "Touhid Pasha M", "Karnataka", 1, 1500, 0, 1500, 349, 1500], ["South", "Vacant ASM-4", "Vacant SO-8", 2, 1100, 0, 1100, 0, 1100], ["South", "Vemula Venkata Chalam", "Abdul Rajak", 3, 4705, 378, 4705, 296, 4705], ["South", "Vemula Venkata Chalam", "Modem Ramu", 1, 1100, 254, 1100, 430, 1100], ["South", "Vemula Venkata Chalam", "Mummidi Setty Nagaraju", 1, 1100, 148, 1100, 0, 1100]];
+// [region, asm, so, dist, aprT, aprA, mayT, mayA, junT]
+const SO = RAW.map((r,i)=>({id:i,region:r[0],asm:r[1],name:r[2],dist:r[3],
+  aprT:r[4],aprA:r[5],mayT:r[6],mayA:r[7],junT:r[8],
+  vacant:/^vacant/i.test(r[2])}));
 
-const USERS = {
-  esm: [
-    {id:'E01',name:'Rahul Verma'},{id:'E02',name:'Sneha Gupta'},{id:'E03',name:'Karan Singh'},
-    {id:'E04',name:'Pooja Mehta'},{id:'E05',name:'Arjun Das'},{id:'E06',name:'Divya Pillai'},
-    {id:'E07',name:'Nikhil Reddy'},{id:'E08',name:'Preethi Nair'},{id:'E09',name:'Suresh Babu'},
-    {id:'E10',name:'Manish Tiwari'}
-  ],
-  supervisor: [
-    {id:'S01',name:'Amit Sharma'},{id:'S02',name:'Deepak Nair'},{id:'S03',name:'Sunita Rao'},
-    {id:'S04',name:'Ravi Kumar'},{id:'S05',name:'Meena Iyer'},{id:'S06',name:'Ganesh Rao'},
-    {id:'S07',name:'Rajesh Gupta'}
-  ],
-  manager: [
-    {id:'M01',name:'Priya Kapoor'},{id:'M02',name:'Vikram Joshi'},
-    {id:'M03',name:'Ananya Sen'},{id:'M04',name:'Sunil Bose'}
-  ],
-  mis: [{id:'MIS01',name:'MIS Admin'}]
-};
+/* ============ SLAB ENGINE (editable) ============ */
+const DEFAULT_SLAB={entry:0.9,base:3,r100:4,r110:6,r120:8,r125:10};
+let SLAB=loadJSON('schemeiq_slab',{...DEFAULT_SLAB});
+function soInc(target,actual,cfg){
+  cfg=cfg||SLAB; if(!target)return 0;
+  const ach=actual/target;
+  if(ach<cfg.entry)return 0;
+  let v=cfg.base*Math.min(actual,target);
+  if(ach<1)return v;
+  const above=actual-target;
+  let rate= ach<1.1?cfg.r100: ach<1.2?cfg.r110: ach<1.25?cfg.r120: cfg.r125;
+  return v+above*rate;
+}
+const soScen=(target,s)=>soInc(target,target*s);
+function bandOf(ach){ // ach as fraction
+  if(ach< SLAB.entry)return['s0','Below '+pct(SLAB.entry)]; if(ach<1)return['s90','90–99%'];
+  if(ach<1.1)return['s100','100–109%']; if(ach<1.2)return['s110','110–119%'];
+  if(ach<1.25)return['s120','120–124%']; return['s125','125%+'];
+}
+function nextSlab(ach){ // returns {threshold, rate, label} of the NEXT bracket above current
+  const T=[[SLAB.entry,SLAB.base,'90% (base ₹'+SLAB.base+'/unit)'],[1.0,SLAB.r100,'100% (+₹'+SLAB.r100+'/unit)'],
+          [1.1,SLAB.r110,'110% (+₹'+SLAB.r110+'/unit)'],[1.2,SLAB.r120,'120% (+₹'+SLAB.r120+'/unit)'],
+          [1.25,SLAB.r125,'125% (+₹'+SLAB.r125+'/unit)']];
+  for(const [t,r,l] of T){ if(ach<t) return {threshold:t,rate:r,label:l}; }
+  return null;
+}
 
-// ── ACHIEVEMENT SLAB SCHEME (basis drives calculation engine) ──
-// 90-99%: Rs.3/unit on TOTAL volume
-// 100%+:  Rs.N/unit on INCREMENTAL units only (above 100% target)
-// Supervisor: 2x of his team average incentive
-// Manager:    3x of his team average incentive
-// Key Outlet: Rs.500 per enrolled specific outlet per month
-const SCHEME_DEFAULTS = [
-  {id:'SCH01',name:'Team Incentive — 90–99% Slab',  role:'ESM',achFrom:90, achTo:99,  ratePerUnit:3,  basis:'total',            brand:'ALL'},
-  {id:'SCH01',name:'Team Incentive — 100–109% Slab',role:'ESM',achFrom:100,achTo:109, ratePerUnit:4,  basis:'incremental',       brand:'ALL'},
-  {id:'SCH01',name:'Team Incentive — 110–119% Slab',role:'ESM',achFrom:110,achTo:119, ratePerUnit:6,  basis:'incremental',       brand:'ALL'},
-  {id:'SCH01',name:'Team Incentive — 120–124% Slab',role:'ESM',achFrom:120,achTo:124, ratePerUnit:8,  basis:'incremental',       brand:'ALL'},
-  {id:'SCH01',name:'Team Incentive — 125%+ Slab',        role:'ESM',achFrom:125,achTo:9999,ratePerUnit:10, basis:'incremental',       brand:'ALL'},
-  {id:'SCH02',name:'Key Outlet Enrollment Bonus',        role:'ESM',achFrom:0,  achTo:9999,ratePerUnit:500,basis:'per_outlet',        brand:'ALL'},
-  {id:'SCH03',name:'Supervisor Incentive (2x Team Avg)', role:'Supervisor',achFrom:0,achTo:9999,ratePerUnit:2,basis:'team_avg_multiple',brand:'ALL'},
-  {id:'SCH04',name:'Manager Incentive (3x Team Avg)',    role:'Manager',   achFrom:0,achTo:9999,ratePerUnit:3,basis:'team_avg_multiple',brand:'ALL'},
-];
-
-// ═══════════════════════════════════════════════════════════
-//  SEED DATA
-// ═══════════════════════════════════════════════════════════
-function seedData(){
-  const brands=['FCUK','French Connection','PUMA'];
-  const cats={FCUK:['Shirts','Trousers','Jackets'],'French Connection':['Dresses','Tops','Jeans'],PUMA:['Footwear','Apparel','Accessories']};
-  const dists=[{id:'D01',name:'Sharma Distributors'},{id:'D02',name:'Kapoor & Sons'},{id:'D03',name:'Nair Traders'},{id:'D04',name:'Mehta Enterprises'},{id:'D05',name:'Singh Brothers'}];
-  const outlets=Array.from({length:15},(_, i)=>({id:`O${String(i+1).padStart(3,'0')}`,name:`Outlet ${i+1} - Fashion Hub`}));
-  const esms=[
-    {id:'E01',name:'Rahul Verma',supId:'S01',supName:'Amit Sharma',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Delhi NCR'},
-    {id:'E02',name:'Sneha Gupta',supId:'S01',supName:'Amit Sharma',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Noida'},
-    {id:'E03',name:'Karan Singh',supId:'S02',supName:'Deepak Nair',mgrId:'M01',mgrName:'Priya Kapoor',region:'North',territory:'Gurgaon'},
-    {id:'E04',name:'Pooja Mehta',supId:'S03',supName:'Sunita Rao',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Mumbai'},
-    {id:'E05',name:'Arjun Das',supId:'S03',supName:'Sunita Rao',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Pune'},
-    {id:'E06',name:'Divya Pillai',supId:'S04',supName:'Ravi Kumar',mgrId:'M02',mgrName:'Vikram Joshi',region:'West',territory:'Ahmedabad'},
-    {id:'E07',name:'Nikhil Reddy',supId:'S05',supName:'Meena Iyer',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Bangalore'},
-    {id:'E08',name:'Preethi Nair',supId:'S05',supName:'Meena Iyer',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Chennai'},
-    {id:'E09',name:'Suresh Babu',supId:'S06',supName:'Ganesh Rao',mgrId:'M03',mgrName:'Ananya Sen',region:'South',territory:'Hyderabad'},
-    {id:'E10',name:'Manish Tiwari',supId:'S07',supName:'Rajesh Gupta',mgrId:'M04',mgrName:'Sunil Bose',region:'East',territory:'Kolkata'}
-  ];
-
-  const rows=[];
-  const rng=mulberry32(42);
-  function rand(a,b){return a+Math.floor(rng()*(b-a+1));}
-  const start=new Date('2026-04-01');
-  for(let d=0;d<30;d++){
-    const dt=new Date(start);dt.setDate(d+1);
-    const ds=dt.toISOString().slice(0,10);
-    esms.forEach(esm=>{
-      const n=rand(3,8);
-      for(let r=0;r<n;r++){
-        const brand=brands[rand(0,2)];
-        const cat=cats[brand][rand(0,cats[brand].length-1)];
-        const dist=dists[rand(0,4)];
-        const outlet=outlets[rand(0,14)];
-        const units=rand(8,60);
-        const nsv=Math.round(units*(300+rng()*1500));
-        const tU=Math.round(units*(0.75+rng()*0.55));
-        const tN=Math.round(nsv*(0.8+rng()*0.45));
-        rows.push({Date:ds,ESM_Code:esm.id,ESM_Name:esm.name,
-          Supervisor_Code:esm.supId,Supervisor_Name:esm.supName,
-          Manager_Code:esm.mgrId,Manager_Name:esm.mgrName,
-          Region:esm.region,Territory:esm.territory,
-          Distributor_Code:dist.id,Distributor_Name:dist.name,
-          Outlet_Code:outlet.id,Outlet_Name:outlet.name,
-          Brand:brand,Category:cat,
-          SKU_Code:'SKU'+rand(1000,9999),Units_Sold:units,
-          NSV_Value:nsv,Target_Units:tU,Target_NSV:tN});
-      }
-    });
-  }
-  STATE.salesData=rows;
-  STATE.schemes=JSON.parse(JSON.stringify(SCHEME_DEFAULTS));
-
-  // Targets
-  esms.forEach(esm=>{
-    brands.forEach(brand=>{
-      STATE.targets.push({ESM_Code:esm.id,ESM_Name:esm.name,Brand:brand,
-        Monthly_NSV_Target:rand(300000,1500000),Monthly_Units_Target:rand(200,800)});
-    });
+/* ============ DERIVED ============ */
+let SCEN={s1:0.9,s2:1.0,s3:1.2};
+function recompute(){
+  SO.forEach(o=>{
+    o.aprAch=o.aprT?o.aprA/o.aprT:0; o.mayAch=o.mayT?o.mayA/o.mayT:0;
+    o.aprInc=soInc(o.aprT,o.aprA); o.mayInc=soInc(o.mayT,o.mayA);
+    o.junS1=soScen(o.junT,SCEN.s1); o.junS2=soScen(o.junT,SCEN.s2); o.junS3=soScen(o.junT,SCEN.s3);
+    o.q1S2=o.aprInc+o.mayInc+o.junS2;
   });
-  STATE.uploadLog=[
-    {id:'UPL001',date:'2026-04-01',by:'MIS Team',file:'SalesData_Apr_W1.xlsx',records:480,status:'Success'},
-    {id:'UPL002',date:'2026-04-08',by:'MIS Team',file:'SalesData_Apr_W2.xlsx',records:510,status:'Success'},
-    {id:'UPL003',date:'2026-04-15',by:'MIS Team',file:'SalesData_Apr_W3.xlsx',records:492,status:'Success'},
-  ];
+}
+const groupBy=(arr,k)=>arr.reduce((m,x)=>((m[x[k]]??=[]).push(x),m),{});
+function asmRollup(scope){ // scope=array of SO
+  const g=groupBy(scope,'asm');
+  return Object.entries(g).map(([asm,list])=>{
+    const region=list[0].region;
+    const avg=f=>Math.round(list.reduce((s,x)=>s+x[f],0)/list.length*2);
+    return {asm,region,count:list.length,
+      apr:avg('aprInc'),may:avg('mayInc'),s1:avg('junS1'),s2:avg('junS2'),s3:avg('junS3')};
+  }).sort((a,b)=>b.s2-a.s2);
+}
+function regionRollup(scope){
+  const g=groupBy(scope,'region');
+  return Object.entries(g).map(([region,list])=>{
+    const avg=f=>Math.round(list.reduce((s,x)=>s+x[f],0)/list.length*3);
+    const asms=new Set(list.map(x=>x.asm)).size;
+    return {region,count:list.length,asms,
+      apr:avg('aprInc'),may:avg('mayInc'),s1:avg('junS1'),s2:avg('junS2'),s3:avg('junS3')};
+  }).sort((a,b)=>b.s2-a.s2);
+}
+const sum=(arr,f)=>arr.reduce((s,x)=>s+(typeof f==='function'?f(x):x[f]),0);
+
+/* ============ ACCOUNTS / AUTH (PIN-based · distributor-portal style) ============ */
+const ACCOUNTS=[{"pin": "9999", "role": "admin", "key": null, "name": "Underlinen HQ", "label": "MIS Admin"}, {"pin": "1100", "role": "region", "key": "Sachin Sapra", "name": "North Region", "sub": "Sachin Sapra", "label": "Region Head"}, {"pin": "2200", "role": "region", "key": "South", "name": "South Region", "sub": "South", "label": "Region Head"}, {"pin": "3300", "role": "region", "key": "Rajarshri De", "name": "East Region", "sub": "Rajarshri De", "label": "Region Head"}, {"pin": "4400", "role": "region", "key": "Avinash Singh", "name": "West Region", "sub": "Avinash Singh", "label": "Region Head"}, {"pin": "AS01", "role": "asm", "key": "Ashish Saxena", "name": "Ashish Saxena", "label": "ABM", "noData": false}, {"pin": "BA02", "role": "asm", "key": "Balvantkumar Thakordas Rana", "name": "Balvantkumar Thakordas Rana", "label": "ABM", "noData": false}, {"pin": "BI03", "role": "asm", "key": "Bihar", "name": "Bihar", "label": "ABM", "noData": false}, {"pin": "DE04", "role": "asm", "key": "Deepak Dhawan", "name": "Deepak Dhawan", "label": "ABM", "noData": false}, {"pin": "DI05", "role": "asm", "key": "Diwakar Pandey", "name": "Diwakar Pandey", "label": "ABM", "noData": false}, {"pin": "GU06", "role": "asm", "key": "Gulshan Kumar", "name": "Gulshan Kumar", "label": "ABM", "noData": false}, {"pin": "JH07", "role": "asm", "key": "Jharkhand", "name": "Jharkhand", "label": "ABM", "noData": false}, {"pin": "JI08", "role": "asm", "key": "Jitendra Chaturvedi", "name": "Jitendra Chaturvedi", "label": "ABM", "noData": false}, {"pin": "KA09", "role": "asm", "key": "Kapil Kakkar", "name": "Kapil Kakkar", "label": "ABM", "noData": false}, {"pin": "KE10", "role": "asm", "key": "Kerala", "name": "Kerala", "label": "ABM", "noData": false}, {"pin": "MA11", "role": "asm", "key": "Maharashtra", "name": "Maharashtra", "label": "ABM", "noData": false}, {"pin": "MA12", "role": "asm", "key": "Manoj Jena", "name": "Manoj Jena", "label": "ABM", "noData": false}, {"pin": "NO13", "role": "asm", "key": null, "name": "North East", "label": "ABM", "noData": true}, {"pin": "OD14", "role": "asm", "key": null, "name": "Odisha", "label": "ABM", "noData": true}, {"pin": "PR15", "role": "asm", "key": "Pradeep Parnami", "name": "Pradeep Parnami", "label": "ABM", "noData": false}, {"pin": "RA16", "role": "asm", "key": null, "name": "Rajkumar V", "label": "ABM", "noData": true}, {"pin": "SA17", "role": "asm", "key": "Santosh Kumar Dubey", "name": "Santosh Kumar Dubey", "label": "ABM", "noData": false}, {"pin": "TA18", "role": "asm", "key": "Tamilnadu", "name": "Tamilnadu", "label": "ABM", "noData": false}, {"pin": "TO19", "role": "asm", "key": "Touhid Pasha M", "name": "Touhid Pasha M", "label": "ABM", "noData": false}, {"pin": "VE20", "role": "asm", "key": "Vemula Venkata Chalam", "name": "Vemula Venkata Chalam", "label": "ABM", "noData": false}, {"pin": "WE21", "role": "asm", "key": "West Bengal", "name": "West Bengal", "label": "ABM", "noData": false}, {"pin": "AB01", "role": "so", "key": 49, "name": "Abdul Rajak", "label": "BE", "noData": false}, {"pin": "AK02", "role": "so", "key": 42, "name": "Akhil MV", "label": "BE", "noData": false}, {"pin": "AN03", "role": "so", "key": 15, "name": "Ankit Kumar Verma", "label": "BE", "noData": false}, {"pin": "AN04", "role": "so", "key": 34, "name": "Anshuman Tiwari", "label": "BE", "noData": false}, {"pin": "AR05", "role": "so", "key": 23, "name": "Ariz Yar Khan", "label": "BE", "noData": false}, {"pin": "AV06", "role": "so", "key": 12, "name": "Avinash Chavhan", "label": "BE", "noData": false}, {"pin": "BH07", "role": "so", "key": 19, "name": "Bhubneshwer", "label": "BE", "noData": false}, {"pin": "BR08", "role": "so", "key": 9, "name": "Brij Mathur", "label": "BE", "noData": false}, {"pin": "CH09", "role": "so", "key": 24, "name": "Chandra Mohan Mehta", "label": "BE", "noData": false}, {"pin": "DE10", "role": "so", "key": 28, "name": "Deepak Kumar Ghand", "label": "BE", "noData": false}, {"pin": "DE11", "role": "so", "key": 39, "name": "Deepak Sarwara", "label": "BE", "noData": false}, {"pin": "DI12", "role": "so", "key": 6, "name": "Dipak Saraf", "label": "BE", "noData": false}, {"pin": "EA13", "role": "so", "key": null, "name": "East Delhi", "label": "BE", "noData": true}, {"pin": "GA14", "role": "so", "key": 16, "name": "Gaya", "label": "BE", "noData": false}, {"pin": "HA15", "role": "so", "key": 46, "name": "Hamsa V A", "label": "BE", "noData": false}, {"pin": "HI16", "role": "so", "key": 5, "name": "Hitesh Dashrath Khandagale", "label": "BE", "noData": false}, {"pin": "KA17", "role": "so", "key": 47, "name": "Karnataka", "label": "BE", "noData": false}, {"pin": "KO18", "role": "so", "key": 22, "name": "Kolkata", "label": "BE", "noData": false}, {"pin": "KU19", "role": "so", "key": 0, "name": "Kukreja Jay Harilal", "label": "BE", "noData": false}, {"pin": "LO20", "role": "so", "key": 7, "name": "Lokesh Dayaram Patel", "label": "BE", "noData": false}, {"pin": "MA21", "role": "so", "key": 29, "name": "Manoj Kumar Gupta", "label": "BE", "noData": false}, {"pin": "MA22", "role": "so", "key": 35, "name": "Manshu Maggo", "label": "BE", "noData": false}, {"pin": "MD23", "role": "so", "key": 17, "name": "Md Salman Khurshid", "label": "BE", "noData": false}, {"pin": "MO24", "role": "so", "key": 50, "name": "Modem Ramu", "label": "BE", "noData": false}, {"pin": "MU25", "role": "so", "key": 51, "name": "Mummidi Setty Nagaraju", "label": "BE", "noData": false}, {"pin": "MU26", "role": "so", "key": 36, "name": "Muzamil Yousuf", "label": "BE", "noData": false}, {"pin": "NA27", "role": "so", "key": 25, "name": "Nafees Usmani", "label": "BE", "noData": false}, {"pin": "NA28", "role": "so", "key": 37, "name": "Naresh Kumar", "label": "BE", "noData": false}, {"pin": "NI29", "role": "so", "key": null, "name": "Nishant Tyagi", "label": "BE", "noData": true}, {"pin": "NO30", "role": "so", "key": 13, "name": "North East", "label": "BE", "noData": false}, {"pin": "OD31", "role": "so", "key": null, "name": "Odisha", "label": "BE", "noData": true}, {"pin": "PA32", "role": "so", "key": 10, "name": "Pankaj Charaya", "label": "BE", "noData": false}, {"pin": "RA33", "role": "so", "key": 1, "name": "Rajkot", "label": "BE", "noData": false}, {"pin": "RA34", "role": "so", "key": 44, "name": "Ramesh Babu", "label": "BE", "noData": false}, {"pin": "RA35", "role": "so", "key": 30, "name": "Raveendra Singh", "label": "BE", "noData": false}, {"pin": "RA36", "role": "so", "key": 18, "name": "Ravikanth Burman", "label": "BE", "noData": false}, {"pin": "SA37", "role": "so", "key": 11, "name": "Salim Mohammad", "label": "BE", "noData": false}, {"pin": "SA38", "role": "so", "key": null, "name": "Sambalpur", "label": "BE", "noData": true}, {"pin": "SA39", "role": "so", "key": 8, "name": "Sandip N Y", "label": "BE", "noData": false}, {"pin": "SA40", "role": "so", "key": 40, "name": "Sanjay Singh", "label": "BE", "noData": false}, {"pin": "SH41", "role": "so", "key": 2, "name": "Shah Kevin Dinesh", "label": "BE", "noData": false}, {"pin": "SI42", "role": "so", "key": 14, "name": "Siliguri", "label": "BE", "noData": false}, {"pin": "SU43", "role": "so", "key": 31, "name": "Sumit kumar", "label": "BE", "noData": false}, {"pin": "SU44", "role": "so", "key": 32, "name": "Sunil Kumar", "label": "BE", "noData": false}, {"pin": "TA45", "role": "so", "key": 45, "name": "Tamilnadu", "label": "BE", "noData": false}, {"pin": "VA46", "role": "so", "key": 4, "name": "Vadodara", "label": "BE", "noData": false}, {"pin": "VI47", "role": "so", "key": null, "name": "Vinay Pandey", "label": "BE", "noData": true}, {"pin": "WE48", "role": "so", "key": 27, "name": "Western UP", "label": "BE", "noData": false}];
+ACCOUNTS.forEach(a=>{a.roleLabel=a.label;});
+const PINMAP={};ACCOUNTS.forEach(a=>{PINMAP[String(a.pin).toUpperCase()]=a;});
+let USER=null;
+function meSO(){return SO.find(o=>o.id===USER.key);}
+function scopeFor(u){
+  if(!u||u.role==='admin')return SO;
+  if(u.role==='region')return SO.filter(o=>o.region===u.key);
+  if(u.role==='asm')return u.key?SO.filter(o=>o.asm===u.key):[];
+  if(u.role==='so')return (u.key!=null)?SO.filter(o=>o.id===u.key):[];
+  return SO;
 }
 
-function mulberry32(a){
-  return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}
+/* ============ UTIL ============ */
+function loadJSON(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function saveJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function delKey(k){try{localStorage.removeItem(k);}catch(e){}}
+const inr=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const inrK=n=>{n=Math.round(n);if(n>=1e7)return'₹'+(n/1e7).toFixed(2)+' Cr';if(n>=1e5)return'₹'+(n/1e5).toFixed(2)+' L';if(n>=1e3)return'₹'+(n/1e3).toFixed(1)+'K';return'₹'+n;};
+const pct=f=>Math.round(f*100)+'%';
+const pct1=f=>(f*100).toFixed(1)+'%';
+function toast(html){const t=document.getElementById('toast');t.innerHTML=html;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3400);}
+function animCount(el,to,fmt){const from=0,dur=650,st=performance.now();fmt=fmt||(v=>Math.round(v).toLocaleString('en-IN'));
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=fmt(to);return;}
+  function step(t){let p=Math.min(1,(t-st)/dur);p=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*p);if(p<1)requestAnimationFrame(step);}requestAnimationFrame(step);}
+
+/* ============ LOGIN (PIN) ============ */
+function emptyCard(title,body){return `<div class="card" style="text-align:center;padding:48px 28px"><div style="width:54px;height:54px;border-radius:14px;background:var(--gold-ink);display:grid;place-items:center;margin:0 auto 16px"><svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M12 2L2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#E5B567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3 class="disp" style="font-size:19px;font-weight:800;margin-bottom:8px">${title}</h3><p style="color:var(--txt-2);font-size:13.5px;max-width:46ch;margin:0 auto">${body}</p></div>`;}
+function renderDemoChips(){
+  const picks=[['9999','MIS Admin'],['1100','North Region'],['GU06','ABM · Gulshan Kumar'],['MU26','BE · Muzamil Yousuf']];
+  const el=document.getElementById('demochips');
+  el.innerHTML=picks.map(([pin,l])=>`<button class="chip" onclick="quick('${pin}')">${l} · <b>${pin}</b></button>`).join('');
 }
-
-// ═══════════════════════════════════════════════════════════
-//  LOGIN
-// ═══════════════════════════════════════════════════════════
-document.getElementById('role-select').addEventListener('change',function(){
-  const role=this.value;
-  const sel=document.getElementById('user-select');
-  sel.innerHTML='<option value="">— Select User —</option>';
-  if(USERS[role]) USERS[role].forEach(u=>{ const o=document.createElement('option');o.value=u.id;o.textContent=u.name;sel.appendChild(o);});
-});
-
+function quick(pin){document.getElementById('lpin').value=pin;doLogin();}
 function doLogin(){
-  const role=document.getElementById('role-select').value;
-  const uid=document.getElementById('user-select').value;
-  if(!role||!uid){alert('Please select a Role AND a User before signing in.');return;}
-  STATE.role=role;
-  STATE.userId=uid;
-  const found=(USERS[role]||[]).find(u=>u.id===uid);
-  STATE.userName=found?found.name:'User';
-  // Always hide overlay first — then attempt to render
-  document.getElementById('login-overlay').style.display='none';
-  document.getElementById('app').classList.add('visible');
-  try{
-    initApp();
-  }catch(err){
-    console.error('Dashboard init error:',err);
-    // Show non-blocking toast so user can still navigate
-    const toast=document.createElement('div');
-    toast.style.cssText='position:fixed;bottom:20px;right:20px;background:#f43f5e;color:#fff;padding:12px 20px;border-radius:10px;font-size:12px;z-index:999;max-width:340px;font-family:Manrope,sans-serif';
-    toast.textContent='Warning: Some charts could not load ('+err.message+'). Data and tables are still available.';
-    document.body.appendChild(toast);
-    setTimeout(()=>toast.remove(),8000);
-    // Still try to render what we can without charts
-    try{renderAlerts();}catch(e){}
-    try{renderSchemes();}catch(e){}
-    try{renderUploadHistory();}catch(e){}
-  }
+  const pin=(document.getElementById('lpin').value||'').trim().toUpperCase();
+  const a=PINMAP[pin];
+  const err=document.getElementById('lerr');
+  if(!a){err.textContent='PIN not recognised. Try a sample PIN below.';return;}
+  err.textContent='';USER=a;
+  if(document.getElementById('lr').checked)saveJSON('schemeiq_session',{pin:a.pin});
+  else delKey('schemeiq_session');
+  enterApp();
+}
+function doLogout(){USER=null;delKey('schemeiq_session');document.getElementById('app').style.display='none';document.getElementById('login').style.display='grid';var p=document.getElementById('lpin');if(p)p.value='';}
+
+/* ============ APP / ROUTER ============ */
+const NAV={
+  admin:[['overview','Overview','grid'],['officers','All Officers','users'],['leaderboard','Leaderboard','trophy'],['simulator','Scenario Lab','sliders'],['analytics','Analytics','chart'],['summary','Summary Payout','file'],['slabs','Slab Settings','cog']],
+  region:[['overview','Zone Overview','grid'],['officers','My Officers','users'],['team','ASM Rollup','layers'],['leaderboard','Zone Leaderboard','trophy'],['simulator','Scenario Lab','sliders'],['analytics','Analytics','chart']],
+  asm:[['overview','Team Overview','grid'],['officers','My Officers','users'],['leaderboard','Team Leaderboard','trophy'],['simulator','Scenario Lab','sliders']],
+  so:[['mine','My Incentive','user'],['simulator','My Simulator','sliders'],['leaderboard','Where I Rank','trophy']]
+};
+const ICON={
+  grid:'<path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+  users:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8M23 21v-2a4 4 0 00-3-3.87M16 3.13A4 4 0 0116 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0zM7 4H4v2a3 3 0 003 3M17 4h3v2a3 3 0 01-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  sliders:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  chart:'<path d="M3 3v18h18M7 14l3-3 3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  file:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6M9 13h6M9 17h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  cog:'<path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-2.92.67 2 2 0 11-3.99 0 1.65 1.65 0 00-2.92-.67l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.82-.33 2 2 0 110-3.99A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51 2 2 0 113.99 0A1.65 1.65 0 0015 4.6a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1 2 2 0 110 3.99 1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.6"/>',
+  layers:'<path d="M12 2L2 7l10 5 10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  user:'<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+};
+const PGINFO={overview:['Overview','Org-wide incentive command center'],mine:['My Incentive','Your live payout, slab position & gap to next'],officers:['Officers','Sales Officer incentive ledger'],team:['ASM Rollup','2× team-average supervisor payout'],leaderboard:['Leaderboard','Ranked by incentive earned'],simulator:['Scenario Lab','Move the slider — watch the rupees move'],analytics:['Analytics','Trends, distributions & comparisons'],summary:['Summary Payout','Org-wide formula-linked totals'],slabs:['Slab Settings','Edit the BASE + INCREMENTAL engine']};
+let CURPAGE='overview';
+function enterApp(){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  recompute();
+  // header scope label
+  const scopeLbl={admin:'Org-wide incentive command center',region:'Zone: '+USER.name,asm:'Team: '+USER.name,so:USER.name+' · '+(SO.find(o=>o.id===USER.key)?.asm||'')};
+  document.getElementById('uName').textContent=USER.name;
+  document.getElementById('uRole').textContent=USER.roleLabel;
+  document.getElementById('uAv').textContent=(USER.name[0]||'U').toUpperCase();
+  // nav
+  const nav=NAV[USER.role];
+  document.getElementById('navitems').innerHTML='<div class="nav-label">'+({admin:'Command',region:'Zone',asm:'Team',so:'You'})[USER.role]+'</div>'+
+    nav.map(([id,label,ic])=>`<button class="navitem" data-pg="${id}" onclick="go('${id}')"><svg viewBox="0 0 24 24" fill="none">${ICON[ic]}</svg>${label}</button>`).join('');
+  // scenario state
+  SCEN=loadJSON('schemeiq_scen',{s1:0.9,s2:1.0,s3:1.2});
+  document.getElementById('s1').value=Math.round(SCEN.s1*100);
+  document.getElementById('s2').value=Math.round(SCEN.s2*100);
+  document.getElementById('s3').value=Math.round(SCEN.s3*100);
+  go(nav[0][0]);
+}
+function go(pg){
+  CURPAGE=pg;toggleRail(false);
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active',n.dataset.pg===pg));
+  const info=PGINFO[pg]||['',''];
+  document.getElementById('pgTitle').textContent=info[0];
+  document.getElementById('pgSub').textContent=info[1];
+  recompute();
+  const c=document.getElementById('content');
+  const R={overview:pageOverview,mine:pageMine,officers:pageOfficers,team:pageTeam,leaderboard:pageLeaderboard,simulator:pageSimulator,analytics:pageAnalytics,summary:pageSummary,slabs:pageSlabs};
+  c.innerHTML='';(R[pg]||pageOverview)();
+  document.querySelectorAll('[data-count]').forEach(el=>{const t=+el.dataset.count,money=el.dataset.money;animCount(el,t,money?(v=>inr(v)):null);});
+  window.scrollTo(0,0);
+}
+function toggleRail(open){const r=document.getElementById('rail'),b=document.getElementById('backdrop');if(open===undefined)open=!r.classList.contains('open');r.classList.toggle('open',open);b.classList.toggle('show',open);}
+function onScen(){
+  SCEN={s1:(+document.getElementById('s1').value||0)/100,s2:(+document.getElementById('s2').value||0)/100,s3:(+document.getElementById('s3').value||0)/100};
+  saveJSON('schemeiq_scen',SCEN);recompute();
+  if(['overview','officers','team','summary','analytics','simulator','leaderboard','mine'].includes(CURPAGE))go(CURPAGE);
 }
 
-function doLogout(){
-  document.getElementById('login-overlay').style.display='flex';
-  document.getElementById('app').classList.remove('visible');
-  STATE.role='';STATE.userName='';
+/* ============ SIGNATURE: incentive curve ============ */
+function curveSVG(target,markPct,opts){
+  opts=opts||{};const W=720,H=300,padL=58,padR=24,padT=18,padB=42;
+  const aMin=0.7,aMax=1.5;
+  const xs=a=>padL+(a-aMin)/(aMax-aMin)*(W-padL-padR);
+  const maxY=soScen(target,aMax)*1.06||1;
+  const ys=v=>H-padB-(v/maxY)*(H-padT-padB);
+  let d='';const N=240;
+  for(let i=0;i<=N;i++){const a=aMin+(aMax-aMin)*i/N;const v=soScen(target,a);d+=(i?'L':'M')+xs(a).toFixed(1)+' '+ys(v).toFixed(1)+' ';}
+  // band shading
+  const bands=[[aMin,SLAB.entry,'rgba(110,110,124,.05)'],[SLAB.entry,1,'rgba(91,157,240,.06)'],[1,1.1,'rgba(229,181,103,.05)'],[1.1,1.2,'rgba(229,181,103,.08)'],[1.2,1.25,'rgba(52,211,153,.06)'],[1.25,aMax,'rgba(52,211,153,.1)']];
+  let rects=bands.map(([a,b,c])=>`<rect x="${xs(a).toFixed(1)}" y="${padT}" width="${(xs(b)-xs(a)).toFixed(1)}" height="${H-padT-padB}" fill="${c}"/>`).join('');
+  // gridlines (achievement ticks)
+  const ticks=[0.8,0.9,1.0,1.1,1.2,1.25,1.4,1.5];
+  let grid=ticks.map(a=>`<line x1="${xs(a).toFixed(1)}" y1="${padT}" x2="${xs(a).toFixed(1)}" y2="${H-padB}" stroke="#2A2A33" stroke-width="1" stroke-dasharray="${a===1?'0':'2 4'}"/><text x="${xs(a).toFixed(1)}" y="${H-padB+18}" fill="#6E6E7C" font-size="10.5" text-anchor="middle" font-family="JetBrains Mono">${Math.round(a*100)}%</text>`).join('');
+  // y ticks
+  let yt='';for(let k=0;k<=4;k++){const v=maxY*k/4;yt+=`<line x1="${padL}" y1="${ys(v).toFixed(1)}" x2="${W-padR}" y2="${ys(v).toFixed(1)}" stroke="#23232C" stroke-width="1"/><text x="${padL-8}" y="${(ys(v)+3).toFixed(1)}" fill="#6E6E7C" font-size="10" text-anchor="end" font-family="JetBrains Mono">${inrK(v)}</text>`;}
+  // markers for scenarios
+  let marks='';const scenMarks=opts.scenarios||[];
+  scenMarks.forEach(m=>{const x=xs(m.a),y=ys(soScen(target,m.a));marks+=`<line x1="${x.toFixed(1)}" y1="${y.toFixed(1)}" x2="${x.toFixed(1)}" y2="${H-padB}" stroke="${m.c}" stroke-width="1" stroke-dasharray="3 3" opacity=".55"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="${m.c}"/><text x="${x.toFixed(1)}" y="${(y-10).toFixed(1)}" fill="${m.c}" font-size="10.5" text-anchor="middle" font-weight="700" font-family="Archivo">${m.lbl}</text>`;});
+  // main marker
+  let main='';if(markPct!=null){const a=markPct,x=xs(a),y=ys(soScen(target,a));
+    main=`<line x1="${x.toFixed(1)}" y1="${padT}" x2="${x.toFixed(1)}" y2="${H-padB}" stroke="#E5B567" stroke-width="1.5" opacity=".5"/>
+    <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11" fill="#E5B567" opacity=".18"/>
+    <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="#E5B567" stroke="#0E0E11" stroke-width="2"/>
+    <text x="${x.toFixed(1)}" y="${(y-16).toFixed(1)}" fill="#F2CE8E" font-size="13" text-anchor="middle" font-weight="800" font-family="Archivo">${inr(soScen(target,a))}</text>`;}
+  return `<svg id="curveSvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+    ${rects}${yt}${grid}
+    <path d="${d}" fill="none" stroke="url(#cg)" stroke-width="3" stroke-linejoin="round"/>
+    <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5B9DF0"/><stop offset=".4" stop-color="#E5B567"/><stop offset="1" stop-color="#34D399"/></linearGradient></defs>
+    ${marks}${main}
+  </svg>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════════
-function initApp(){
-  document.getElementById('sb-name').textContent=STATE.userName;
-  document.getElementById('sb-avatar').textContent=STATE.userName[0];
-  document.getElementById('sb-role').textContent=STATE.role.toUpperCase();
-  document.getElementById('role-badge').textContent=STATE.role.toUpperCase()+' VIEW';
-  setLastUpdated();
-  applyRoleNav();
-  renderAlerts();
-  renderDashboard();
-  renderSchemes();
-  renderUploadHistory();
+/* ============ GAUGE ============ */
+function gauge(ach){
+  const f=Math.max(0,Math.min(1.5,ach))/1.5; // 0..1 of 150% sweep
+  const col= ach<0.9?'#E11D2A': ach<1?'#E5B567': ach<1.2?'#5B9DF0':'#34D399';
+  const cx=100,cy=104,r=82, a0=Math.PI, a1=Math.PI+f*Math.PI;
+  const x0=cx+r*Math.cos(a0),y0=cy+r*Math.sin(a0),x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+  const large=f>0.5?1:0;
+  const bgx=cx+r*Math.cos(2*Math.PI),bgy=cy+r*Math.sin(2*Math.PI);
+  return `<div class="gauge"><svg viewBox="0 0 200 118">
+    <path d="M ${x0} ${y0} A ${r} ${r} 0 1 1 ${bgx} ${bgy}" fill="none" stroke="#23232C" stroke-width="13" stroke-linecap="round"/>
+    <path d="M ${x0} ${y0} A ${r} ${r} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}" fill="none" stroke="${col}" stroke-width="13" stroke-linecap="round"/>
+  </svg><div class="gnum"><b style="color:${col}">${Math.round(ach*100)}%</b><span>achievement</span></div></div>`;
 }
 
-function applyRoleNav(){
-  const role=STATE.role;
-  document.querySelectorAll('.nav-item[data-for]').forEach(item=>{
-    const fors=item.dataset.for.split(',');
-    const visible=fors.includes('all')||fors.includes(role);
-    item.style.display=visible?'flex':'none';
-  });
-  document.getElementById('upload-trigger-btn').style.display=(role==='mis')?'flex':'none';
+/* ============ KPI helper ============ */
+function kpi(label,value,sub,cls,money){
+  return `<div class="kpi ${cls||''}"><div class="kl"><span class="dot"></span>${label}</div>
+    <div class="kv"><span class="cur">${money?'₹':''}</span><span data-count="${value}" ${money?'data-money="1"':''}>0</span></div>
+    <div class="ks">${sub||''}</div></div>`;
 }
 
-function setLastUpdated(){
-  const d=new Date();
-  document.getElementById('last-updated').textContent='Last updated: '+d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-}
+/* ============ PAGE: OVERVIEW (admin/region/asm) ============ */
+function pageOverview(){
+  const scope=scopeFor(USER), live=scope.filter(o=>!o.vacant);
+  const c=document.getElementById('content');
+  const totAprMay=sum(scope,'aprInc')+sum(scope,'mayInc');
+  const junS2=sum(scope,'junS2'), junS1=sum(scope,'junS1'), junS3=sum(scope,'junS3');
+  const top=[...scope].sort((a,b)=>b.junS2-a.junS2)[0];
+  // managerial uplift (ASM 2x + RH 3x) for this scope
+  const asmTot=sum(asmRollup(scope),'s2'), rhTot=USER.role==='admin'?sum(regionRollup(scope),'s2'):0;
+  const refTarget = USER.role==='so'?0 : (Math.round(sum(live,'junT')/Math.max(1,live.length)/100)*100||3000);
 
-function refreshDashboard(){
-  const btn=document.querySelector('.refresh-btn');
-  btn.innerHTML='<span class="spin">↻</span> Refreshing';
-  setTimeout(()=>{
-    renderDashboard();btn.innerHTML='↻ Refresh';setLastUpdated();
-  },800);
-}
+  let h=`<div class="kpis">
+    ${kpi('Apr + May paid',totAprMay,'Closed months · actual',null,true)}
+    ${kpi('June @ S2 ('+pct(SCEN.s2)+')',junS2,`<span class="pill flat">${live.length} officers</span>`,'gold',true)}
+    ${kpi('June range S1→S3',junS3,`S1 ${inrK(junS1)} · S3 ${inrK(junS3)}`,'gold',true)}
+    ${kpi('Top officer · June S2',top?top.junS2:0,top?(top.vacant?'—':top.name):'—','green',true)}
+  </div>`;
 
-// ═══════════════════════════════════════════════════════════
-//  NAV
-// ═══════════════════════════════════════════════════════════
-function showSection(sec,el){
-  document.querySelectorAll('.view-section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('sec-'+sec).classList.add('active');
-  if(el)el.classList.add('active');
-  STATE.currentSection=sec;
-  const titles={dashboard:'My Dashboard',team:'Team Performance',incentives:'Incentives',leaderboard:'Leaderboard',schemes:'Scheme Manager',reports:'Reports',upload:'Data Upload'};
-  document.getElementById('page-title').textContent=titles[sec]||sec;
-  if(sec==='team')renderTeamTable();
-  if(sec==='incentives')renderIncentives();
-  if(sec==='leaderboard')renderLeaderboard();
-  if(sec==='reports')renderReports();
-  if(sec==='upload')renderUploadHistory();
-  closeMobMenu();
-}
-
-function toggleMobMenu(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('mob-overlay').classList.toggle('open');}
-function closeMobMenu(){document.getElementById('sidebar').classList.remove('open');document.getElementById('mob-overlay').classList.remove('open');}
-
-// ═══════════════════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════════════════
-function fmt(n){return '₹'+Math.round(n).toLocaleString('en-IN');}
-function fmtK(n){if(n>=10000000)return '₹'+(n/10000000).toFixed(1)+'Cr';if(n>=100000)return '₹'+(n/100000).toFixed(1)+'L';if(n>=1000)return '₹'+(n/1000).toFixed(0)+'K';return '₹'+Math.round(n);}
-function pct(a,b){return b?((a/b)*100).toFixed(1):'0.0';}
-function getMyData(){
-  if(STATE.role==='esm') return STATE.salesData.filter(r=>r.ESM_Code===STATE.userId);
-  if(STATE.role==='supervisor') return STATE.salesData.filter(r=>r.Supervisor_Code===STATE.userId);
-  if(STATE.role==='manager') return STATE.salesData.filter(r=>r.Manager_Code===STATE.userId);
-  return STATE.salesData;
-}
-function sumNSV(data){return data.reduce((s,r)=>s+r.NSV_Value,0);}
-function sumUnits(data){return data.reduce((s,r)=>s+r.Units_Sold,0);}
-function sumTarget(data){return data.reduce((s,r)=>s+r.Target_NSV,0);}
-// ─── INCENTIVE ENGINE ───────────────────────────────────────
-// calcESMIncentive: achievement-slab + per-outlet logic for one ESM
-// Input: totalUnits sold, targetUnits, outletCount (enrolled specific outlets)
-function calcESMIncentive(totalUnits, targetUnits, outletCount){
-  outletCount = outletCount || 0;
-  if(!targetUnits) return 0;
-  const achPct = (totalUnits / targetUnits) * 100;
-  let earned = 0;
-
-  if(achPct >= 90 && achPct < 100){
-    // 90–99%: Rs.3/unit on TOTAL volume
-    earned = totalUnits * 3;
-  } else if(achPct >= 100){
-    // 100%+: find applicable slab, pay on INCREMENTAL units only
-    // Incremental = units sold above the 100% target
-    const incrementalUnits = totalUnits - targetUnits;
-    const slabs = STATE.schemes.filter(s => s.role==='ESM' && s.basis==='incremental');
-    slabs.forEach(s => {
-      if(achPct >= s.achFrom && achPct <= s.achTo){
-        earned = incrementalUnits * s.ratePerUnit;
-      }
-    });
-  }
-  // Key outlet enrollment bonus: Rs.500 per enrolled specific outlet
-  earned += outletCount * 500;
-  return Math.round(earned);
-}
-
-// calcIncentiveForESMData: wraps calcESMIncentive for a data array belonging to one ESM
-function calcIncentiveForESMData(esmData){
-  const totalUnits = esmData.reduce((s,r) => s + r.Units_Sold, 0);
-  const targetUnits = esmData.reduce((s,r) => s + r.Target_Units, 0);
-  const outletCount = [...new Set(esmData.filter(r=>r.Key_Outlet).map(r=>r.Outlet_Code))].length;
-  return calcESMIncentive(totalUnits, targetUnits, outletCount);
-}
-
-// Legacy alias used by brand-based breakdowns (approximates using units)
-function calcIncentive(nsv, brand){
-  // For brand-level breakdowns: estimate via units using a proxy target
-  // Real engine uses calcIncentiveForESMData which has units + target
-  return nsv * 0.008; // ~0.8% proxy for display only
-}
-
-// totalIncentiveForData: sums ESM-level incentives (correct engine)
-function totalIncentiveForData(data){
-  const esmIds = [...new Set(data.map(r=>r.ESM_Code))];
-  return esmIds.reduce((tot, eid) => {
-    const ed = data.filter(r => r.ESM_Code === eid);
-    return tot + calcIncentiveForESMData(ed);
-  }, 0);
-}
-
-// calcSupervisorIncentive: 2x of average ESM incentive in team
-function calcSupervisorIncentive(supData){
-  const esmIds = [...new Set(supData.map(r=>r.ESM_Code))];
-  if(!esmIds.length) return 0;
-  const total = esmIds.reduce((s,eid) => s + calcIncentiveForESMData(supData.filter(r=>r.ESM_Code===eid)), 0);
-  return Math.round((total / esmIds.length) * 2);
-}
-
-// calcManagerIncentive: 3x of average ESM incentive in zone
-function calcManagerIncentive(mgrData){
-  const esmIds = [...new Set(mgrData.map(r=>r.ESM_Code))];
-  if(!esmIds.length) return 0;
-  const total = esmIds.reduce((s,eid) => s + calcIncentiveForESMData(mgrData.filter(r=>r.ESM_Code===eid)), 0);
-  return Math.round((total / esmIds.length) * 3);
-}
-function brandColor(b){const m={FCUK:'rgba(91,108,255,','French Connection':'rgba(6,182,212,',PUMA:'rgba(0,217,126,'};return (m[b]||'rgba(245,158,11,');}
-const avatarColors=['#5b6cff','#7c3aed','#06b6d4','#00d97e','#f59e0b','#f43f5e','#a78bfa','#34d399'];
-
-// ═══════════════════════════════════════════════════════════
-//  ALERTS
-// ═══════════════════════════════════════════════════════════
-function renderAlerts(){
-  const data=getMyData();
-  const totalUnits=sumUnits(data);
-  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
-  const achPct=targetUnits?(totalUnits/targetUnits*100):0;
-  const alerts=[];
-  if(achPct>=125)      alerts.push({type:'success',icon:'&#127942;',text:'Outstanding! 125%+ slab &mdash; &#8377;10/unit on incremental units.'});
-  else if(achPct>=120) alerts.push({type:'success',icon:'&#127942;',text:'Excellent! 120&ndash;124% slab &mdash; &#8377;8/unit on incremental units.'});
-  else if(achPct>=110) alerts.push({type:'success',icon:'&#11088;', text:'110&ndash;119% slab &mdash; &#8377;6/unit on incremental units.'});
-  else if(achPct>=100) alerts.push({type:'success',icon:'&#9989;',  text:'Target achieved! 100&ndash;109% slab &mdash; &#8377;4/unit on incremental units.'});
-  else if(achPct>=90)  alerts.push({type:'warn',   icon:'&#9889;',  text:'In slab! 90&ndash;99% &mdash; &#8377;3/unit on total volume. '+Math.ceil(targetUnits-totalUnits)+' units to reach 100%.'});
-  else                 alerts.push({type:'info',   icon:'&#128202;',text:'Unit achievement: '+achPct.toFixed(1)+'% &mdash; Need 90%+ to enter incentive slab.'});
-  let inc=0;
-  if(STATE.role==='esm')             inc=calcIncentiveForESMData(data);
-  else if(STATE.role==='supervisor') inc=calcSupervisorIncentive(data);
-  else if(STATE.role==='manager')    inc=calcManagerIncentive(data);
-  else                               inc=totalIncentiveForData(data);
-  alerts.push({type:'info',icon:'&#8377;',text:'Incentive Earned MTD: '+fmtK(inc)});
-  const enrolled=(STATE.keyOutlets||[]).length;
-  if(enrolled>0) alerts.push({type:'info',icon:'&#127978;',text:enrolled+' specific outlets enrolled &mdash; Bonus: '+fmtK(enrolled*500)});
-  if(STATE.role==='supervisor') alerts.push({type:'info',icon:'&#128203;',text:'Your incentive = 2&times; average of your team\'s ESM earnings'});
-  if(STATE.role==='manager')    alerts.push({type:'info',icon:'&#128203;',text:'Your incentive = 3&times; average of your team\'s ESM earnings'});
-  document.getElementById('alerts-wrap').innerHTML=alerts.map(a=>`<div class="alert-pill ${a.type}"><span>${a.icon}</span>${a.text}</div>`).join('');
-}
-
-// ═══════════════════════════════════════════════════════════
-//  DASHBOARD
-// ═══════════════════════════════════════════════════════════
-function renderDashboard(){
-  const data=getMyData();
-  const nsv=sumNSV(data);
-  const tgt=sumTarget(data);
-  const units=sumUnits(data);
-  const inc=totalIncentiveForData(data);
-  const prevNSV=nsv*0.87;
-  const growth=((nsv-prevNSV)/prevNSV*100).toFixed(1);
-  const ach=pct(nsv,tgt);
-  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
-  const achUnits=targetUnits?((units/targetUnits)*100).toFixed(1):'0.0';
-
-  const kpis=[
-    {label:'MTD NSV',value:fmtK(nsv),sub:'Total Net Sales Value',badge:achUnits+'% units',badgeType:+achUnits>=100?'up':+achUnits>=90?'warn':'down',cls:''},
-    {label:'TARGET NSV',value:fmtK(tgt),sub:'Cumulative target',badge:'MTD',badgeType:'',cls:'purple'},
-    {label:'INCENTIVE EARNED',value:fmtK(inc),sub:'Based on active schemes',badge:'+Est.',badgeType:'up',cls:'green'},
-    {label:'UNITS SOLD',value:units.toLocaleString('en-IN'),sub:'MTD across all brands',badge:'',badgeType:'',cls:'amber'},
-    {label:'GROWTH vs LM',value:'+'+growth+'%',sub:'vs Last Month MTD',badge:growth>0?'▲ Growing':'▼ Lag',badgeType:growth>0?'up':'down',cls:growth>0?'green':'red'},
-    {label:'PENDING INCENTIVE',value:fmtK(inc*0.35),sub:'Awaiting approval',badge:'Processing',badgeType:'warn',cls:'amber'}
-  ];
-  document.getElementById('kpi-grid').innerHTML=kpis.map(k=>`
-    <div class="kpi-card ${k.cls} fade-up">
-      <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}</div>
-      <div class="kpi-sub">${k.sub} ${k.badge?`<span class="kpi-badge ${k.badgeType}">${k.badge}</span>`:''}</div>
-    </div>`).join('');
-
-  renderBarChart(data);
-  renderPieChart(data);
-  renderLineChart(data);
-  renderProjection(data,nsv,tgt,inc);
-}
-
-function renderBarChart(data){
-  if(typeof Chart==='undefined'){console.warn('Chart.js not loaded');return;}
-  const ctx=document.getElementById('barChart').getContext('2d');
-  if(STATE.charts.bar)STATE.charts.bar.destroy();
-  let labels,achData,tgtData;
-  if(STATE.barView==='brand'){
-    const brands=['FCUK','French Connection','PUMA'];
-    labels=brands;
-    achData=brands.map(b=>sumNSV(data.filter(r=>r.Brand===b)));
-    tgtData=brands.map(b=>data.filter(r=>r.Brand===b).reduce((s,r)=>s+r.Target_NSV,0));
-  } else {
-    const regions=[...new Set(data.map(r=>r.Region))].sort();
-    labels=regions;
-    achData=regions.map(reg=>sumNSV(data.filter(r=>r.Region===reg)));
-    tgtData=regions.map(reg=>data.filter(r=>r.Region===reg).reduce((s,r)=>s+r.Target_NSV,0));
-  }
-  STATE.charts.bar=new Chart(ctx,{type:'bar',data:{labels,datasets:[
-    {label:'Achievement',data:achData,backgroundColor:'rgba(91,108,255,0.85)',borderRadius:6,borderSkipped:false},
-    {label:'Target',data:tgtData,backgroundColor:'rgba(91,108,255,0.15)',borderRadius:6,borderSkipped:false,borderColor:'rgba(91,108,255,0.4)',borderWidth:1}
-  ]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{color:'#6b7194',font:{family:'Manrope',size:11}}}},scales:{x:{ticks:{color:'#6b7194',font:{size:11}},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#6b7194',font:{size:10},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,0.04)'}}}}});
-}
-
-function renderPieChart(data){
-  if(typeof Chart==='undefined'){return;}
-  const ctx=document.getElementById('pieChart').getContext('2d');
-  if(STATE.charts.pie)STATE.charts.pie.destroy();
-  const brands=['FCUK','French Connection','PUMA'];
-  const vals=brands.map(b=>totalIncentiveForData(data.filter(r=>r.Brand===b)));
-  STATE.charts.pie=new Chart(ctx,{type:'doughnut',data:{labels:brands,datasets:[{data:vals,backgroundColor:['rgba(91,108,255,0.85)','rgba(6,182,212,0.85)','rgba(0,217,126,0.85)'],borderColor:'rgba(17,19,32,1)',borderWidth:3,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:true,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:'#6b7194',font:{size:10},padding:12}}}}});
-}
-
-function renderLineChart(data){
-  if(typeof Chart==='undefined'){return;}
-  const ctx=document.getElementById('lineChart').getContext('2d');
-  if(STATE.charts.line)STATE.charts.line.destroy();
-  let labels,vals;
-  if(STATE.trendView==='daily'){
-    const byDate={};
-    data.forEach(r=>{byDate[r.Date]=(byDate[r.Date]||0)+r.NSV_Value;});
-    const sorted=Object.keys(byDate).sort();
-    labels=sorted.map(d=>d.slice(5));
-    vals=sorted.map(d=>byDate[d]);
-  } else {
-    const byWeek={};
-    data.forEach(r=>{const wk='Wk'+Math.ceil(new Date(r.Date).getDate()/7);byWeek[wk]=(byWeek[wk]||0)+r.NSV_Value;});
-    labels=Object.keys(byWeek);vals=Object.values(byWeek);
-  }
-  const grad=ctx.createLinearGradient(0,0,0,200);
-  grad.addColorStop(0,'rgba(91,108,255,0.3)');grad.addColorStop(1,'rgba(91,108,255,0)');
-  STATE.charts.line=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'NSV',data:vals,borderColor:'rgba(91,108,255,1)',backgroundColor:grad,fill:true,tension:0.4,pointRadius:2,pointBackgroundColor:'rgba(91,108,255,1)'}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#6b7194',font:{size:9},maxTicksLimit:8},grid:{color:'rgba(255,255,255,0.03)'}},y:{ticks:{color:'#6b7194',font:{size:9},callback:v=>fmtK(v)},grid:{color:'rgba(255,255,255,0.04)'}}}}});
-}
-
-function renderProjection(data,nsv,tgt,inc){
-  const daysElapsed=new Date().getDate();const daysInMonth=30;
-  const projNSV=nsv/daysElapsed*daysInMonth;
-  const projInc=inc/daysElapsed*daysInMonth;
-  const projAch=pct(projNSV,tgt);
-  document.getElementById('proj-content').innerHTML=`
-    <div style="color:var(--muted);font-size:11px;margin-bottom:10px">Based on current daily run rate (${daysElapsed} days elapsed)</div>
-    <div class="proj-row">
-      <div class="proj-box"><div class="p-val">${fmtK(projNSV)}</div><div class="p-lbl">Projected NSV</div></div>
-      <div class="proj-box"><div class="p-val" style="color:var(--green)">${fmtK(projInc)}</div><div class="p-lbl">Projected Incentive</div></div>
-      <div class="proj-box"><div class="p-val" style="color:${+projAch>=100?'var(--green)':+projAch>=85?'var(--amber)':'var(--red)'}">${projAch}%</div><div class="p-lbl">Projected Ach%</div></div>
+  // hero curve + simulator-ish
+  h+=`<div class="grid g-2" style="margin-bottom:18px">
+    <div class="card curvewrap">
+      <div class="card-head"><div><h3>The Incentive Curve</h3><div class="ch-sub">BASE + INCREMENTAL payout for a ${refTarget.toLocaleString('en-IN')}-unit target. It never drops as achievement climbs — the curve is monotonic by design.</div></div><span class="tag">monotonic</span></div>
+      ${curveSVG(refTarget,SCEN.s2,{scenarios:[{a:SCEN.s1,c:'#5B9DF0',lbl:'S1'},{a:SCEN.s3,c:'#34D399',lbl:'S3'}]})}
+      <div class="curve-readout">
+        <div class="cr"><div class="crl">S1 · ${pct(SCEN.s1)}</div><div class="crv">${inr(soScen(refTarget,SCEN.s1))}</div><div class="crh">scenario floor</div></div>
+        <div class="cr"><div class="crl">S2 · ${pct(SCEN.s2)}</div><div class="crv gold">${inr(soScen(refTarget,SCEN.s2))}</div><div class="crh">your set point</div></div>
+        <div class="cr"><div class="crl">S3 · ${pct(SCEN.s3)}</div><div class="crv green">${inr(soScen(refTarget,SCEN.s3))}</div><div class="crh">stretch</div></div>
+        <div class="cr"><div class="crl">S1 → S3 lift</div><div class="crv red">+${inr(soScen(refTarget,SCEN.s3)-soScen(refTarget,SCEN.s1))}</div><div class="crh">per officer</div></div>
+      </div>
     </div>
-    <div style="margin-top:14px;font-size:11px;color:var(--muted)">Gap to next slab: <strong style="color:var(--amber)">${fmtK(Math.max(0,tgt*1.1-nsv))}</strong></div>`;
-}
-
-function switchBarView(view,el){
-  STATE.barView=view;
-  document.querySelectorAll('#sec-dashboard .panel-actions .chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderBarChart(getMyData());
-}
-function switchTrend(view,el){
-  STATE.trendView=view;
-  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderLineChart(getMyData());
-}
-
-// ═══════════════════════════════════════════════════════════
-//  TEAM TABLE
-// ═══════════════════════════════════════════════════════════
-function switchTeamTab(tab,el){
-  STATE.teamTab=tab;
-  el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  const titles={esm:'ESM Performance',distributor:'Distributor Performance',outlet:'Outlet-wise Performance'};
-  document.getElementById('team-table-title').textContent=titles[tab];
-  renderTeamTable();
-}
-
-function renderTeamTable(){
-  let data=STATE.salesData;
-  const brand=document.getElementById('t-brand').value;
-  const region=document.getElementById('t-region').value;
-  const from=document.getElementById('t-from').value;
-  const to=document.getElementById('t-to').value;
-  if(brand)data=data.filter(r=>r.Brand===brand);
-  if(region)data=data.filter(r=>r.Region===region);
-  if(from)data=data.filter(r=>r.Date>=from);
-  if(to)data=data.filter(r=>r.Date<=to);
-  if(STATE.role==='supervisor')data=data.filter(r=>r.Supervisor_Code===STATE.userId);
-  if(STATE.role==='manager')data=data.filter(r=>r.Manager_Code===STATE.userId);
-
-  let grouped={};
-  if(STATE.teamTab==='esm'){
-    data.forEach(r=>{const k=r.ESM_Code;if(!grouped[k])grouped[k]={name:r.ESM_Name,region:r.Region,territory:r.Territory,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
-  } else if(STATE.teamTab==='distributor'){
-    data.forEach(r=>{const k=r.Distributor_Code;if(!grouped[k])grouped[k]={name:r.Distributor_Name,region:r.Region,territory:'',nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
-  } else {
-    data.forEach(r=>{const k=r.Outlet_Code;if(!grouped[k])grouped[k]={name:r.Outlet_Name,region:r.Region,territory:r.Territory,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
-  }
-
-  const rows=Object.entries(grouped).sort((a,b)=>b[1].nsv-a[1].nsv);
-  if(!rows.length){document.getElementById('team-table-wrap').innerHTML='<div class="empty-state"><div class="empty-icon">📭</div>No data for selected filters</div>';return;}
-
-  const html=`<table id="team-table"><thead><tr>
-    <th>#</th><th>NAME</th><th>REGION</th><th>NSV</th>
-    <th>TARGET</th><th>ACH %</th><th>UNITS</th><th>INCENTIVE</th>
-  </tr></thead><tbody>
-  ${rows.map(([id,r],i)=>{
-    const a=+pct(r.nsv,r.tgt);
-    const col=a>=100?'green':a>=85?'amber':'red';
-    const inc=totalIncentiveForData(data.filter(d=>{
-      if(STATE.teamTab==='esm')return d.ESM_Code===id;
-      if(STATE.teamTab==='distributor')return d.Distributor_Code===id;
-      return d.Outlet_Code===id;
-    }));
-    return `<tr>
-      <td style="color:var(--muted)">${i+1}</td>
-      <td><strong>${r.name}</strong></td>
-      <td>${r.region}</td>
-      <td style="font-family:var(--font-mono)">${fmtK(r.nsv)}</td>
-      <td style="font-family:var(--font-mono);color:var(--muted)">${fmtK(r.tgt)}</td>
-      <td><div class="progress-bar-wrap"><div class="progress-bar"><div class="progress-fill ${col}" style="width:${Math.min(a,100)}%"></div></div><span style="font-size:11px;color:${a>=100?'var(--green)':a>=85?'var(--amber)':'var(--red)'}">${a}%</span></div></td>
-      <td>${r.units.toLocaleString('en-IN')}</td>
-      <td style="font-family:var(--font-mono);color:var(--green)">${fmtK(inc)}</td>
-    </tr>`;
-  }).join('')}</tbody></table>`;
-  document.getElementById('team-table-wrap').innerHTML=html;
-}
-
-// ═══════════════════════════════════════════════════════════
-//  INCENTIVES
-// ═══════════════════════════════════════════════════════════
-function renderIncentives(){
-  const data=getMyData();
-
-  // ── Role-aware incentive total ──────────────────────────
-  let totalInc=0, supInc=0, mgrInc=0;
-  if(STATE.role==='esm'){
-    totalInc=calcIncentiveForESMData(data);
-  } else if(STATE.role==='supervisor'){
-    totalInc=calcSupervisorIncentive(data);
-  } else if(STATE.role==='manager'){
-    totalInc=calcManagerIncentive(data);
-  } else {
-    // MIS / all-access: show aggregate ESM incentives
-    totalInc=totalIncentiveForData(data);
-    supInc=0; mgrInc=0;
-  }
-  const paid=totalInc*0.65; const pending=totalInc*0.35;
-
-  // ── KPI Cards ───────────────────────────────────────────
-  const totalUnits=sumUnits(data);
-  const targetUnits=data.reduce((s,r)=>s+r.Target_Units,0);
-  const achPct=targetUnits?((totalUnits/targetUnits)*100):0;
-  const outletCount=STATE.keyOutlets ? STATE.keyOutlets.length : 0;
-  const outletBonus=outletCount*500;
-
-  const kpiRows=[
-    {label:'MY INCENTIVE (EARNED)',value:fmtK(totalInc),cls:'green'},
-    {label:'PAID OUT',value:fmtK(paid),cls:''},
-    {label:'PENDING APPROVAL',value:fmtK(pending),cls:'amber'},
-    {label:'KEY OUTLET BONUS',value:fmtK(outletBonus),cls:'purple'},
-  ];
-  if(STATE.role==='supervisor') kpiRows.splice(0,1,{label:'SUPERVISOR INCENTIVE (2× Team Avg)',value:fmtK(totalInc),cls:'green'});
-  if(STATE.role==='manager')    kpiRows.splice(0,1,{label:'MANAGER INCENTIVE (3× Team Avg)',  value:fmtK(totalInc),cls:'green'});
-
-  document.getElementById('inc-kpi-grid').innerHTML=kpiRows.map(k=>
-    `<div class="kpi-card ${k.cls}"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div></div>`).join('');
-
-  // ── ESM-wise incentive breakdown ────────────────────────
-  const esmIds=[...new Set(data.map(r=>r.ESM_Code))];
-  const rows=esmIds.map(eid=>{
-    const ed=data.filter(r=>r.ESM_Code===eid);
-    const tu=sumUnits(ed); const tgt=ed.reduce((s,r)=>s+r.Target_Units,0);
-    const ap=tgt?(tu/tgt*100):0;
-    const inc=calcIncentiveForESMData(ed);
-    const name=ed[0]?ed[0].ESM_Name:eid;
-    // which slab?
-    let slabLabel='Below 90%'; let slabBasis='';
-    if(ap>=125){slabLabel='125%+ Slab';slabBasis='Incremental × ₹10/unit';}
-    else if(ap>=120){slabLabel='120–124% Slab';slabBasis='Incremental × ₹8/unit';}
-    else if(ap>=110){slabLabel='110–119% Slab';slabBasis='Incremental × ₹6/unit';}
-    else if(ap>=100){slabLabel='100–109% Slab';slabBasis='Incremental × ₹4/unit';}
-    else if(ap>=90){slabLabel='90–99% Slab';slabBasis='Total Vol × ₹3/unit';}
-    return {eid,name,tu,tgt,ap,inc,slabLabel,slabBasis};
-  });
-
-  document.getElementById('inc-table-wrap').innerHTML=`<table id="inc-table"><thead><tr>
-    <th>ESM</th><th>UNITS SOLD</th><th>TARGET UNITS</th><th>ACH %</th><th>SLAB</th><th>BASIS</th><th>INCENTIVE ₹</th>
-  </tr></thead><tbody>
-  ${rows.sort((a,b)=>b.inc-a.inc).map(r=>`<tr>
-    <td><strong>${r.name}</strong></td>
-    <td style="font-family:var(--font-mono)">${r.tu.toLocaleString('en-IN')}</td>
-    <td style="font-family:var(--font-mono);color:var(--muted)">${r.tgt.toLocaleString('en-IN')}</td>
-    <td style="color:${r.ap>=100?'var(--green)':r.ap>=90?'var(--amber)':'var(--red)'}"><strong>${r.ap.toFixed(1)}%</strong></td>
-    <td><span class="kpi-badge ${r.ap>=100?'up':r.ap>=90?'warn':'down'}">${r.slabLabel}</span></td>
-    <td style="font-size:10px;color:var(--muted)">${r.slabBasis||'—'}</td>
-    <td style="font-family:var(--font-mono);color:var(--green);font-weight:600">${fmtK(r.inc)}</td>
-  </tr>`).join('')}</tbody></table>`;
-
-  // ── Slab Status Widget ──────────────────────────────────
-  const myUnits=sumUnits(data);
-  const myTgtUnits=data.reduce((s,r)=>s+r.Target_Units,0);
-  const myAch=myTgtUnits?(myUnits/myTgtUnits*100):0;
-  const slabs=[
-    {label:'90–99%',rate:'₹3/unit',basis:'Total volume',from:90,to:99.9},
-    {label:'100–109%',rate:'₹4/unit',basis:'Incremental only',from:100,to:109.9},
-    {label:'110–119%',rate:'₹6/unit',basis:'Incremental only',from:110,to:119.9},
-    {label:'120–124%',rate:'₹8/unit',basis:'Incremental only',from:120,to:124.9},
-    {label:'125%+',rate:'₹10/unit',basis:'Incremental only',from:125,to:9999},
-  ];
-  document.getElementById('slab-status').innerHTML=slabs.map(s=>{
-    const active=myAch>=s.from&&myAch<=s.to;
-    const achieved=myAch>s.to;
-    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;margin-bottom:6px;border:1px solid ${active?'rgba(91,108,255,0.4)':achieved?'rgba(0,217,126,0.2)':'var(--border)'};background:${active?'var(--glow)':achieved?'rgba(0,217,126,0.05)':'transparent'}">
-      <div style="width:8px;height:8px;border-radius:50%;background:${active?'var(--accent)':achieved?'var(--green)':'var(--border2)'};flex-shrink:0"></div>
-      <div style="flex:1">
-        <div style="font-size:12px;font-weight:700;color:${active?'var(--text)':'var(--muted)'}">${s.label} &nbsp;<span style="font-weight:400;font-size:11px">${s.rate}</span></div>
-        <div style="font-size:10px;color:var(--muted)">${s.basis}</div>
-      </div>
-      <span class="kpi-badge ${active?'up':achieved?'up':'warn'}">${active?'● Current':achieved?'✓ Passed':'― Ahead'}</span>
-    </div>`;
-  }).join('')+`
-  <div style="margin-top:10px;padding:10px 12px;background:var(--surface2);border-radius:10px;font-size:11px">
-    <span style="color:var(--muted)">Your achievement: </span><strong style="color:${myAch>=100?'var(--green)':myAch>=90?'var(--amber)':'var(--red)'}">${myAch.toFixed(1)}%</strong>
-    &nbsp;|&nbsp;<span style="color:var(--muted)">Units: </span><strong>${myUnits.toLocaleString('en-IN')} / ${myTgtUnits.toLocaleString('en-IN')}</strong>
-    &nbsp;|&nbsp;<span style="color:var(--muted)">Gap to next slab: </span><strong style="color:var(--amber)">${Math.max(0,Math.ceil(myTgtUnits*(Math.ceil(myAch/10)*10+((myAch%10)?0:10))/100)-myUnits).toLocaleString('en-IN')} units</strong>
+    <div class="card">
+      <div class="card-head"><div><h3>What this scope pays</h3><div class="ch-sub">Across all levels at June Scenario 2.</div></div></div>
+      ${miniLevelBars(junS2,asmTot,rhTot)}
+      <div class="sectiontitle" style="margin:22px 0 12px">Live insights</div>
+      ${insightsFor(scope)}
+    </div>
   </div>`;
 
-  // ── Status doughnut ─────────────────────────────────────
-  const ctx=document.getElementById('incStatusChart').getContext('2d');
-  if(STATE.charts.incStatus)STATE.charts.incStatus.destroy();
-  STATE.charts.incStatus=new Chart(ctx,{type:'doughnut',data:{labels:['Paid','Pending'],datasets:[{data:[paid,pending],backgroundColor:['rgba(0,217,126,0.85)','rgba(245,158,11,0.85)'],borderColor:'rgba(17,19,32,1)',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{color:'#6b7194',font:{size:10}}}}}});
+  // region/asm rollup table depending on role
+  if(USER.role==='admin'){
+    h+=`<div class="sectiontitle">Region Heads · 3× zone average</div>`+regionTable(regionRollup(scope));
+  }
+  h+=`<div class="sectiontitle">ASM / BM · 2× team average</div>`+asmTable(asmRollup(scope));
+  c.innerHTML=h;
+}
+function miniLevelBars(so,asm,rh){
+  const rows=[['Sales Officers',so,'var(--gold)'],['ASM / BM (2× avg)',asm,'var(--red)']];
+  if(rh)rows.push(['Region Heads (3× avg)',rh,'var(--green)']);
+  const mx=Math.max(...rows.map(r=>r[1]),1);
+  return rows.map(([l,v,c])=>`<div style="margin-bottom:13px"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"><span style="color:var(--txt-2);font-weight:600">${l}</span><span class="mono" style="color:var(--gold-soft);font-weight:700">${inr(v)}</span></div><div style="height:8px;background:var(--surf-3);border-radius:6px;overflow:hidden"><div style="height:100%;width:${(v/mx*100).toFixed(1)}%;background:${c};border-radius:6px;transition:.5s"></div></div></div>`).join('')
+    +`<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between"><span style="font-weight:700;color:var(--txt)">Total June S2 outlay</span><span class="mono" style="font-weight:800;color:var(--gold-soft);font-size:16px">${inr(so+asm+rh)}</span></div>`;
 }
 
-// ═══════════════════════════════════════════════════════════
-//  LEADERBOARD
-// ═══════════════════════════════════════════════════════════
-function renderLeaderboard(){
-  let data=STATE.salesData;
-  const brand=document.getElementById('lb-brand').value;
-  if(brand)data=data.filter(r=>r.Brand===brand);
-
-  const byESM={};
-  data.forEach(r=>{
-    if(!byESM[r.ESM_Code])byESM[r.ESM_Code]={name:r.ESM_Name,region:r.Region,nsv:0,units:0};
-    byESM[r.ESM_Code].nsv+=r.NSV_Value;byESM[r.ESM_Code].units+=r.Units_Sold;
-  });
-  const rankColors=['gold','silver','bronze'];
-  const sorted=Object.entries(byESM).sort((a,b)=>b[1].nsv-a[1].nsv);
-
-  document.getElementById('lb-list').innerHTML=sorted.slice(0,10).map(([id,u],i)=>`
-    <div class="lb-item">
-      <div class="lb-rank ${rankColors[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
-      <div class="lb-avatar" style="background:${avatarColors[i%avatarColors.length]}">${u.name[0]}</div>
-      <div class="lb-info"><div class="lb-name">${u.name}</div><div class="lb-region">${u.region}</div></div>
-      <div class="lb-amt">${fmtK(u.nsv)}</div>
-    </div>`).join('');
-
-  const byInc=sorted.map(([id,u])=>({...u,inc:totalIncentiveForData(data.filter(r=>r.ESM_Code===id))})).sort((a,b)=>b.inc-a.inc);
-  document.getElementById('lb-inc-list').innerHTML=byInc.slice(0,10).map((u,i)=>`
-    <div class="lb-item">
-      <div class="lb-rank ${rankColors[i]||''}">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</div>
-      <div class="lb-avatar" style="background:${avatarColors[(i+3)%avatarColors.length]}">${u.name[0]}</div>
-      <div class="lb-info"><div class="lb-name">${u.name}</div><div class="lb-region">${u.region}</div></div>
-      <div class="lb-amt">${fmtK(u.inc)}</div>
-    </div>`).join('');
-
-  // Heatmap
-  document.getElementById('heatmap-wrap').innerHTML=sorted.map(([id,u])=>{
-    const tgt=STATE.salesData.filter(r=>r.ESM_Code===id).reduce((s,r)=>s+r.Target_NSV,0);
-    const a=pct(u.nsv,tgt);
-    const hue=Math.min(+a,100)/100;
-    const bg=`rgba(${Math.round(244-hue*153)},${Math.round(63+hue*154)},${Math.round(94-hue*94)},0.15)`;
-    const bc=`rgba(${Math.round(244-hue*153)},${Math.round(63+hue*154)},${Math.round(94-hue*94)},0.4)`;
-    return `<div style="background:${bg};border:1px solid ${bc};border-radius:10px;padding:12px;text-align:center">
-      <div style="font-size:11px;font-weight:600;margin-bottom:4px">${u.name}</div>
-      <div style="font-size:10px;color:var(--muted)">${u.region}</div>
-      <div style="font-family:var(--font-head);font-size:20px;font-weight:800;margin:6px 0;color:${+a>=100?'var(--green)':+a>=85?'var(--amber)':'var(--red)'}">${a}%</div>
-      <div style="font-size:10px;color:var(--muted)">${fmtK(u.nsv)}</div>
-    </div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════════════════
-//  SCHEME MANAGER
-// ═══════════════════════════════════════════════════════════
-function renderSchemes(){
-  const headerRow=`<div style="display:grid;grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto;gap:8px;padding:6px 12px;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:.7px">
-    <div>SCHEME NAME &middot; ROLE &middot; BRAND</div><div>ACH% FROM</div><div>ACH% TO</div><div>&#8377;/UNIT</div><div>BASIS</div><div></div>
+/* ============ PAGE: MINE (SO) ============ */
+let mineSlider=null;
+function pageMine(){
+  const c=document.getElementById('content');
+  if(USER.key==null){c.innerHTML=emptyCard('No incentive record yet','Your territory ('+USER.name+') isn\u2019t part of the current April\u2013June incentive cycle. Once targets are loaded for your area, your live payout, slab position and curve will appear here.');return;}
+  const o=SO.find(x=>x.id===USER.key);
+  const curAch=o.mayAch||o.aprAch||1; // reference from latest closed month
+  let h=`<div class="kpis">
+    ${kpi('April incentive',o.aprInc,o.aprT?`${pct1(o.aprAch)} of ${o.aprT.toLocaleString('en-IN')}`:'no target','',true)}
+    ${kpi('May incentive',o.mayInc,o.mayT?`${pct1(o.mayAch)} of ${o.mayT.toLocaleString('en-IN')}`:'no target','',true)}
+    ${kpi('June @ S2 ('+pct(SCEN.s2)+')',o.junS2,`target ${o.junT.toLocaleString('en-IN')} units`,'gold',true)}
+    ${kpi('Q1 total @ S2',o.q1S2,'Apr + May + Jun','green',true)}
   </div>`;
-  const rows=STATE.schemes.map(function(s,i){
-    const basis=s.basis||'total';
-    const roleOpts=['ESM','Supervisor','Manager'].map(function(r){return '<option'+(s.role===r?' selected':'')+'>'+r+'</option>';}).join('');
-    const brandOpts=['ALL','FCUK','French Connection','PUMA'].map(function(b){return '<option'+(s.brand===b?' selected':'')+'>'+b+'</option>';}).join('');
-    const basisOpts=['total','incremental','per_outlet','team_avg_multiple'].map(function(b){return '<option'+(basis===b?' selected':'')+'>'+b+'</option>';}).join('');
-    return '<div class="scheme-edit-row" id="srow-'+i+'" style="grid-template-columns:2.5fr 0.8fr 0.8fr 0.8fr 0.8fr auto">'
-      +'<div style="display:flex;flex-direction:column;gap:4px">'
-      +'<input value="'+s.name+'" placeholder="Scheme Name" onchange="STATE.schemes['+i+'].name=this.value"/>'
-      +'<div style="display:flex;gap:6px">'
-      +'<select onchange="STATE.schemes['+i+'].role=this.value">'+roleOpts+'</select>'
-      +'<select onchange="STATE.schemes['+i+'].brand=this.value">'+brandOpts+'</select>'
-      +'</div></div>'
-      +'<input type="number" value="'+(s.achFrom||0)+'" onchange="STATE.schemes['+i+'].achFrom=+this.value"/>'
-      +'<input type="number" value="'+(s.achTo||9999)+'" onchange="STATE.schemes['+i+'].achTo=+this.value"/>'
-      +'<input type="number" step="1" value="'+(s.ratePerUnit||0)+'" onchange="STATE.schemes['+i+'].ratePerUnit=+this.value"/>'
-      +'<select onchange="STATE.schemes['+i+'].basis=this.value">'+basisOpts+'</select>'
-      +'<button class="del-btn" onclick="deleteSchemeRow('+i+')">&#10005;</button>'
-      +'</div>';
-  });
-  document.getElementById('scheme-edit-grid').innerHTML=headerRow+rows.join('');
+  h+=`<div class="grid g-2" style="margin-bottom:18px">
+    <div class="card curvewrap">
+      <div class="card-head"><div><h3>Your incentive curve</h3><div class="ch-sub">Target ${o.junT.toLocaleString('en-IN')} units. Drag the slider — the marker rides the curve and the rupees update live.</div></div><span class="tag" id="mineBand"></span></div>
+      <div id="mineCurve">${curveSVG(o.junT,curAch)}</div>
+      <div class="simrow"><span class="slabel">70%</span><input type="range" id="mineRange" min="70" max="150" value="${Math.round(curAch*100)}" oninput="mineMove(this.value)"><span class="slabel" style="text-align:right">150%</span></div>
+      <div class="presets" id="minePresets">${[80,90,100,110,120,125,130,140,150].map(p=>`<button class="preset" data-p="${p}" onclick="minePreset(${p})">${p}%</button>`).join('')}</div>
+      <div class="curve-readout" id="mineReadout"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div><h3>Where you stand</h3></div></div>
+      <div class="gaugewrap">${gauge(curAch)}</div>
+      <div class="sectiontitle" style="margin:18px 0 12px">Your next move</div>
+      <div id="mineInsights"></div>
+    </div>
+  </div>`;
+  c.innerHTML=h;
+  mineMove(Math.round(curAch*100));
+}
+function mineMove(v){
+  const o=SO.find(x=>x.id===USER.key);const ach=v/100;
+  document.getElementById('mineCurve').innerHTML=curveSVG(o.junT,ach);
+  const [bcls,blbl]=bandOf(ach);
+  const bt=document.getElementById('mineBand');bt.textContent=blbl;
+  const inc=soScen(o.junT,ach), base=soScen(o.junT,Math.min(ach,1)<SLAB.entry?0:1)===0&&ach<1?0:SLAB.base*Math.min(o.junT*ach,o.junT);
+  const ns=nextSlab(ach);
+  let gapHtml='';
+  if(ns){const unitsNeeded=Math.max(0,Math.ceil(o.junT*ns.threshold-o.junT*ach));const incAt=soScen(o.junT,ns.threshold);
+    gapHtml=`<div class="cr"><div class="crl">Gap to next slab</div><div class="crv red">+${unitsNeeded.toLocaleString('en-IN')}<span style="font-size:13px;color:var(--txt-3);font-weight:600"> units</span></div><div class="crh">reach ${pct(ns.threshold)} → ${inr(incAt)} (+${inr(incAt-inc)})</div></div>`;}
+  else gapHtml=`<div class="cr"><div class="crl">Top slab</div><div class="crv green">MAX</div><div class="crh">125%+ · ₹${SLAB.r125}/unit on every unit above target</div></div>`;
+  document.getElementById('mineReadout').innerHTML=
+    `<div class="cr"><div class="crl">At ${v}%</div><div class="crv gold">${inr(inc)}</div><div class="crh">${blbl} band</div></div>
+     <div class="cr"><div class="crl">vs. 100%</div><div class="crv">${inr(inc-soScen(o.junT,1))===inr(0)?'—':(inc>=soScen(o.junT,1)?'+':'')+inr(inc-soScen(o.junT,1))}</div><div class="crh">delta over target pay</div></div>
+     ${gapHtml}`;
+  document.querySelectorAll('#minePresets .preset').forEach(p=>p.classList.toggle('on',+p.dataset.p===+v));
+  // insights
+  const ins=document.getElementById('mineInsights');
+  let arr=[];
+  if(ns){const unitsNeeded=Math.max(0,Math.ceil(o.junT*ns.threshold-o.junT*ach));const extra=soScen(o.junT,ns.threshold)-inc;
+    arr.push(['g','flag',`Sell <b>${unitsNeeded.toLocaleString('en-IN')} more units</b> to cross <span class="rg">${pct(ns.threshold)}</span> and unlock <b>+${inr(extra)}</b> this month.`]);}
+  arr.push(['gr','up',`At ${v}% your June payout is <b>${inr(inc)}</b> on a ${o.junT.toLocaleString('en-IN')}-unit target.`]);
+  if(ach>=1.25)arr.push(['g','star',`You're in the <span class="gn">top 125%+ slab</span> — every extra unit now earns the full ₹${SLAB.r125}.`]);
+  ins.innerHTML=arr.map(insRow).join('');
+}
+function minePreset(p){document.getElementById('mineRange').value=p;mineMove(p);}
+
+/* ============ PAGE: OFFICERS ============ */
+function pageOfficers(){
+  const scope=scopeFor(USER);const c=document.getElementById('content');
+  let h=`<div class="toolbar">
+    <input type="text" id="qSO" placeholder="Search officer / ASM…" oninput="renderOfficerTable()" style="min-width:220px">
+    <select id="fRegion" onchange="renderOfficerTable()"></select>
+    <select id="fBand" onchange="renderOfficerTable()">
+      <option value="">All bands · May</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
+    </select>
+    <div class="spacer" style="flex:1"></div>
+    <button class="btn-ghost" onclick="exportCSV()"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Export CSV</button>
+  </div><div id="officerTableWrap"></div>`;
+  c.innerHTML=h;
+  const regs=[...new Set(scope.map(o=>o.region))];
+  document.getElementById('fRegion').innerHTML='<option value="">All regions</option>'+regs.map(r=>`<option>${r}</option>`).join('');
+  if(USER.role==='region'){const s=document.getElementById('fRegion');s.value=USER.key;s.disabled=true;}
+  renderOfficerTable();
+}
+function renderOfficerTable(){
+  const scope=scopeFor(USER);
+  const q=(document.getElementById('qSO')?.value||'').toLowerCase();
+  const fr=document.getElementById('fRegion')?.value||'';
+  const fb=document.getElementById('fBand')?.value||'';
+  let rows=scope.filter(o=>(!q||o.name.toLowerCase().includes(q)||o.asm.toLowerCase().includes(q))&&(!fr||o.region===fr)&&(!fb||bandOf(o.mayAch)[0]===fb));
+  rows.sort((a,b)=>b.junS2-a.junS2);
+  const t=`<div class="tablewrap"><table><thead><tr>
+    <th>Officer</th><th>ASM / BM</th><th>Region</th><th class="num">May Ach</th><th>May band</th>
+    <th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th><th class="num">Q1 S2</th>
+    </tr></thead><tbody>${rows.map(o=>{const [bc,bl]=bandOf(o.mayAch);return `<tr>
+      <td>${o.vacant?'<span class="vac">'+o.name+'</span>':o.name}</td><td class="muted">${o.asm}</td><td class="muted">${o.region}</td>
+      <td class="num">${o.mayT?pct1(o.mayAch):'—'}</td><td><span class="slabtag ${bc}">${bl}</span></td>
+      <td class="num money">${o.aprInc?inr(o.aprInc):'—'}</td><td class="num money">${o.mayInc?inr(o.mayInc):'—'}</td>
+      <td class="num">${inr(o.junS1)}</td><td class="num money">${inr(o.junS2)}</td><td class="num">${inr(o.junS3)}</td><td class="num money">${inr(o.q1S2)}</td>
+    </tr>`;}).join('')}
+    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">${rows.length} rows</td><td></td><td></td>
+      <td class="num money">${inr(sum(rows,'aprInc'))}</td><td class="num money">${inr(sum(rows,'mayInc'))}</td>
+      <td class="num">${inr(sum(rows,'junS1'))}</td><td class="num money">${inr(sum(rows,'junS2'))}</td><td class="num">${inr(sum(rows,'junS3'))}</td><td class="num money">${inr(sum(rows,'q1S2'))}</td></tr>
+    </tbody></table></div>`;
+  document.getElementById('officerTableWrap').innerHTML=t;
 }
 
-function addSchemeRow(){
-  STATE.schemes.push({id:'NEW',name:'New Scheme',role:'ESM',achFrom:90,achTo:99,ratePerUnit:3,basis:'total',brand:'ALL'});
-  renderSchemes();
-}
-function deleteSchemeRow(i){STATE.schemes.splice(i,1);renderSchemes();}
-function saveSchemes(){renderSchemes();alert('✓ Schemes saved successfully!\nDashboard will use updated payout logic.');}
-function exportSchemes(){
-  const csv=['Scheme_ID,Scheme_Name,Role,Slab_From,Slab_To,Type,Value,Brand',
-    ...STATE.schemes.map(s=>`${s.id},${s.name},${s.role},${s.from},${s.to},${s.type},${s.value},${s.brand}`)].join('\n');
-  downloadCSV(csv,'Underlinen_Incentive_Schemes.csv');
+/* ============ PAGE: TEAM (ASM rollup) ============ */
+function pageTeam(){
+  const scope=scopeFor(USER);const c=document.getElementById('content');
+  c.innerHTML=`<div class="card" style="margin-bottom:18px"><div class="card-head"><div><h3>How supervisor pay works</h3><div class="ch-sub">Each ASM / BM earns <b>2× the average incentive of the Sales Officers reporting to them</b> — an AVERAGEIF rollup that updates the instant the scenario box changes. Region Heads earn 3× their zone average.</div></div><span class="tag">2× team avg</span></div></div>`
+   +`<div class="sectiontitle">ASM / BM rollup</div>`+asmTable(asmRollup(scope));
 }
 
-// ═══════════════════════════════════════════════════════════
-//  REPORTS
-// ═══════════════════════════════════════════════════════════
-function renderReports(){
-  let data=STATE.salesData;
-  const brand=document.getElementById('rpt-brand').value;
-  const region=document.getElementById('rpt-region').value;
-  if(brand)data=data.filter(r=>r.Brand===brand);
-  if(region)data=data.filter(r=>r.Region===region);
-
-  const nsv=sumNSV(data);const tgt=sumTarget(data);const units=sumUnits(data);const inc=totalIncentiveForData(data);
-  document.getElementById('rpt-kpis').innerHTML=[
-    {label:'TOTAL NSV',value:fmtK(nsv)},{label:'TARGET',value:fmtK(tgt)},
-    {label:'ACH %',value:pct(nsv,tgt)+'%'},{label:'UNITS',value:units.toLocaleString('en-IN')},
-    {label:'INCENTIVE',value:fmtK(inc)}
-  ].map(k=>`<div class="kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div></div>`).join('');
-
-  // Region-brand summary
-  const grouped={};
-  data.forEach(r=>{const k=r.Region+'__'+r.Brand;if(!grouped[k])grouped[k]={region:r.Region,brand:r.Brand,nsv:0,tgt:0,units:0};grouped[k].nsv+=r.NSV_Value;grouped[k].tgt+=r.Target_NSV;grouped[k].units+=r.Units_Sold;});
-  const rows=Object.values(grouped).sort((a,b)=>b.nsv-a.nsv);
-
-  document.getElementById('rpt-table-wrap').innerHTML=`<table id="rpt-table"><thead><tr>
-    <th>REGION</th><th>BRAND</th><th>NSV</th><th>TARGET</th><th>ACH %</th><th>UNITS</th><th>INCENTIVE</th>
-  </tr></thead><tbody>
-  ${rows.map(r=>{const a=pct(r.nsv,r.tgt);const inc=calcIncentive(r.nsv,r.brand);return `<tr>
-    <td>${r.region}</td>
-    <td><span class="tag ${r.brand==='FCUK'?'fcuk':r.brand==='French Connection'?'fc':'puma'}">${r.brand}</span></td>
-    <td style="font-family:var(--font-mono)">${fmtK(r.nsv)}</td>
-    <td style="font-family:var(--font-mono);color:var(--muted)">${fmtK(r.tgt)}</td>
-    <td style="color:${+a>=100?'var(--green)':+a>=85?'var(--amber)':'var(--red)'}">${a}%</td>
-    <td>${r.units.toLocaleString('en-IN')}</td>
-    <td style="font-family:var(--font-mono);color:var(--green)">${fmtK(inc)}</td>
-  </tr>`;}).join('')}</tbody></table>`;
+/* ============ PAGE: LEADERBOARD ============ */
+let lbMetric='junS2';
+function pageLeaderboard(){
+  const c=document.getElementById('content');
+  c.innerHTML=`<div class="toolbar"><span style="font-size:12px;color:var(--txt-3);font-weight:700;letter-spacing:.6px;text-transform:uppercase">Rank by</span>
+    <div class="seg" id="lbSeg">
+      <button data-m="mayInc">May actual</button>
+      <button data-m="junS1">Jun S1</button>
+      <button data-m="junS2" class="on">Jun S2</button>
+      <button data-m="junS3">Jun S3</button>
+      <button data-m="q1S2">Q1 total</button>
+    </div></div><div id="lbWrap"></div>`;
+  document.querySelectorAll('#lbSeg button').forEach(b=>b.onclick=()=>{lbMetric=b.dataset.m;document.querySelectorAll('#lbSeg button').forEach(x=>x.classList.toggle('on',x===b));renderLB();});
+  renderLB();
+}
+function renderLB(){
+  const scope=scopeFor(USER).filter(o=>!o.vacant);
+  const rows=[...scope].sort((a,b)=>b[lbMetric]-a[lbMetric]).slice(0,15);
+  const medals=['g1','g2','g3'];const names=['Gold','Silver','Bronze'];
+  let podium=`<div class="lb-top">`+rows.slice(0,3).map((o,i)=>`<div class="podium ${medals[i]}"><span class="crown">${i+1}</span>
+    <span class="medal">◆ ${names[i]}</span><div class="pn">${o.name}</div><div class="pr">${o.asm} · ${o.region}</div>
+    <div class="pv">${inr(o[lbMetric])}</div><div class="pa">${o.mayT?pct1(o.mayAch)+' May achievement':o.junT.toLocaleString('en-IN')+' unit target'}</div></div>`).join('')+`</div>`;
+  let table=`<div class="tablewrap"><table><thead><tr><th>#</th><th>Officer</th><th>ASM / BM</th><th>Region</th><th class="num">May Ach</th><th class="num">Incentive</th></tr></thead><tbody>`+
+    rows.map((o,i)=>`<tr><td class="mono" style="color:${i<3?'var(--gold)':'var(--txt-3)'};font-weight:700">${i+1}</td><td>${o.name}</td><td class="muted">${o.asm}</td><td class="muted">${o.region}</td><td class="num">${o.mayT?pct1(o.mayAch):'—'}</td><td class="num money" style="font-size:14px">${inr(o[lbMetric])}</td></tr>`).join('')+`</tbody></table></div>`;
+  // if SO viewing, show their rank
+  let me='';
+  if(USER.role==='so'&&USER.key!=null){const all=[...SO.filter(o=>!o.vacant)].sort((a,b)=>b[lbMetric]-a[lbMetric]);const rank=all.findIndex(o=>o.id===USER.key)+1;
+    me=`<div class="card" style="margin-bottom:18px"><div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap"><div class="avatar" style="width:48px;height:48px;font-size:19px">${(USER.name[0]||'').toUpperCase()}</div><div><div style="font-size:12px;color:var(--txt-3);text-transform:uppercase;letter-spacing:1px;font-weight:700">Your rank · national</div><div class="disp" style="font-size:28px;font-weight:900;letter-spacing:-1px">#${rank} <span style="font-size:15px;color:var(--txt-3);font-weight:600">of ${all.length}</span></div></div><div style="flex:1"></div><div style="text-align:right"><div style="font-size:12px;color:var(--txt-3);text-transform:uppercase;letter-spacing:1px;font-weight:700">Incentive</div><div class="disp" style="font-size:26px;font-weight:900;color:var(--gold-soft)">${inr(SO.find(o=>o.id===USER.key)[lbMetric])}</div></div></div></div>`;}
+  document.getElementById('lbWrap').innerHTML=me+podium+table;
 }
 
-// ═══════════════════════════════════════════════════════════
-//  UPLOAD
-// ═══════════════════════════════════════════════════════════
-function openUploadModal(){document.getElementById('upload-modal').classList.add('open');}
-function closeUploadModal(){document.getElementById('upload-modal').classList.remove('open');}
-
-function handleFileDrop(e){e.preventDefault();document.getElementById('modal-upload-zone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)parseFile(f,'modal');}
-function handleFileSelect(e){const f=e.target.files[0];if(f)parseFile(f,'modal');}
-function handleMainDrop(e){e.preventDefault();document.getElementById('main-upload-zone').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)parseFile(f,'main');}
-function handleMainUpload(e){const f=e.target.files[0];if(f)parseFile(f,'main');}
-
-function parseFile(file,target){
-  STATE.pendingFile=file;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      const wb=XLSX.read(e.target.result,{type:'binary'});
-      const ws=wb.Sheets[wb.SheetNames[0]];
-      const raw=XLSX.utils.sheet_to_json(ws);
-      const required=['Date','ESM_Code','NSV_Value','Brand'];
-      const cols=raw.length?Object.keys(raw[0]):[];
-      const missing=required.filter(r=>!cols.includes(r));
-      if(missing.length&&target==='main'){
-        document.getElementById('upload-validation').innerHTML=`<div class="alert-pill warn" style="margin-bottom:8px">⚠ Missing columns: ${missing.join(', ')}</div>`;
-      } else {
-        if(target==='modal'){
-          document.getElementById('upload-log').innerHTML=`<div class="upload-log-item"><span class="ul-icon">📄</span><span class="ul-name">${file.name}</span><span class="ul-rows">${raw.length} rows</span><span class="ul-status">Ready</span></div>`;
-        } else {
-          document.getElementById('upload-validation').innerHTML=`<div class="alert-pill success">✓ ${file.name} — ${raw.length} rows validated</div>`;
-          ingestData(raw,file.name);
-        }
-      }
-    }catch(err){
-      const el=target==='modal'?'upload-log':'upload-validation';
-      document.getElementById(el).innerHTML=`<div class="alert-pill warn">✗ Error reading file</div>`;
-    }
-  };
-  reader.readAsBinaryString(file);
-}
-
-function processUpload(){
-  if(!STATE.pendingFile){closeUploadModal();return;}
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const wb=XLSX.read(e.target.result,{type:'binary'});
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    const raw=XLSX.utils.sheet_to_json(ws);
-    ingestData(raw,STATE.pendingFile.name);
-    closeUploadModal();
-    renderAlerts();renderDashboard();setLastUpdated();
-    alert('✓ Data uploaded! Dashboard refreshed.');
-  };
-  reader.readAsBinaryString(STATE.pendingFile);
-}
-
-function ingestData(rows,fname){
-  const mapped=rows.map(r=>({
-    Date:r.Date||r.date||'',ESM_Code:r.ESM_Code||r.esm_code||'',ESM_Name:r.ESM_Name||r.esm_name||'',
-    Supervisor_Code:r.Supervisor_Code||'',Supervisor_Name:r.Supervisor_Name||'',
-    Manager_Code:r.Manager_Code||'',Manager_Name:r.Manager_Name||'',
-    Region:r.Region||'',Territory:r.Territory||'',
-    Distributor_Code:r.Distributor_Code||'',Distributor_Name:r.Distributor_Name||'',
-    Outlet_Code:r.Outlet_Code||'',Outlet_Name:r.Outlet_Name||'',
-    Brand:r.Brand||'',Category:r.Category||'',SKU_Code:r.SKU_Code||'',
-    Units_Sold:+r.Units_Sold||0,NSV_Value:+r.NSV_Value||0,
-    Target_Units:+r.Target_Units||0,Target_NSV:+r.Target_NSV||0
-  })).filter(r=>r.NSV_Value>0);
-  if(mapped.length>0)STATE.salesData=[...STATE.salesData,...mapped];
-  const entry={id:'UPL'+String(STATE.uploadLog.length+1).padStart(3,'0'),date:new Date().toISOString().slice(0,10),by:STATE.userName,file:fname,records:mapped.length,status:'Success'};
-  STATE.uploadLog.push(entry);
-  renderUploadHistory();
-  renderUploadPreview(mapped.slice(0,20));
-}
-
-function renderUploadHistory(){
-  document.getElementById('upload-history-list').innerHTML=STATE.uploadLog.slice().reverse().map(u=>`
-    <div class="upload-log-item">
-      <span class="ul-icon">📄</span>
-      <div style="flex:1;min-width:0">
-        <div class="ul-name" style="white-space:normal;word-break:break-all">${u.file}</div>
-        <div style="font-size:10px;color:var(--muted)">${u.date} · by ${u.by}</div>
+/* ============ PAGE: SIMULATOR (scenario lab) ============ */
+function pageSimulator(){
+  const scope=scopeFor(USER);const live=scope.filter(o=>!o.vacant);const c=document.getElementById('content');
+  if(USER.role==='so'&&USER.key==null){c.innerHTML=emptyCard('Simulator unavailable','Your territory ('+USER.name+') isn\u2019t in the current incentive cycle yet, so there\u2019s no target to simulate. It\u2019ll light up here once your area\u2019s numbers are loaded.');return;}
+  const refTarget = USER.role==='so'? meSO().junT : (Math.round(sum(live,'junT')/Math.max(1,live.length)/100)*100||3000);
+  c.innerHTML=`<div class="card" style="margin-bottom:18px"><div class="card-head"><div><h3>Scenario Lab — the live tweak box</h3><div class="ch-sub">This is the amber box from the workbook (cells N6:P6). Set three June achievement scenarios; every officer, ASM rollup, Region Head zone and the summary dashboard recalculate the moment you change a value.</div></div><span class="tag">live · N6:P6</span></div>
+    <div class="grid g-2b">
+      <div>${[['s1','Scenario 1','#5B9DF0'],['s2','Scenario 2','#E5B567'],['s3','Scenario 3','#34D399']].map(([id,lbl,col])=>{
+        const v=Math.round(SCEN[id]*100);
+        return `<div style="margin-bottom:18px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-weight:700;color:${col}">${lbl}</span><span class="mono" style="font-weight:800;color:${col}">${v}%</span></div>
+        <div class="simrow"><span class="slabel">70%</span><input type="range" min="70" max="150" value="${v}" oninput="labSet('${id}',this.value)"><span class="slabel" style="text-align:right">150%</span></div></div>`;}).join('')}
+        <div class="presets">${[80,90,100,110,120,125,130,140,150].map(p=>`<button class="preset" onclick="labAll(${p})">${p}% all</button>`).join('')}</div>
+        <div class="note">Reference target ${refTarget.toLocaleString('en-IN')} units. Values persist on this device.</div>
       </div>
-      <span class="ul-rows">${u.records}</span>
-      <span class="ul-status">${u.status}</span>
-    </div>`).join('');
+      <div class="curvewrap">${curveSVG(refTarget,SCEN.s2,{scenarios:[{a:SCEN.s1,c:'#5B9DF0',lbl:'S1'},{a:SCEN.s3,c:'#34D399',lbl:'S3'}]})}</div>
+    </div></div>
+    <div class="sectiontitle">Org impact at each scenario</div>
+    <div class="kpis">
+      ${scenKPI('Scenario 1',SCEN.s1,scope,'#5B9DF0')}
+      ${scenKPI('Scenario 2',SCEN.s2,scope,'#E5B567')}
+      ${scenKPI('Scenario 3',SCEN.s3,scope,'#34D399')}
+    </div>`;
+  document.querySelectorAll('[data-count]').forEach(el=>{const t=+el.dataset.count;animCount(el,t,v=>inr(v));});
+}
+function scenKPI(lbl,s,scope,col){
+  const soT=sum(scope,o=>soScen(o.junT,s));
+  const asmT=sum(asmRollup(scope),'s'+(s===SCEN.s1?1:s===SCEN.s2?2:3));
+  const rhT=USER.role==='admin'?sum(regionRollup(scope),'s'+(s===SCEN.s1?1:s===SCEN.s2?2:3)):0;
+  return `<div class="kpi gold"><div class="kl"><span class="dot" style="background:${col}"></span>${lbl} · ${pct(s)}</div>
+    <div class="kv"><span class="cur">₹</span><span data-count="${soT+asmT+rhT}">0</span></div>
+    <div class="ks">SO ${inrK(soT)} · ASM ${inrK(asmT)}${rhT?' · RH '+inrK(rhT):''}</div></div>`;
+}
+function labSet(id,v){SCEN[id]=v/100;document.getElementById(id).value=v;saveJSON('schemeiq_scen',SCEN);recompute();pageSimulator();}
+function labAll(p){SCEN={s1:p/100,s2:p/100,s3:p/100};['s1','s2','s3'].forEach(k=>document.getElementById(k).value=p);saveJSON('schemeiq_scen',SCEN);recompute();pageSimulator();}
+
+/* ============ PAGE: ANALYTICS ============ */
+let CHARTS=[];
+function pageAnalytics(){
+  const scope=scopeFor(USER).filter(o=>!o.vacant);const c=document.getElementById('content');
+  c.innerHTML=`<div class="grid g-2b" style="margin-bottom:18px">
+    <div class="card"><div class="card-head"><h3>Monthly payout trend</h3></div><div class="chartbox"><canvas id="ch_trend"></canvas></div></div>
+    <div class="card"><div class="card-head"><h3>May achievement distribution</h3></div><div class="chartbox"><canvas id="ch_dist"></canvas></div></div>
+  </div>
+  <div class="grid g-2b">
+    <div class="card"><div class="card-head"><h3>${USER.role==='admin'?'Region':'ASM'} comparison · June S2</h3></div><div class="chartbox"><canvas id="ch_region"></canvas></div></div>
+    <div class="card"><div class="card-head"><h3>May slab mix</h3></div><div class="chartbox"><canvas id="ch_slab"></canvas></div></div>
+  </div>`;
+  CHARTS.forEach(ch=>ch.destroy());CHARTS=[];
+  const gridc='#23232C',txtc='#A5A5B2';Chart.defaults.color=txtc;Chart.defaults.font.family='Inter';Chart.defaults.font.size=11.5;
+  // trend
+  CHARTS.push(new Chart(document.getElementById('ch_trend'),{type:'bar',data:{labels:['Apr','May','Jun S1','Jun S2','Jun S3'],
+    datasets:[{label:'Sales Officer ₹',data:[sum(scope,'aprInc'),sum(scope,'mayInc'),sum(scope,'junS1'),sum(scope,'junS2'),sum(scope,'junS3')],
+      backgroundColor:['#5B9DF0','#5B9DF0','#E5B567','#E5B567','#34D399'],borderRadius:6}]},
+    options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:gridc},ticks:{callback:v=>inrK(v)}},x:{grid:{display:false}}}}}));
+  // dist (May ach buckets)
+  const buckets=['<90','90–99','100–109','110–119','120–124','125+'];const bc=[0,0,0,0,0,0];
+  scope.forEach(o=>{if(!o.mayT)return;const [b]=bandOf(o.mayAch);bc[['s0','s90','s100','s110','s120','s125'].indexOf(b)]++;});
+  CHARTS.push(new Chart(document.getElementById('ch_dist'),{type:'bar',data:{labels:buckets,datasets:[{data:bc,backgroundColor:['#6E6E7C','#5B9DF0','#E5B567','#F2CE8E','#34D399','#34D399'],borderRadius:6}]},
+    options:{plugins:{legend:{display:false}},scales:{y:{grid:{color:gridc},ticks:{stepSize:1}},x:{grid:{display:false}}}}}));
+  // region/asm comparison
+  const grp=USER.role==='admin'?regionRollup(scope):asmRollup(scope);
+  const gname=USER.role==='admin'?'region':'asm';
+  CHARTS.push(new Chart(document.getElementById('ch_region'),{type:'bar',data:{labels:grp.map(g=>g[gname]),datasets:[
+    {label:'SO Jun S2',data:grp.map(g=>USER.role==='admin'?sum(scope.filter(o=>o.region===g.region),'junS2'):sum(scope.filter(o=>o.asm===g.asm),'junS2')),backgroundColor:'#E5B567',borderRadius:5}]},
+    options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:gridc},ticks:{callback:v=>inrK(v)}},y:{grid:{display:false}}}}}));
+  // slab mix doughnut
+  CHARTS.push(new Chart(document.getElementById('ch_slab'),{type:'doughnut',data:{labels:buckets,datasets:[{data:bc,backgroundColor:['#6E6E7C','#5B9DF0','#E5B567','#F2CE8E','#34D399','#2bb589'],borderColor:'#15151A',borderWidth:2}]},
+    options:{cutout:'62%',plugins:{legend:{position:'right',labels:{boxWidth:12,padding:10}}}}}));
 }
 
-function renderUploadPreview(rows){
-  if(!rows||!rows.length){document.getElementById('upload-preview-table').innerHTML='<div class="empty-state"><div class="empty-icon">📂</div>No data uploaded yet</div>';return;}
-  const cols=['Date','ESM_Name','Brand','Category','Units_Sold','NSV_Value','Target_NSV'];
-  document.getElementById('upload-preview-table').innerHTML=`<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>
-  ${rows.map(r=>`<tr>${cols.map(c=>`<td>${typeof r[c]==='number'?r[c].toLocaleString('en-IN'):r[c]}</td>`).join('')}</tr>`).join('')}
-  </tbody></table>`;
+/* ============ PAGE: SUMMARY (admin) ============ */
+function pageSummary(){
+  const c=document.getElementById('content');
+  const so={apr:sum(SO,'aprInc'),may:sum(SO,'mayInc'),s1:sum(SO,'junS1'),s2:sum(SO,'junS2'),s3:sum(SO,'junS3')};
+  const asm=asmRollup(SO),rh=regionRollup(SO);
+  const asmT={apr:sum(asm,'apr'),may:sum(asm,'may'),s1:sum(asm,'s1'),s2:sum(asm,'s2'),s3:sum(asm,'s3')};
+  const rhT={apr:sum(rh,'apr'),may:sum(rh,'may'),s1:sum(rh,'s1'),s2:sum(rh,'s2'),s3:sum(rh,'s3')};
+  const tot=k=>so[k]+asmT[k]+rhT[k];
+  const grand={s1:so.apr+so.may+tot('s1'),s2:so.apr+so.may+tot('s2'),s3:so.apr+so.may+tot('s3')}; // note: apr/may only counted once via so? -> mirror workbook
+  // workbook grand = (apr actual all levels)+(may actual all levels)+(june scenario all levels)
+  const aprAll=so.apr+asmT.apr+rhT.apr, mayAll=so.may+asmT.may+rhT.may;
+  const grandWB={s1:aprAll+mayAll+tot('s1'),s2:aprAll+mayAll+tot('s2'),s3:aprAll+mayAll+tot('s3')};
+  c.innerHTML=`<div class="kpis">
+    ${kpi('Apr actual · all levels',aprAll,'closed','',true)}
+    ${kpi('May actual · all levels',mayAll,'closed','',true)}
+    ${kpi('June @ S2 · all levels',tot('s2'),pct(SCEN.s2)+' scenario','gold',true)}
+    ${kpi('Q1 grand total @ S2',grandWB.s2,'Apr+May actual + Jun S2','green',true)}
+  </div>
+  <div class="sectiontitle">April &amp; May — actual payout (closed)</div>
+  <div class="tablewrap"><table><thead><tr><th>Level</th><th class="num">Apr ₹</th><th class="num">May ₹</th></tr></thead><tbody>
+    <tr><td>Sales Officer</td><td class="num money">${inr(so.apr)}</td><td class="num money">${inr(so.may)}</td></tr>
+    <tr><td>ASM / BM (2× avg)</td><td class="num money">${inr(asmT.apr)}</td><td class="num money">${inr(asmT.may)}</td></tr>
+    <tr><td>Region Head (3× avg)</td><td class="num money">${inr(rhT.apr)}</td><td class="num money">${inr(rhT.may)}</td></tr>
+    <tr class="tot-row"><td>TOTAL ACTUAL</td><td class="num money">${inr(aprAll)}</td><td class="num money">${inr(mayAll)}</td></tr>
+  </tbody></table></div>
+  <div class="sectiontitle">June — tweakable scenario payout</div>
+  <div class="tablewrap"><table><thead><tr><th>Level</th><th class="num">@ S1 (${pct(SCEN.s1)})</th><th class="num">@ S2 (${pct(SCEN.s2)})</th><th class="num">@ S3 (${pct(SCEN.s3)})</th></tr></thead><tbody>
+    <tr><td>Sales Officer</td><td class="num">${inr(so.s1)}</td><td class="num money">${inr(so.s2)}</td><td class="num">${inr(so.s3)}</td></tr>
+    <tr><td>ASM / BM (2× avg)</td><td class="num">${inr(asmT.s1)}</td><td class="num money">${inr(asmT.s2)}</td><td class="num">${inr(asmT.s3)}</td></tr>
+    <tr><td>Region Head (3× avg)</td><td class="num">${inr(rhT.s1)}</td><td class="num money">${inr(rhT.s2)}</td><td class="num">${inr(rhT.s3)}</td></tr>
+    <tr class="tot-row"><td>TOTAL JUNE</td><td class="num money">${inr(tot('s1'))}</td><td class="num money">${inr(tot('s2'))}</td><td class="num money">${inr(tot('s3'))}</td></tr>
+  </tbody></table></div>
+  <div class="sectiontitle">Grand total Q1 payout</div>
+  <div class="tablewrap"><table><thead><tr><th>Scope</th><th class="num">@ S1</th><th class="num">@ S2</th><th class="num">@ S3</th></tr></thead><tbody>
+    <tr class="tot-row"><td>ORG-WIDE GRAND TOTAL</td><td class="num money">${inr(grandWB.s1)}</td><td class="num money">${inr(grandWB.s2)}</td><td class="num money">${inr(grandWB.s3)}</td></tr>
+  </tbody></table></div>
+  <div class="toolbar" style="margin-top:18px"><button class="btn-ghost" onclick="window.print()"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Print / Save PDF</button>
+  <button class="btn-ghost" onclick="exportCSV()"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Export officer ledger</button></div>`;
+  document.querySelectorAll('[data-count]').forEach(el=>{const t=+el.dataset.count;animCount(el,t,v=>inr(v));});
 }
 
-// ═══════════════════════════════════════════════════════════
-//  EXPORT
-// ═══════════════════════════════════════════════════════════
-function downloadCSV(csv,fname){
-  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download=fname;a.click();
+/* ============ PAGE: SLABS (admin) ============ */
+function pageSlabs(){
+  const c=document.getElementById('content');
+  const rows=[['miniband','Below '+pct(SLAB.entry),'#6E6E7C','₹0','—','entry'],
+    ['','90–99%','#5B9DF0','₹'+SLAB.base+' / unit on MIN(actual,target)','locks in as BASE','base'],
+    ['','100–109%','#E5B567','BASE + ₹'+SLAB.r100+' / unit above target','','r100'],
+    ['','110–119%','#F2CE8E','BASE + ₹'+SLAB.r110+' / unit above target','','r110'],
+    ['','120–124%','#34D399','BASE + ₹'+SLAB.r120+' / unit above target','','r120'],
+    ['','125%+','#2bb589','BASE + ₹'+SLAB.r125+' / unit above target','','r125']];
+  c.innerHTML=`<div class="grid g-2"><div class="card">
+    <div class="card-head"><div><h3>BASE + INCREMENTAL slab engine</h3><div class="ch-sub">Edit the rates — every officer, rollup, leaderboard and the summary recalculate live. The base is frozen at the target level once achievement crosses 100%, so the curve can never drop.</div></div><span class="tag">live engine</span></div>
+    <table class="slabtable"><thead><tr><th>Band</th><th>Reward</th><th>Rate ₹/unit</th></tr></thead><tbody>
+      <tr><td><span class="miniband" style="background:#6E6E7C"></span>Below entry</td><td>No incentive</td><td><span class="muted">₹0</span></td></tr>
+      <tr><td><span class="miniband" style="background:#5B9DF0"></span>${pct(SLAB.entry)}–99% · BASE</td><td>₹<input id="sl_base" type="number" value="${SLAB.base}" onchange="slabSet('base',this.value)"> × MIN(actual,target)</td><td class="muted">base</td></tr>
+      <tr><td><span class="miniband" style="background:#E5B567"></span>100–109%</td><td>BASE + ₹<input id="sl_r100" type="number" value="${SLAB.r100}" onchange="slabSet('r100',this.value)"> × units above</td><td class="muted">+₹${SLAB.r100}</td></tr>
+      <tr><td><span class="miniband" style="background:#F2CE8E"></span>110–119%</td><td>BASE + ₹<input id="sl_r110" type="number" value="${SLAB.r110}" onchange="slabSet('r110',this.value)"> × units above</td><td class="muted">+₹${SLAB.r110}</td></tr>
+      <tr><td><span class="miniband" style="background:#34D399"></span>120–124%</td><td>BASE + ₹<input id="sl_r120" type="number" value="${SLAB.r120}" onchange="slabSet('r120',this.value)"> × units above</td><td class="muted">+₹${SLAB.r120}</td></tr>
+      <tr><td><span class="miniband" style="background:#2bb589"></span>125%+</td><td>BASE + ₹<input id="sl_r125" type="number" value="${SLAB.r125}" onchange="slabSet('r125',this.value)"> × units above</td><td class="muted">+₹${SLAB.r125}</td></tr>
+      <tr><td><span class="miniband" style="background:#9CA3AF"></span>Entry threshold</td><td>Min achievement to earn · <input id="sl_entry" type="number" value="${Math.round(SLAB.entry*100)}" onchange="slabSet('entry',this.value/100)"> %</td><td class="muted">${pct(SLAB.entry)}</td></tr>
+    </tbody></table>
+    <div class="toolbar" style="margin-top:16px"><button class="btn-ghost" onclick="slabReset()">Reset to live workbook defaults</button></div>
+    </div>
+    <div class="card curvewrap"><div class="card-head"><div><h3>Curve preview</h3><div class="ch-sub">3,000-unit target. Watch the steps change as you edit rates.</div></div></div>
+    <div id="slabCurve">${curveSVG(3000,1.2)}</div>
+    <div class="note">Verification (target 3,000): 99%→${inr(soScen(3000,.99))}, 100%→${inr(soScen(3000,1))}, 120%→${inr(soScen(3000,1.2))}, 130%→${inr(soScen(3000,1.3))}. Each step is ≥ the one before it.</div></div></div>`;
+}
+function slabSet(k,v){SLAB[k]=+v;saveJSON('schemeiq_slab',SLAB);recompute();document.getElementById('slabCurve').innerHTML=curveSVG(3000,1.2);pageSlabs();toast('Slab updated · <b>everything recalculated</b>');}
+function slabReset(){SLAB={...DEFAULT_SLAB};saveJSON('schemeiq_slab',SLAB);recompute();pageSlabs();toast('Restored <b>workbook defaults</b>');}
+
+/* ============ shared table builders ============ */
+function asmTable(rows){
+  return `<div class="tablewrap"><table><thead><tr><th>ASM / BM</th><th>Region</th><th class="num">SOs</th><th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th></tr></thead><tbody>`+
+    rows.map(r=>`<tr><td>${/^vacant/i.test(r.asm)?'<span class="vac">'+r.asm+'</span>':r.asm}</td><td class="muted">${r.region}</td><td class="num">${r.count}</td><td class="num money">${r.apr?inr(r.apr):'—'}</td><td class="num money">${r.may?inr(r.may):'—'}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
+    `<tr class="tot-row"><td>TOTAL</td><td></td><td class="num">${sum(rows,'count')}</td><td class="num money">${inr(sum(rows,'apr'))}</td><td class="num money">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
+}
+function regionTable(rows){
+  return `<div class="tablewrap"><table><thead><tr><th>Region Head</th><th class="num">SOs</th><th class="num">ASMs</th><th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th></tr></thead><tbody>`+
+    rows.map(r=>`<tr><td>${r.region}</td><td class="num">${r.count}</td><td class="num">${r.asms}</td><td class="num money">${r.apr?inr(r.apr):'—'}</td><td class="num money">${r.may?inr(r.may):'—'}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
+    `<tr class="tot-row"><td>TOTAL</td><td class="num">${sum(rows,'count')}</td><td class="num">${sum(rows,'asms')}</td><td class="num money">${inr(sum(rows,'apr'))}</td><td class="num money">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
 }
 
-function exportTableCSV(tableId,fname){
-  const tbl=document.getElementById(tableId);if(!tbl){alert('Table not found');return;}
-  const rows=[...tbl.querySelectorAll('tr')];
-  const csv=rows.map(r=>[...r.querySelectorAll('th,td')].map(c=>'"'+c.textContent.trim().replace(/"/g,'""')+'"').join(',')).join('\n');
-  downloadCSV(csv,`Underlinen_${fname}_${new Date().toISOString().slice(0,10)}.csv`);
+/* ============ insights ============ */
+function insRow([cls,icon,html]){
+  const I={flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    up:'<path d="M23 6l-9.5 9.5-5-5L1 18M17 6h6v6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    star:'<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+    bolt:'<path d="M13 2L3 14h7l-1 8 10-12h-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'};
+  return `<div class="insight"><div class="ic ${cls}"><svg viewBox="0 0 24 24" fill="none">${I[icon]||I.up}</svg></div><div class="it">${html}</div></div>`;
+}
+function insightsFor(scope){
+  const live=scope.filter(o=>!o.vacant);if(!live.length)return '<div class="note">No officers in scope.</div>';
+  const top=[...live].sort((a,b)=>b.junS2-a.junS2)[0];
+  const lift=sum(scope,'junS3')-sum(scope,'junS1');
+  const under=live.filter(o=>o.mayT&&o.mayAch<0.9).length;
+  let arr=[['g','star',`<b>${top.name}</b> leads June S2 at <b>${inr(top.junS2)}</b> on a ${top.junT.toLocaleString('en-IN')}-unit target.`],
+    ['gr','up',`Moving the whole scope from S1 to S3 adds <span class="gn">+${inr(lift)}</span> in SO incentive.`]];
+  if(under)arr.push(['r','bolt',`<span class="rg">${under}</span> officer${under>1?'s':''} finished May below the ${pct(SLAB.entry)} entry — each is one slab away from earning.`]);
+  return arr.map(insRow).join('');
 }
 
-function exportTablePDF(){
-  window.print();
+/* ============ CSV export ============ */
+function exportCSV(){
+  const scope=scopeFor(USER);
+  const head=['Region Head','ASM/BM','Sales Officer','Distributors','Apr Target','Apr Actual','Apr Ach%','Apr Incentive','May Target','May Actual','May Ach%','May Incentive','Jun Target',`Jun S1 (${pct(SCEN.s1)})`,`Jun S2 (${pct(SCEN.s2)})`,`Jun S3 (${pct(SCEN.s3)})`,'Q1 @S2'];
+  const lines=[head.join(',')];
+  scope.forEach(o=>{lines.push([o.region,o.asm,o.name,o.dist,o.aprT,o.aprA,(o.aprAch*100).toFixed(1),Math.round(o.aprInc),o.mayT,o.mayA,(o.mayAch*100).toFixed(1),Math.round(o.mayInc),o.junT,Math.round(o.junS1),Math.round(o.junS2),Math.round(o.junS3),Math.round(o.q1S2)].map(x=>`"${x}"`).join(','));});
+  const blob=new Blob([lines.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='SchemeIQ_officer_ledger.csv';a.click();
+  toast('Exported <b>'+scope.length+' rows</b> · SchemeIQ_officer_ledger.csv');
 }
 
-// ═══════════════════════════════════════════════════════════
-//  BOOT
-// ═══════════════════════════════════════════════════════════
-seedData();
-renderUploadPreview([]);
+/* ============ INIT ============ */
+function init(){
+  document.getElementById('lf-so').textContent=SO.filter(o=>!o.vacant).length;
+  document.getElementById('lf-asm').textContent=ACCOUNTS.filter(a=>a.role==='asm').length;
+  document.getElementById('lf-rh').textContent=ACCOUNTS.filter(a=>a.role==='region').length;
+  renderDemoChips();
+  const pinEl=document.getElementById('lpin');
+  if(pinEl)pinEl.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  const sess=loadJSON('schemeiq_session',null);
+  if(sess&&sess.pin){const a=PINMAP[String(sess.pin).toUpperCase()];if(a){USER=a;enterApp();}}
+}
+init();
+
 </script>
 
 
