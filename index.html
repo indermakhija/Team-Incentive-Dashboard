@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0073)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SchemeIQ_Dashboard.html -->
+<!-- saved from url=(0079)file:///C:/Users/Inderpal%20S%20Makhija/Downloads/SchemeIQ_Dashboard%20(1).html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -196,6 +196,12 @@ tbody td.money{color:var(--gold-soft);font-weight:600}
 tbody td.muted{color:var(--txt-3)}
 .tot-row td{background:var(--ink-2);font-weight:800;border-top:2px solid var(--line);color:var(--txt)}
 .tot-row td.money{color:var(--gold-soft)}
+thead th.grp{text-align:center;font-size:9.5px;letter-spacing:1.4px;border-bottom:1px solid var(--line)}
+thead th.grp.apr{color:var(--blue);background:rgba(91,157,240,.07)}
+thead th.grp.may{color:var(--gold);background:rgba(229,181,103,.07)}
+thead th.grp.jun{color:var(--green);background:rgba(52,211,153,.07)}
+tbody td.aprcol{background:rgba(91,157,240,.035)} thead th.aprcol{background:rgba(91,157,240,.05)}
+tbody td.maycol{background:rgba(229,181,103,.035)} thead th.maycol{background:rgba(229,181,103,.05)}
 .slabtag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10.5px;font-weight:700;letter-spacing:.3px}
 .s0{background:var(--surf-3);color:var(--txt-3)} .s90{background:rgba(91,157,240,.15);color:var(--blue)}
 .s100{background:rgba(229,181,103,.15);color:var(--gold)} .s110{background:rgba(229,181,103,.22);color:var(--gold-soft)}
@@ -298,7 +304,7 @@ tbody td.muted{color:var(--txt-3)}
       <div class="field"><label>Access PIN</label><input id="lpin" type="text" inputmode="latin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="6" placeholder="e.g. KU19 or 1100" oninput="this.value=this.value.toUpperCase()"></div>
       <label class="remember"><input type="checkbox" id="lr"> Keep me signed in on this device</label>
       <button class="btn btn-primary" onclick="doLogin()">Unlock dashboard</button>
-      <div class="loginerr" id="lerr">PIN not recognised. Try a sample PIN below.</div>
+      <div class="loginerr" id="lerr"></div>
       <div class="demo-accts">
         <div class="dl">Quick access · sample PINs</div>
         <div class="chips" id="demochips"><button class="chip" onclick="quick(&#39;9999&#39;)">MIS Admin · <b>9999</b></button><button class="chip" onclick="quick(&#39;1100&#39;)">North Region · <b>1100</b></button><button class="chip" onclick="quick(&#39;GU06&#39;)">ABM · Gulshan Kumar · <b>GU06</b></button><button class="chip" onclick="quick(&#39;MU26&#39;)">BE · Muzamil Yousuf · <b>MU26</b></button></div>
@@ -346,113 +352,150 @@ tbody td.muted{color:var(--txt-3)}
       <div class="content" id="content"><div class="toolbar">
     <input type="text" id="qSO" placeholder="Search officer / ASM…" oninput="renderOfficerTable()" style="min-width:220px">
     <select id="fRegion" onchange="renderOfficerTable()" disabled=""><option value="">All regions</option><option>Sachin Sapra</option></select>
+    <span style="font-size:11px;color:var(--txt-3);font-weight:700;letter-spacing:.5px;text-transform:uppercase">Band filter</span>
+    <div class="seg" id="fMonthSeg">
+      <button data-m="apr" onclick="setBandMonth(&#39;apr&#39;)">April</button>
+      <button data-m="may" class="on" onclick="setBandMonth(&#39;may&#39;)">May</button>
+    </div>
     <select id="fBand" onchange="renderOfficerTable()">
-      <option value="">All bands · May</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
+      <option value="">All bands</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
     </select>
     <div class="spacer" style="flex:1"></div>
     <button class="btn-ghost" onclick="exportCSV()"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Export CSV</button>
-  </div><div id="officerTableWrap"><div class="tablewrap"><table><thead><tr>
-    <th>Officer</th><th>ASM / BM</th><th>Region</th><th class="num">May Ach</th><th>May band</th>
-    <th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th><th class="num">Q1 S2</th>
+  </div>
+  <div class="note" style="margin:-4px 0 14px">April &amp; May are <b style="color:var(--blue)">closed-month actuals</b> (real target, sell-in, achievement &amp; incentive shown for every officer). June is <b style="color:var(--green)">projected</b> at the three live scenarios.</div>
+  <div id="officerTableWrap"><div class="tablewrap"><table><thead>
+    <tr>
+      <th rowspan="2">Officer</th><th rowspan="2">ASM / BM</th><th rowspan="2">Region</th>
+      <th class="grp apr" colspan="4">▒ APRIL · ACTUAL</th>
+      <th class="grp may" colspan="4">▒ MAY · ACTUAL</th>
+      <th class="grp jun" colspan="3">JUNE · PROJECTED</th>
+      <th rowspan="2" class="num">Q1 @S2</th>
+    </tr>
+    <tr>
+      <th class="num aprcol">Tgt</th><th class="num aprcol">Actual</th><th class="num aprcol">Ach%</th><th class="num aprcol">₹</th>
+      <th class="num maycol">Tgt</th><th class="num maycol">Actual</th><th class="num maycol">Ach%</th><th class="num maycol">₹</th>
+      <th class="num">S1</th><th class="num">S2</th><th class="num">S3</th>
     </tr></thead><tbody><tr>
       <td>Sumit Kumar</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
-      <td class="num">10.3%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹18,900</td><td class="num money">₹21,000</td><td class="num">₹32,200</td><td class="num money">₹21,000</td>
+      <td class="num  aprcol">7,000</td><td class="num  aprcol">1,811</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">25.9%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">7,000</td><td class="num  maycol">723</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">10.3%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹18,900</td><td class="num money">₹21,000</td><td class="num">₹32,200</td>
+      <td class="num money">₹21,000</td>
     </tr><tr>
       <td>Deepak Sarwara</td><td class="muted">Kapil Kakkar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">66.2%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹10,163</td><td class="num money">₹11,292</td><td class="num">₹17,314</td><td class="num money">₹11,292</td>
+      <td class="num  aprcol">3,294</td><td class="num  aprcol">987</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">30.0%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">3,294</td><td class="num  maycol">2,179</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">66.2%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹10,163</td><td class="num money">₹11,292</td><td class="num">₹17,314</td>
+      <td class="num money">₹11,292</td>
     </tr><tr>
       <td>Naresh Kumar</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">11.2%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹9,528</td><td class="num money">₹10,587</td><td class="num">₹16,233</td><td class="num money">₹10,587</td>
+      <td class="num  aprcol">3,529</td><td class="num  aprcol">820</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">23.2%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">3,529</td><td class="num  maycol">395</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">11.2%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹9,528</td><td class="num money">₹10,587</td><td class="num">₹16,233</td>
+      <td class="num money">₹10,587</td>
     </tr><tr>
       <td>Manshu Maggo</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">42.8%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹8,894</td><td class="num money">₹9,882</td><td class="num">₹15,152</td><td class="num money">₹9,882</td>
+      <td class="num  aprcol">3,294</td><td class="num  aprcol">1,598</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">48.5%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">3,294</td><td class="num  maycol">1,410</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">42.8%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹8,894</td><td class="num money">₹9,882</td><td class="num">₹15,152</td>
+      <td class="num money">₹9,882</td>
     </tr><tr>
       <td>Western Up</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
-      <td class="num">89.8%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹7,625</td><td class="num money">₹8,472</td><td class="num">₹12,990</td><td class="num money">₹8,472</td>
+      <td class="num  aprcol">2,824</td><td class="num  aprcol">466</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">16.5%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">2,824</td><td class="num  maycol">2,537</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">89.8%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹7,625</td><td class="num money">₹8,472</td><td class="num">₹12,990</td>
+      <td class="num money">₹8,472</td>
     </tr><tr>
       <td>Deepak Ghand</td><td class="muted">Deepak Dhawan</td><td class="muted">Sachin Sapra</td>
-      <td class="num">159.2%</td><td><span class="slabtag s125">125%+</span></td>
-      <td class="num money">—</td><td class="num money">₹20,999</td>
-      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹28,058</td>
+      <td class="num  aprcol">2,353</td><td class="num  aprcol">1,698</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">72.2%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">2,353</td><td class="num  maycol">3,747</td><td class="num maycol" style="color:var(--green);font-weight:600">159.2%</td><td class="num money  maycol">₹20,999</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td>
+      <td class="num money">₹28,058</td>
     </tr><tr>
       <td>Sunil Kumar</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
-      <td class="num">44.7%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹7,059</td>
+      <td class="num  aprcol">2,353</td><td class="num  aprcol">104</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">4.4%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">2,353</td><td class="num  maycol">1,051</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">44.7%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td>
+      <td class="num money">₹7,059</td>
     </tr><tr>
       <td>Muzamil Yousuf</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">110.6%</td><td><span class="slabtag s110">110–119%</span></td>
-      <td class="num money">₹8,673</td><td class="num money">₹8,559</td>
-      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td><td class="num money">₹24,291</td>
+      <td class="num  aprcol">2,353</td><td class="num  aprcol">2,622</td><td class="num aprcol" style="color:var(--gold-soft);font-weight:600">111.4%</td><td class="num money  aprcol">₹8,673</td>
+      <td class="num  maycol">2,353</td><td class="num  maycol">2,603</td><td class="num maycol" style="color:var(--gold-soft);font-weight:600">110.6%</td><td class="num money  maycol">₹8,559</td>
+      <td class="num">₹6,353</td><td class="num money">₹7,059</td><td class="num">₹10,824</td>
+      <td class="num money">₹24,291</td>
     </tr><tr>
       <td>Nafees Usmani</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
-      <td class="num">65.4%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹6,210</td><td class="num money">₹6,900</td><td class="num">₹10,580</td><td class="num money">₹6,900</td>
+      <td class="num  aprcol">1,900</td><td class="num  aprcol">990</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">52.1%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,900</td><td class="num  maycol">1,242</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">65.4%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹6,210</td><td class="num money">₹6,900</td><td class="num">₹10,580</td>
+      <td class="num money">₹6,900</td>
     </tr><tr>
       <td>Anshuman Tiwari</td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">23.7%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹5,670</td><td class="num money">₹6,300</td><td class="num">₹9,660</td><td class="num money">₹6,300</td>
+      <td class="num  aprcol">2,100</td><td class="num  aprcol">1,021</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">48.6%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">2,100</td><td class="num  maycol">498</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">23.7%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹5,670</td><td class="num money">₹6,300</td><td class="num">₹9,660</td>
+      <td class="num money">₹6,300</td>
     </tr><tr>
       <td>Manoj Kumar Gupta</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
-      <td class="num">25.4%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹4,574</td><td class="num money">₹5,082</td><td class="num">₹7,792</td><td class="num money">₹5,082</td>
+      <td class="num  aprcol">1,694</td><td class="num  aprcol">179</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">10.6%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,694</td><td class="num  maycol">430</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">25.4%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹4,574</td><td class="num money">₹5,082</td><td class="num">₹7,792</td>
+      <td class="num money">₹5,082</td>
     </tr><tr>
       <td>Raveendra Singh</td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
-      <td class="num">66.3%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹4,050</td><td class="num money">₹4,500</td><td class="num">₹6,900</td><td class="num money">₹4,500</td>
+      <td class="num  aprcol">1,500</td><td class="num  aprcol">42</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">2.8%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,500</td><td class="num  maycol">994</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">66.3%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹4,050</td><td class="num money">₹4,500</td><td class="num">₹6,900</td>
+      <td class="num money">₹4,500</td>
     </tr><tr>
       <td>Sanjay Singh</td><td class="muted">Kapil Kakkar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">53.1%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹3,812</td><td class="num money">₹4,236</td><td class="num">₹6,495</td><td class="num money">₹4,236</td>
+      <td class="num  aprcol">1,412</td><td class="num  aprcol">978</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">69.3%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,412</td><td class="num  maycol">750</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">53.1%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹3,812</td><td class="num money">₹4,236</td><td class="num">₹6,495</td>
+      <td class="num money">₹4,236</td>
     </tr><tr>
       <td>Chandra Mohan</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
-      <td class="num">81.1%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td><td class="num money">₹3,300</td>
+      <td class="num  aprcol">1,100</td><td class="num  aprcol">922</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">83.8%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,100</td><td class="num  maycol">892</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">81.1%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td>
+      <td class="num money">₹3,300</td>
     </tr><tr>
       <td><span class="vac">Vacant SO-5</span></td><td class="muted">Diwakar Pandey</td><td class="muted">Sachin Sapra</td>
-      <td class="num">38.1%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td><td class="num money">₹3,300</td>
+      <td class="num  aprcol">1,100</td><td class="num  aprcol">27</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">2.5%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">1,100</td><td class="num  maycol">419</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">38.1%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹2,970</td><td class="num money">₹3,300</td><td class="num">₹5,060</td>
+      <td class="num money">₹3,300</td>
     </tr><tr>
       <td>Ariz Yar Khan</td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
-      <td class="num">72.5%</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹2,025</td><td class="num money">₹2,250</td><td class="num">₹3,450</td><td class="num money">₹2,250</td>
+      <td class="num  aprcol">750</td><td class="num muted aprcol">0</td><td class="num aprcol" style="color:var(--txt-3);font-weight:600">0.0%</td><td class="num money muted aprcol">₹0</td>
+      <td class="num  maycol">750</td><td class="num  maycol">544</td><td class="num maycol" style="color:var(--txt-3);font-weight:600">72.5%</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹2,025</td><td class="num money">₹2,250</td><td class="num">₹3,450</td>
+      <td class="num money">₹2,250</td>
     </tr><tr>
       <td><span class="vac">Vacant SO-4</span></td><td class="muted">Ashish Saxena</td><td class="muted">Sachin Sapra</td>
-      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+      <td class="num muted aprcol">0</td><td class="num muted aprcol">0</td><td class="num muted aprcol">no tgt</td><td class="num money muted aprcol">₹0</td>
+      <td class="num muted maycol">0</td><td class="num muted maycol">0</td><td class="num muted maycol">no tgt</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td>
+      <td class="num money">₹0</td>
     </tr><tr>
       <td><span class="vac">Vacant SO-6</span></td><td class="muted">Gulshan Kumar</td><td class="muted">Sachin Sapra</td>
-      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+      <td class="num muted aprcol">0</td><td class="num muted aprcol">0</td><td class="num muted aprcol">no tgt</td><td class="num money muted aprcol">₹0</td>
+      <td class="num muted maycol">0</td><td class="num  maycol">19</td><td class="num muted maycol">no tgt</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td>
+      <td class="num money">₹0</td>
     </tr><tr>
       <td><span class="vac">Vacant SO-7</span></td><td class="muted">Vacant ASM-3</td><td class="muted">Sachin Sapra</td>
-      <td class="num">—</td><td><span class="slabtag s0">Below 90%</span></td>
-      <td class="num money">—</td><td class="num money">—</td>
-      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td><td class="num money">₹0</td>
+      <td class="num muted aprcol">0</td><td class="num muted aprcol">0</td><td class="num muted aprcol">no tgt</td><td class="num money muted aprcol">₹0</td>
+      <td class="num muted maycol">0</td><td class="num muted maycol">0</td><td class="num muted maycol">no tgt</td><td class="num money muted maycol">₹0</td>
+      <td class="num">₹0</td><td class="num money">₹0</td><td class="num">₹0</td>
+      <td class="num money">₹0</td>
     </tr>
-    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">19 rows</td><td></td><td></td>
-      <td class="num money">₹8,673</td><td class="num money">₹29,558</td>
-      <td class="num">₹1,06,450</td><td class="num money">₹1,18,278</td><td class="num">₹1,81,360</td><td class="num money">₹1,56,509</td></tr>
+    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">19 rows</td>
+      <td class="num aprcol">38,556</td><td class="num aprcol">14,265</td><td class="aprcol"></td><td class="num money aprcol">₹8,673</td>
+      <td class="num maycol">38,556</td><td class="num maycol">20,433</td><td class="maycol"></td><td class="num money maycol">₹29,558</td>
+      <td class="num">₹1,06,450</td><td class="num money">₹1,18,278</td><td class="num">₹1,81,360</td>
+      <td class="num money">₹1,56,509</td></tr>
     </tbody></table></div></div></div>
     </div>
   </div>
@@ -700,7 +743,8 @@ function pageOverview(){
   const refTarget = USER.role==='so'?0 : (Math.round(sum(live,'junT')/Math.max(1,live.length)/100)*100||3000);
 
   let h=`<div class="kpis">
-    ${kpi('Apr + May paid',totAprMay,'Closed months · actual',null,true)}
+    ${kpi('April paid · actual',sum(scope,'aprInc'),`<span class="pill flat">${pct1(sum(scope,'aprA')/(sum(scope,'aprT')||1))} avg ach</span>`,null,true)}
+    ${kpi('May paid · actual',sum(scope,'mayInc'),`<span class="pill flat">${pct1(sum(scope,'mayA')/(sum(scope,'mayT')||1))} avg ach</span>`,null,true)}
     ${kpi('June @ S2 ('+pct(SCEN.s2)+')',junS2,`<span class="pill flat">${live.length} officers</span>`,'gold',true)}
     ${kpi('June range S1→S3',junS3,`S1 ${inrK(junS1)} · S3 ${inrK(junS3)}`,'gold',true)}
     ${kpi('Top officer · June S2',top?top.junS2:0,top?(top.vacant?'—':top.name):'—','green',true)}
@@ -769,6 +813,15 @@ function pageMine(){
       <div id="mineInsights"></div>
     </div>
   </div>`;
+  // April & May actuals — always visible
+  const mrow=(lbl,t,a,ach,inc,cls)=>{const bc=t?bandOf(ach)[0]:'s0';const col=t?{s0:'var(--txt-3)',s90:'var(--blue)',s100:'var(--gold)',s110:'var(--gold-soft)',s120:'var(--green)',s125:'var(--green)'}[bc]:'var(--txt-3)';
+    return `<tr><td><span class="miniband" style="background:${cls}"></span>${lbl}</td><td class="num">${t?t.toLocaleString('en-IN'):'—'}</td><td class="num">${a.toLocaleString('en-IN')}</td><td class="num" style="color:${col};font-weight:600">${t?pct1(ach):'no tgt'}</td><td class="num money">${inr(inc)}</td></tr>`;};
+  h+=`<div class="sectiontitle">April &amp; May — your actuals (closed)</div>
+  <div class="tablewrap"><table><thead><tr><th>Month</th><th class="num">Target</th><th class="num">Actual sell-in</th><th class="num">Achievement</th><th class="num">Incentive ₹</th></tr></thead><tbody>
+    ${mrow('April',o.aprT,o.aprA,o.aprAch,o.aprInc,'#5B9DF0')}
+    ${mrow('May',o.mayT,o.mayA,o.mayAch,o.mayInc,'#E5B567')}
+    <tr class="tot-row"><td>Apr + May earned</td><td class="num">${(o.aprT+o.mayT).toLocaleString('en-IN')}</td><td class="num">${(o.aprA+o.mayA).toLocaleString('en-IN')}</td><td></td><td class="num money">${inr(o.aprInc+o.mayInc)}</td></tr>
+  </tbody></table></div>`;
   c.innerHTML=h;
   mineMove(Math.round(curAch*100));
 }
@@ -805,37 +858,62 @@ function pageOfficers(){
   let h=`<div class="toolbar">
     <input type="text" id="qSO" placeholder="Search officer / ASM…" oninput="renderOfficerTable()" style="min-width:220px">
     <select id="fRegion" onchange="renderOfficerTable()"></select>
+    <span style="font-size:11px;color:var(--txt-3);font-weight:700;letter-spacing:.5px;text-transform:uppercase">Band filter</span>
+    <div class="seg" id="fMonthSeg">
+      <button data-m="apr" onclick="setBandMonth('apr')">April</button>
+      <button data-m="may" class="on" onclick="setBandMonth('may')">May</button>
+    </div>
     <select id="fBand" onchange="renderOfficerTable()">
-      <option value="">All bands · May</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
+      <option value="">All bands</option><option value="s125">125%+</option><option value="s120">120–124%</option><option value="s110">110–119%</option><option value="s100">100–109%</option><option value="s90">90–99%</option><option value="s0">Below 90%</option>
     </select>
     <div class="spacer" style="flex:1"></div>
     <button class="btn-ghost" onclick="exportCSV()"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Export CSV</button>
-  </div><div id="officerTableWrap"></div>`;
+  </div>
+  <div class="note" style="margin:-4px 0 14px">April &amp; May are <b style="color:var(--blue)">closed-month actuals</b> (real target, sell-in, achievement &amp; incentive shown for every officer). June is <b style="color:var(--green)">projected</b> at the three live scenarios.</div>
+  <div id="officerTableWrap"></div>`;
   c.innerHTML=h;
   const regs=[...new Set(scope.map(o=>o.region))];
   document.getElementById('fRegion').innerHTML='<option value="">All regions</option>'+regs.map(r=>`<option>${r}</option>`).join('');
   if(USER.role==='region'){const s=document.getElementById('fRegion');s.value=USER.key;s.disabled=true;}
   renderOfficerTable();
 }
+let bandMonth='may';
+function setBandMonth(m){bandMonth=m;document.querySelectorAll('#fMonthSeg button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));renderOfficerTable();}
 function renderOfficerTable(){
   const scope=scopeFor(USER);
   const q=(document.getElementById('qSO')?.value||'').toLowerCase();
   const fr=document.getElementById('fRegion')?.value||'';
   const fb=document.getElementById('fBand')?.value||'';
-  let rows=scope.filter(o=>(!q||o.name.toLowerCase().includes(q)||o.asm.toLowerCase().includes(q))&&(!fr||o.region===fr)&&(!fb||bandOf(o.mayAch)[0]===fb));
+  const achOf=o=>bandMonth==='apr'?o.aprAch:o.mayAch;
+  let rows=scope.filter(o=>(!q||o.name.toLowerCase().includes(q)||o.asm.toLowerCase().includes(q))&&(!fr||o.region===fr)&&(!fb||bandOf(achOf(o))[0]===fb));
   rows.sort((a,b)=>b.junS2-a.junS2);
-  const t=`<div class="tablewrap"><table><thead><tr>
-    <th>Officer</th><th>ASM / BM</th><th>Region</th><th class="num">May Ach</th><th>May band</th>
-    <th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th><th class="num">Q1 S2</th>
-    </tr></thead><tbody>${rows.map(o=>{const [bc,bl]=bandOf(o.mayAch);return `<tr>
+  const achCell=(t,ach,extra)=>{if(!t)return `<td class="num muted ${extra}">no tgt</td>`;const bc=bandOf(ach)[0];const col={s0:'var(--txt-3)',s90:'var(--blue)',s100:'var(--gold)',s110:'var(--gold-soft)',s120:'var(--green)',s125:'var(--green)'}[bc];return `<td class="num ${extra}" style="color:${col};font-weight:600">${pct1(ach)}</td>`;};
+  const unit=(v,extra)=>`<td class="num ${v?'':'muted'} ${extra}">${(v||0).toLocaleString('en-IN')}</td>`;
+  const money0=(v,extra)=>`<td class="num money ${v?'':'muted'} ${extra}">${inr(v||0)}</td>`;
+  const t=`<div class="tablewrap"><table><thead>
+    <tr>
+      <th rowspan="2">Officer</th><th rowspan="2">ASM / BM</th><th rowspan="2">Region</th>
+      <th class="grp apr" colspan="4">▒ APRIL · ACTUAL</th>
+      <th class="grp may" colspan="4">▒ MAY · ACTUAL</th>
+      <th class="grp jun" colspan="3">JUNE · PROJECTED</th>
+      <th rowspan="2" class="num">Q1 @S2</th>
+    </tr>
+    <tr>
+      <th class="num aprcol">Tgt</th><th class="num aprcol">Actual</th><th class="num aprcol">Ach%</th><th class="num aprcol">₹</th>
+      <th class="num maycol">Tgt</th><th class="num maycol">Actual</th><th class="num maycol">Ach%</th><th class="num maycol">₹</th>
+      <th class="num">S1</th><th class="num">S2</th><th class="num">S3</th>
+    </tr></thead><tbody>${rows.map(o=>`<tr>
       <td>${o.vacant?'<span class="vac">'+o.name+'</span>':o.name}</td><td class="muted">${o.asm}</td><td class="muted">${o.region}</td>
-      <td class="num">${o.mayT?pct1(o.mayAch):'—'}</td><td><span class="slabtag ${bc}">${bl}</span></td>
-      <td class="num money">${o.aprInc?inr(o.aprInc):'—'}</td><td class="num money">${o.mayInc?inr(o.mayInc):'—'}</td>
-      <td class="num">${inr(o.junS1)}</td><td class="num money">${inr(o.junS2)}</td><td class="num">${inr(o.junS3)}</td><td class="num money">${inr(o.q1S2)}</td>
-    </tr>`;}).join('')}
-    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">${rows.length} rows</td><td></td><td></td>
-      <td class="num money">${inr(sum(rows,'aprInc'))}</td><td class="num money">${inr(sum(rows,'mayInc'))}</td>
-      <td class="num">${inr(sum(rows,'junS1'))}</td><td class="num money">${inr(sum(rows,'junS2'))}</td><td class="num">${inr(sum(rows,'junS3'))}</td><td class="num money">${inr(sum(rows,'q1S2'))}</td></tr>
+      ${unit(o.aprT,'aprcol')}${unit(o.aprA,'aprcol')}${achCell(o.aprT,o.aprAch,'aprcol')}${money0(o.aprInc,'aprcol')}
+      ${unit(o.mayT,'maycol')}${unit(o.mayA,'maycol')}${achCell(o.mayT,o.mayAch,'maycol')}${money0(o.mayInc,'maycol')}
+      <td class="num">${inr(o.junS1)}</td><td class="num money">${inr(o.junS2)}</td><td class="num">${inr(o.junS3)}</td>
+      <td class="num money">${inr(o.q1S2)}</td>
+    </tr>`).join('')}
+    <tr class="tot-row"><td>TOTAL</td><td></td><td class="muted">${rows.length} rows</td>
+      <td class="num aprcol">${sum(rows,'aprT').toLocaleString('en-IN')}</td><td class="num aprcol">${sum(rows,'aprA').toLocaleString('en-IN')}</td><td class="aprcol"></td><td class="num money aprcol">${inr(sum(rows,'aprInc'))}</td>
+      <td class="num maycol">${sum(rows,'mayT').toLocaleString('en-IN')}</td><td class="num maycol">${sum(rows,'mayA').toLocaleString('en-IN')}</td><td class="maycol"></td><td class="num money maycol">${inr(sum(rows,'mayInc'))}</td>
+      <td class="num">${inr(sum(rows,'junS1'))}</td><td class="num money">${inr(sum(rows,'junS2'))}</td><td class="num">${inr(sum(rows,'junS3'))}</td>
+      <td class="num money">${inr(sum(rows,'q1S2'))}</td></tr>
     </tbody></table></div>`;
   document.getElementById('officerTableWrap').innerHTML=t;
 }
@@ -1021,13 +1099,13 @@ function slabReset(){SLAB={...DEFAULT_SLAB};saveJSON('schemeiq_slab',SLAB);recom
 /* ============ shared table builders ============ */
 function asmTable(rows){
   return `<div class="tablewrap"><table><thead><tr><th>ASM / BM</th><th>Region</th><th class="num">SOs</th><th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th></tr></thead><tbody>`+
-    rows.map(r=>`<tr><td>${/^vacant/i.test(r.asm)?'<span class="vac">'+r.asm+'</span>':r.asm}</td><td class="muted">${r.region}</td><td class="num">${r.count}</td><td class="num money">${r.apr?inr(r.apr):'—'}</td><td class="num money">${r.may?inr(r.may):'—'}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
-    `<tr class="tot-row"><td>TOTAL</td><td></td><td class="num">${sum(rows,'count')}</td><td class="num money">${inr(sum(rows,'apr'))}</td><td class="num money">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
+    rows.map(r=>`<tr><td>${/^vacant/i.test(r.asm)?'<span class="vac">'+r.asm+'</span>':r.asm}</td><td class="muted">${r.region}</td><td class="num">${r.count}</td><td class="num money aprcol">${inr(r.apr)}</td><td class="num money maycol">${inr(r.may)}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
+    `<tr class="tot-row"><td>TOTAL</td><td></td><td class="num">${sum(rows,'count')}</td><td class="num money aprcol">${inr(sum(rows,'apr'))}</td><td class="num money maycol">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
 }
 function regionTable(rows){
   return `<div class="tablewrap"><table><thead><tr><th>Region Head</th><th class="num">SOs</th><th class="num">ASMs</th><th class="num">Apr ₹</th><th class="num">May ₹</th><th class="num">Jun S1</th><th class="num">Jun S2</th><th class="num">Jun S3</th></tr></thead><tbody>`+
-    rows.map(r=>`<tr><td>${r.region}</td><td class="num">${r.count}</td><td class="num">${r.asms}</td><td class="num money">${r.apr?inr(r.apr):'—'}</td><td class="num money">${r.may?inr(r.may):'—'}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
-    `<tr class="tot-row"><td>TOTAL</td><td class="num">${sum(rows,'count')}</td><td class="num">${sum(rows,'asms')}</td><td class="num money">${inr(sum(rows,'apr'))}</td><td class="num money">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
+    rows.map(r=>`<tr><td>${r.region}</td><td class="num">${r.count}</td><td class="num">${r.asms}</td><td class="num money aprcol">${inr(r.apr)}</td><td class="num money maycol">${inr(r.may)}</td><td class="num">${inr(r.s1)}</td><td class="num money">${inr(r.s2)}</td><td class="num">${inr(r.s3)}</td></tr>`).join('')+
+    `<tr class="tot-row"><td>TOTAL</td><td class="num">${sum(rows,'count')}</td><td class="num">${sum(rows,'asms')}</td><td class="num money aprcol">${inr(sum(rows,'apr'))}</td><td class="num money maycol">${inr(sum(rows,'may'))}</td><td class="num">${inr(sum(rows,'s1'))}</td><td class="num money">${inr(sum(rows,'s2'))}</td><td class="num">${inr(sum(rows,'s3'))}</td></tr></tbody></table></div>`;
 }
 
 /* ============ insights ============ */
